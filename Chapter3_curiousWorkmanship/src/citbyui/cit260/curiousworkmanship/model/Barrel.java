@@ -6,6 +6,7 @@
 
 package citbyui.cit260.curiousworkmanship.model;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 /**
@@ -19,7 +20,7 @@ public class Barrel implements Serializable {
     private double volume;
     private double maxWeight;
 
-    public Barrel() {
+    public Barrel() {        
     }
 
     public Barrel(double diameter, double height, double volume, double maxWeight) {
