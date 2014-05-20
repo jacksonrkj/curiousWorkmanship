@@ -6,6 +6,8 @@
 
 package citbyui.cit260.curiousworkmanship.control;
 
+import citbyui.cit260.curiousworkmanship.model.Game;
+
 /**
  * This class contains constants used in the control layer
  * @author jacksonrkj
@@ -15,8 +17,8 @@ public final class Controls {
     private final static ProgramControl programControl = new ProgramControl();    
     private final static GameControl gameControl = new GameControl();    
     private final static InventoryControl inventoryControl = new InventoryControl();
+    private static Game currentGame = null;
     
-
     public static ProgramControl getProgramControl() {
         return programControl;
     }
@@ -28,6 +30,14 @@ public final class Controls {
     public static InventoryControl getInventoryControl() {
         return inventoryControl;
     }
+
+    public static Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public static void setCurrentGame(Game currentGame) {
+        Controls.currentGame = currentGame;
+    }
     
-      
+    
 }

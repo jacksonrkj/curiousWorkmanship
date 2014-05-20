@@ -14,9 +14,6 @@ import citbyui.cit260.curiousworkmanship.view.StartProgramView;
  */
 public class CuriousWorkmanship {
    
-
-
-    
     /**
      * @param args the command line arguments
      */
@@ -25,7 +22,6 @@ public class CuriousWorkmanship {
         // create StartProgramView and start the program
         StartProgramView startProgramView = new StartProgramView();
         startProgramView.startProgram();
-        
     }
     
 }

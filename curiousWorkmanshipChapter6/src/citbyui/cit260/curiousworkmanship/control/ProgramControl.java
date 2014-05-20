@@ -46,9 +46,9 @@ public class ProgramControl {
     }
 
     public void saveGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       // TODO
+        System.out.println("\n**** saveGame stub ****");
     }
-    
     
     
 }

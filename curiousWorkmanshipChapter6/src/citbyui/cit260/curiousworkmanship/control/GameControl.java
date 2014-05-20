@@ -6,9 +6,6 @@
 
 package citbyui.cit260.curiousworkmanship.control;
 
-import citbyui.cit260.curiousworkmanship.model.Game;
-import citbyui.cit260.curiousworkmanship.model.Player;
-
 /**
  *
  * @author jacksonrkj

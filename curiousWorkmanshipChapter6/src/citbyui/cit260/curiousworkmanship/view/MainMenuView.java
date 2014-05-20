@@ -17,47 +17,88 @@ import java.util.Scanner;
  */
 public class MainMenuView {
     
-    private static final String menu =  "\n\n"
-            + "G - Start game\n" 
-            + "H - Get help on how to play the game\n" 
-            + "S - Save game\n" 
-            + "E - Exit";
+    private static final String MENU = "\n"
+            + "\n-----------------------------------------"
+            + "\n| Main Menu                             |"
+            + "\n-----------------------------------------"
+            + "\nG - Start game" 
+            + "\nH - Get help on how to play the game" 
+            + "\nS - Save game" 
+            + "\nE - Exit"
+            + "\n-----------------------------------------";
     
-    public void displayMainMenu() {
-        boolean invalidSelection = true;
-        Scanner keyboard = new Scanner(System.in);
+
+    public void displayMenu() {
         
+        boolean done = false;
         do {
+            // display menu
+            System.out.println(MENU);
             
-            System.out.println(MainMenuView.menu);
-            String value = keyboard.nextLine();
-            
-            // strip off blanks and make upper case
-            value = value.trim().toUpperCase(); 
-            char selection = value.charAt(0); // get first character
-            
-            switch (selection) {
-                case 'G':
-                    GameMenuView gameMenu = new GameMenuView();
-                    gameMenu.displayGameMenu();
-                    break;
-                case 'H':
-                    HelpMenuView helpMenu = new HelpMenuView();
-                    helpMenu.displayHelpMenu();
-                    break;
-                case 'S':
-                    Controls.getProgramControl().saveGame();                    
-                    break;
-                case 'E':    
-                    return;  
-                    
-                default:
-                    System.out.println("Invalid selection - try again.");
-            }
-  
-            
-        } while(invalidSelection);
+            char selection = this.getInput();
+
+            // get selection and take the appropriate action
+            done = this.doAction(selection);
+        } while(!done);
         
+        
+        
+    }
+    
+    
+    public boolean doAction(char selection) {
+ 
+        switch (selection) {
+            case 'G': // display the game menu
+                GameMenuView gameMenu = new GameMenuView();
+                gameMenu.displayMenu();
+                break;
+            case 'H': // display the help menu
+                HelpMenuView helpMenu = new HelpMenuView();
+                helpMenu.displayMenu();
+                break;
+            case 'S': // save the current game to disk
+                Controls.getProgramControl().saveGame();                    
+                break;
+            case 'E':
+                return true;
+
+            default:
+                System.out.println("\n*** Invalid selection *** Try again");
+        }
+       
+        return false;
+        
+    }
+    
+    private char getInput() {
+        
+        Scanner keyboard = new Scanner(System.in);
+        boolean valid = false;
+        String strValue = null;
+        char selection = ' ';    
+        
+        // while a valid name has not been retrieved
+        while(!valid) {
+            
+            // prompt for the player's name
+            System.out.println("\t\nEnter your selection below:");
+        
+            // get the value entered from the keyboard
+            strValue = keyboard.nextLine(); 
+            
+            if (strValue.trim().length() < 1) { // blank value entered
+                // display and error
+                System.out.println("\n*** Invalid selection *** Try again");
+            }
+            
+            selection = strValue.trim().toUpperCase().charAt(0);
+            
+            // signal that a valid name was entered
+            valid = true;            
+        }
+        
+        return selection; // return the name        
     }
     
 }
