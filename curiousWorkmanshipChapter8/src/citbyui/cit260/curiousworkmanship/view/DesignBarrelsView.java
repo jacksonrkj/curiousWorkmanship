@@ -7,7 +7,6 @@
 package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.enums.Item;
-import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
 import java.awt.Point;
 
 /**
@@ -97,7 +96,7 @@ public class DesignBarrelsView extends View {
         return false;  
     }
     
-    public Point getCoordinates() throws ViewException {
+    public Point getCoordinates() {
         
         String value = this.getInput();
         value = value.trim().toUpperCase();
@@ -108,21 +107,20 @@ public class DesignBarrelsView extends View {
         String[] values = value.split(" ");
 
         if (values.length < 2) {
-            throw new ViewException("You must enter both a row and column number.");
+            return null;
         }
 
         // parse out row and column numbers
-        try {
+        
             int row = Integer.parseInt(values[0]);
             int column = Integer.parseInt(values[1]);
             return new Point(row, column);
 
-        } catch (NumberFormatException nf) {
-            throw new ViewException("The row or column number is not a  number.");
-        }        
+                
     }
     
-    public Double getDoubleNumber() throws ViewException {
+    
+    public Double getDoubleNumber() {
         Double number = null;
         
         while (number == null) {

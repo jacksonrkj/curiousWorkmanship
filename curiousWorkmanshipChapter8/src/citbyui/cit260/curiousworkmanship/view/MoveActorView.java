@@ -6,12 +6,8 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
-import citbyui.cit260.curiousworkmanship.control.Constants;
-import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.control.MapControl;
 import citbyui.cit260.curiousworkmanship.enums.Actor;
-import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
-import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
 import java.awt.Point;
 
 /**
@@ -80,29 +76,32 @@ public class MoveActorView extends View {
         
         boolean done = false;
         do {
-            try {
-                // prompt for and get the row and column numbers
-                System.out.println("\nEnter the row and column number of the location (e.g., 1 3)");
-                Point coordinates = this.getCoordinates(); // get the row and column
-                if (coordinates == null) // entered "Q" to quit
-                    break;
-                
-                // move actor to specified location
-                MapControl.moveActorToLocation(actor, coordinates);
-                
-                System.out.println("\n" + actor + 
-                                   " was successfully moved to location: " + 
-                                   coordinates.x + ", " + coordinates.y);
-                done = true;
-            } catch (ViewException | MapControlException ex) {
-                    System.out.println(ex.getMessage());
-            }       
+
+            // prompt for and get the row and column numbers
+            System.out.println("\nEnter the row and column number of the location (e.g., 1 3)");
+            Point coordinates = this.getCoordinates(); // get the row and column
+            if (coordinates == null) // entered "Q" to quit
+                break;
+
+            // move actor to specified location
+            int returnValue = MapControl.moveActorToLocation(actor, coordinates);
+            if (returnValue < 0) {
+                System.out.println("\nERROR" + actor + 
+                               " counld not be moved to location: " + 
+                               coordinates.x + ", " + coordinates.y);
+            }
+
+            System.out.println("\n" + actor + 
+                               " was successfully moved to location: " + 
+                               coordinates.x + ", " + coordinates.y);
+            done = true;
+
         } while (!done);
 
         return false;  
     }
     
-    public Point getCoordinates() throws ViewException {
+    public Point getCoordinates() {
         
         String value = this.getInput();
         value = value.trim().toUpperCase();
@@ -113,18 +112,15 @@ public class MoveActorView extends View {
         String[] values = value.split(" ");
 
         if (values.length < 2) {
-            throw new ViewException("You must enter both a row and column number.");
+            System.out.println("You must enter both a row and column number.");
+            return null;
         }
 
         // parse out row and column numbers
-        try {
-            int row = Integer.parseInt(values[0]);
-            int column = Integer.parseInt(values[1]);
-            return new Point(row, column);
-
-        } catch (NumberFormatException nf) {
-            throw new ViewException("The row or column number is not a  number.");
-        }        
+        int row = Integer.parseInt(values[0]);
+        int column = Integer.parseInt(values[1]);
+        return new Point(row, column);
+      
     }
     
 }

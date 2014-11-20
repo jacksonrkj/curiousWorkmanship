@@ -8,7 +8,6 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.MapControl;
 import citbyui.cit260.curiousworkmanship.enums.Actor;
-import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
 import citbyui.cit260.curiousworkmanship.model.Location;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -27,27 +26,22 @@ public class ViewLocationView extends View {
 
     @Override
     public boolean doAction(String choice) {
-        try{
+
             Point coordinates = this.getCoordinates(choice); // get the row and column
             if (coordinates == null)
-                return true;
+                return false;
             
             // get the location in the map
             Location location = MapControl.getLocation(coordinates);
             
             // display contents of location
-            this.displayLocationInfo(coordinates, location);
-
-        } catch (ViewException ex) {
-                System.out.println(ex.getMessage());
-                return false;
-        }       
+            this.displayLocationInfo(coordinates, location);     
 
         return true;  
         
     }
     
-    public Point getCoordinates(String value) throws ViewException {
+    public Point getCoordinates(String value) {
        
         value = value.trim().toUpperCase();
         if (value.equals("Q"))
@@ -57,18 +51,14 @@ public class ViewLocationView extends View {
         String[] values = value.split(" ");
 
         if (values.length < 2) {
-            throw new ViewException("You must enter both a row and column number.");
+            System.out.println("You must enter both a row and column number.");
         }
 
         // parse out row and column numbers
-        try {
-            int row = Integer.parseInt(values[0]);
-            int column = Integer.parseInt(values[1]);
-            return new Point(row, column);
-
-        } catch (NumberFormatException nf) {
-            throw new ViewException("The row or column number is not a  number.");
-        }        
+        int row = Integer.parseInt(values[0]);
+        int column = Integer.parseInt(values[1]);
+        return new Point(row, column);
+       
     }
 
     private void displayLocationInfo(Point coordinates, Location location) {

@@ -8,8 +8,6 @@ package citbyui.cit260.curiousworkmanship.control;
 
 import citbyui.cit260.curiousworkmanship.enums.Actor;
 import citbyui.cit260.curiousworkmanship.enums.Item;
-import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
-import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
 import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.InventoryItem;
 import citbyui.cit260.curiousworkmanship.model.Location;
@@ -29,8 +27,7 @@ import java.awt.Point;
 
 public class GameControl {
 
-    public static void createNewGame(Player player) 
-            throws MapControlException {
+    public static int createNewGame(Player player) {
         
        Game game = new Game(); // create new game
        CuriousWorkmanship.setCurrentGame(game); // save in CuriousWorkmanship
@@ -54,7 +51,12 @@ public class GameControl {
        
        // ...
        
-       MapControl.moveActorsToStartingLocation(map);    
+       int returnValue = MapControl.moveActorsToStartingLocation(map);
+       if (returnValue < 0) {
+           return -1;
+       }
+       
+       return 0;
     }
  
     
@@ -346,21 +348,16 @@ public class GameControl {
     
     
     
-    public static void moveActorToLocation(Actor actor, int row, int column) 
-                            throws MapControlException {
+    public static int moveActorToLocation(Actor actor, int row, int column) {
         Map map = CuriousWorkmanship.getCurrentGame().getMap();
-        try {
-            if (row < 1  || row > map.getNoOfRows() ||
-                column < 1  || row > map.getNoOfColumns()) {
-
-                throw new CuriousWorkmanshipException("Row or column is outsides the bounds of the map");
-            }
-        } catch (CuriousWorkmanshipException ex) {
-            System.out.println(ex.getMessage());
+        
+        if (row < 1  || row > map.getNoOfRows() ||
+            column < 1  || row > map.getNoOfColumns()) {
+            return -1;
         }
         
-        MapControl.moveActorToLocation(actor, new Point(row, column));
-        
+        int returnValue = MapControl.moveActorToLocation(actor, new Point(row, column));
+        return returnValue;
     }
     
     public static InventoryItem[] getInventory() {

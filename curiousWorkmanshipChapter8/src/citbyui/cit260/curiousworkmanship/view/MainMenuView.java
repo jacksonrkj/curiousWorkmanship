@@ -7,9 +7,6 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.control.ProgramControl;
-import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
-import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
-import citbyui.cit260.curiousworkmanship.exceptions.ProgramControlException;
 import curiousworkmanship.CuriousWorkmanship;
 
 /**
@@ -65,17 +62,11 @@ public class MainMenuView extends View {
      
 
     private void startNewGame() {
-        
-        try {   
-            // create a new game
-            GameControl.createNewGame(CuriousWorkmanship.getPlayer());    
-        } catch (MapControlException mce) {
-            System.out.println(mce.getMessage());
-            return;
-        } catch (Throwable te) {
-            System.out.println(te.getMessage());
-            te.printStackTrace();
-            return;
+          
+        // create a new game
+        int returnValue = GameControl.createNewGame(CuriousWorkmanship.getPlayer());    
+        if (returnValue < 0) {
+            System.out.println("ERROR - Failed to create new game");
         }
 
         // display the game menu
