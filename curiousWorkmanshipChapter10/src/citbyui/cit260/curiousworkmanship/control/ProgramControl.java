@@ -6,7 +6,6 @@
 
 package citbyui.cit260.curiousworkmanship.control;
 
-import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
 import curiousworkmanship.CuriousWorkmanship;
 
@@ -29,11 +28,6 @@ public class ProgramControl {
         return player;
     }
 
-    public static void saveGame(Game game, String filepath) {
-        
-       // open output file to same objects to 
-       // TODO
-        System.out.println("\n**** saveGame stub ****");
-    }
+    
     
 }

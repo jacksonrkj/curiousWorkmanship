@@ -6,10 +6,7 @@
 package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
-import citbyui.cit260.curiousworkmanship.control.ProgramControl;
-import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
-import citbyui.cit260.curiousworkmanship.exceptions.ProgramControlException;
 import curiousworkmanship.CuriousWorkmanship;
 
 /**
@@ -84,8 +81,20 @@ public class MainMenuView extends View {
     }
 
     private void startExistingGame() {
-        // start a saved game
-        GameControl.startSavedGame();
+        
+        // prompt for and get the name of the file to save the game in
+        System.out.println("\n\nEnter the file path for file where the game "
+                           + "is to be saved.");
+        
+        String filePath = this.getInput();
+        filePath = "/Users/jacksonrkj/Documents/temp/curiousWorkmanship/game1.cws";
+        
+        try {
+            // start a saved game
+            GameControl.getSavedGame(filePath);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } 
 
         // display the game menu
         GameMenuView gameMenu = new GameMenuView();
@@ -97,9 +106,15 @@ public class MainMenuView extends View {
         System.out.println("\n\nEnter the file path for file where the game "
                            + "is to be saved.");
         String filePath = this.getInput();
+        filePath = "/Users/jacksonrkj/Documents/temp/curiousWorkmanship/game1.cws";
         
-        // save the game to the speciried file
-        ProgramControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
+        
+        try {
+            // save the game to the speciried file
+            GameControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } 
     }
 
     private void displayHelpMenu() {

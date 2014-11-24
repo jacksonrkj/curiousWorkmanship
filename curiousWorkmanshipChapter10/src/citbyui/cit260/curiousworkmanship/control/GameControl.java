@@ -8,6 +8,7 @@ package citbyui.cit260.curiousworkmanship.control;
 
 import citbyui.cit260.curiousworkmanship.enums.Actor;
 import citbyui.cit260.curiousworkmanship.enums.Item;
+import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
 import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.InventoryItem;
@@ -18,6 +19,12 @@ import citbyui.cit260.curiousworkmanship.model.Ship;
 import citbyui.cit260.curiousworkmanship.model.Wagon;
 import curiousworkmanship.CuriousWorkmanship;
 import java.awt.Point;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -366,38 +373,34 @@ public class GameControl {
         return CuriousWorkmanship.getCurrentGame().getInventory();
     }
 
-    enum ToolWeights {
-        HAMMER(2.75),
-        AX(10.0),
-        DRILL(1.5),
-        SHOVEL(7.25),
-        SICKLE(2.3),
-        SAW(1.75);
-        
-        private final double weight;
+    
+    public static void saveGame(Game game, String filepath) throws FileNotFoundException, IOException, GameControlException {
 
-        private ToolWeights(double weight) {
-            this.weight = weight;
+        try( FileOutputStream fops = new FileOutputStream(filepath)) {
+            ObjectOutputStream output = new ObjectOutputStream(fops);
+            // write the game object out to the disk
+            output.writeObject(game);
         }
-        
-        
-        public double getWeight() {
-            return weight;
+        catch(IOException e) {
+            throw new GameControlException(e.getMessage());
+        } 
+    }
+
+    public static void getSavedGame(String filepath) throws ClassNotFoundException, GameControlException {
+        Game game = null;
+
+        try( FileInputStream fips = new FileInputStream(filepath)) {
+            ObjectInputStream output = new ObjectInputStream(fips);
+            // write the game object out to the disk
+            game = (Game) output.readObject();
         }
-            
-        
-    }
-    
-    private double getWeightOfToolBox() {
-        
-        double totalWeight = ToolWeights.HAMMER.getWeight() + ToolWeights.DRILL.getWeight();
-        
-        return totalWeight;
-        
-    }
-    
-    
-    
+        catch(Exception e) {
+            throw new GameControlException(e.getMessage());
+        }  
+       // read the game object out to the disk
 
-
+       // close the outuput file
+       CuriousWorkmanship.setCurrentGame(game); // save in CuriousWorkmanship
+    }
+ 
 }
