@@ -8,39 +8,13 @@ package citbyui.cit260.curiousworkmanship.control;
 
 import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
+import curiousworkmanship.CuriousWorkmanship;
 
 /**
  *
  * @author jacksonrkj
  */
-
-
 public class ProgramControl {
-    
-    private static Player player = null; // current player of the game
-    private static Game game = null; // current game being played
-    
-    
-    
-
-    public static Player getPlayer() {
-        return player;
-    }
-
-    public static void setPlayer(Player player) {
-        ProgramControl.player = player;
-    }
-
-    public static Game getGame() {
-        return game;
-    }
-
-    public static void setGame(Game game) {
-        ProgramControl.game = game;
-    }
-    
-    
-    
       
     private final static int INVENTORY_COUNT = 10;
     
@@ -50,12 +24,14 @@ public class ProgramControl {
         Player player = new Player();
         player.setName(name);
         
-        ProgramControl.setPlayer(player); // save the player
+        CuriousWorkmanship.setPlayer(player); // save the player
         
         return player;
     }
 
     public static void saveGame(Game game, String filepath) {
+        
+       // open output file to same objects to 
        // TODO
         System.out.println("\n**** saveGame stub ****");
     }

@@ -6,46 +6,28 @@
 
 package curiousworkmanship;
 
-import citbyui.cit260.curiousworkmanship.frames.MainMenuFrame;
-import citbyui.cit260.curiousworkmanship.frames.StartProgramFrame;
 import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
+import citbyui.cit260.curiousworkmanship.view.StartProgramView;
 
 
 public class CuriousWorkmanship {
     
     private static Game currentGame = null;
     private static Player player = null;   
-    private static MainMenuFrame mainMenuFrame = null;
-
-    public static MainMenuFrame getMainMenuFrame() {
-        return mainMenuFrame;
-    }
-
-    public static void setMainMenuFrame(MainMenuFrame mainMenuFrame) {
-        CuriousWorkmanship.mainMenuFrame = mainMenuFrame;
-    }
-
+    
+    
+    
 
     public static void main(String[] args) { 
     
-//        while (true) { // play game until user explcitly quits
+        while (true) { // play game until user explcitly quits
             try {
                 // create StartProgramView and start the program
-//                StartProgramView startProgramView = new StartProgramView();
-//                startProgramView.display();
-                /* Create and display the form */
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                        StartProgramFrame startProgramFrame = new StartProgramFrame();
-                        startProgramFrame.setVisible(true); 
-                        return;
-                    }
-                });
-
+                StartProgramView startProgramView = new StartProgramView();
+                startProgramView.display();
                 return;
-                          
-                    
+                
             } catch (Exception e) {
                 
                 // build stacktrace string.
@@ -69,10 +51,9 @@ public class CuriousWorkmanship {
                         + "\nIf this error persist, contact support."
                         + "\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                         + "\n\n\n");
-                return;
             }
 
-//        }
+        }
         
         
     }

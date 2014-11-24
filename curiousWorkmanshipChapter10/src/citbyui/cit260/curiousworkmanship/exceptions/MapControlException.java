@@ -10,6 +10,8 @@ package citbyui.cit260.curiousworkmanship.exceptions;
  *
  * @author jacksonrkjs
  */
+
+
 public class MapControlException extends Exception {
 
     

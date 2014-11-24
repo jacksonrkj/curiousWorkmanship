@@ -28,7 +28,8 @@ import java.awt.Point;
 
 public class GameControl {
 
-    public static void createNewGame(Player player) throws MapControlException {
+    public static void createNewGame(Player player) 
+            throws MapControlException {
         
        Game game = new Game(); // create new game
        CuriousWorkmanship.setCurrentGame(game); // save in CuriousWorkmanship
@@ -47,8 +48,11 @@ public class GameControl {
         
        Map map = MapControl.createMap(); // create and initialize new map
        game.setMap(map); // save map in game
-       
+
        // move actors to starting position in the map
+       
+       // ...
+       
        MapControl.moveActorsToStartingLocation(map);    
     }
  
@@ -178,7 +182,7 @@ public class GameControl {
     }
 
     public static void startSavedGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("*** startSavedGame() called ***");
     }
     
 
@@ -391,6 +395,9 @@ public class GameControl {
         return totalWeight;
         
     }
+    
+    
+    
 
 
 }

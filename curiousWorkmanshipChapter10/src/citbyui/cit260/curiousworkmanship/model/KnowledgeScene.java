@@ -6,8 +6,8 @@
 
 package citbyui.cit260.curiousworkmanship.model;
 
-import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
+import citbyui.cit260.curiousworkmanship.enums.SceneGroup;
+import citbyui.cit260.curiousworkmanship.enums.SceneType;
 
 /**
  *
@@ -20,14 +20,13 @@ public class KnowledgeScene extends Scene {
     public KnowledgeScene() {
     }
 
-    public KnowledgeScene( int sceneType, 
+    public KnowledgeScene( SceneGroup sceneGroup, 
                            String description, 
-                           String mapSymbol,
-                           ImageIcon image, 
+                           String mapSymbol, 
                            double travelTime, 
                            boolean blocked, 
                            Question[] knowledgeQuestions) {
-        super(sceneType, description, mapSymbol, travelTime, blocked, image);
+        super(sceneGroup, description, mapSymbol, travelTime, blocked);
         this.knowledgeQuestions = knowledgeQuestions;
     }
 

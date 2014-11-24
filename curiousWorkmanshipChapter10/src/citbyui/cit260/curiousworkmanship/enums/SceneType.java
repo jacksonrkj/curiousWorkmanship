@@ -34,6 +34,7 @@ public enum SceneType {
     forest,
     mountain,
     bridge,
+    riverCrossing,
     toolShed,
     lumberYard,
     warehouse,

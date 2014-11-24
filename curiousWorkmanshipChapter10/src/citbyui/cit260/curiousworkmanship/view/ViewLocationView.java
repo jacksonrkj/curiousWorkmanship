@@ -78,7 +78,7 @@ public class ViewLocationView extends View {
         System.out.println("\n\tActors in location");
         ArrayList<Actor> actorsInLocation = location.getActors();
         for (Actor actor : actorsInLocation) {
-            System.out.println("\t" + actor.toString());        
+            System.out.println("\t" + actor);        
         }
         
     }

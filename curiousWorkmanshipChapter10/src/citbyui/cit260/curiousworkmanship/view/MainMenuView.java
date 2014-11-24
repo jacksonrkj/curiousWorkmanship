@@ -7,7 +7,9 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.control.ProgramControl;
+import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
+import citbyui.cit260.curiousworkmanship.exceptions.ProgramControlException;
 import curiousworkmanship.CuriousWorkmanship;
 
 /**
@@ -57,16 +59,23 @@ public class MainMenuView extends View {
                 System.out.println("\n*** Invalid selection *** Try again");
                 break;
         }
+
         return false;
     }
      
 
     private void startNewGame() {
-        try {
+        
+        try {   
             // create a new game
-            GameControl.createNewGame(CuriousWorkmanship.getPlayer());
-        } catch (MapControlException ex) {
-            System.out.println(ex.getMessage());
+            GameControl.createNewGame(CuriousWorkmanship.getPlayer());    
+        } catch (MapControlException mce) {
+            System.out.println(mce.getMessage());
+            return;
+        } catch (Throwable te) {
+            System.out.println(te.getMessage());
+            te.printStackTrace();
+            return;
         }
 
         // display the game menu

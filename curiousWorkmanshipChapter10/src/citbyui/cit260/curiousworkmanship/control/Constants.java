@@ -6,8 +6,6 @@
 
 package citbyui.cit260.curiousworkmanship.control;
 
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author jacksonrkj
@@ -73,11 +71,9 @@ public class Constants {
     public final static int BLACKSMITH = 28;
     public final static int BOATYARD = 29;
     public final static int REBELLION = 30;
-    public final static int CAMP = 31;
-    public final static int HIGHMOUNTAIN = 32;
-    public final static int INSTRUCTIONS = 33;
-    public final static int FINISH = 34;
-    
+    public final static int VILLAGE = 31;
+    public final static int FINISH = 32;
+
     
     public final static double GRAIN_POUNDS_PER_CUBIC_FOOT = 48.18;
     public final static double LEGUMES_POUNDS_PER_CUBIC_FOOT = 48.18;
@@ -105,7 +101,7 @@ public class Constants {
     public final static double WATER_RECOMMENDED_PER_DAY = 12.85592;
     
     public final static int LEHI = 0;
-    public final static int SARIAH = 1;
+    public final static int SARAH = 1;
     public final static int NEPHI = 2;
     public final static int JACOB = 3;
     public final static int SAM = 4;
@@ -116,7 +112,7 @@ public class Constants {
     public final static int MAP_ROW_COUNT = 10;
     public final static int MAP_COLUMN_COUNT = 10;
     public final static int ACTOR_COUNT = 8;
-    public final static int NUMBER_OF_SCENES = 35;
+    public final static int NUMBER_OF_SCENES = 33;
     
     
 }

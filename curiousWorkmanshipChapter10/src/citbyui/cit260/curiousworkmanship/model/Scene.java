@@ -6,9 +6,8 @@
 
 package citbyui.cit260.curiousworkmanship.model;
 
-import java.awt.image.BufferedImage;
+import citbyui.cit260.curiousworkmanship.enums.SceneGroup;
 import java.io.Serializable;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -16,33 +15,29 @@ import javax.swing.ImageIcon;
  */
 public class Scene implements Serializable {
    
-    private int sceneType;
+    private SceneGroup sceneGroup;
     private String description;
     private String mapSymbol;
     private double travelTime;
     private boolean blocked;
-    private ImageIcon icon;
-    
    
     public Scene() {
     }
 
-    public Scene(int sceneType, String description, String mapSymbol, double travelTime, boolean blocked, ImageIcon image) {
-        this.sceneType = sceneType;
+    public Scene(SceneGroup sceneGroup, String description, String mapSymbol, double travelTime, boolean blocked) {
+        this.sceneGroup = sceneGroup;
         this.description = description;
         this.mapSymbol = mapSymbol;
         this.travelTime = travelTime;
         this.blocked = blocked;
-        this.icon = icon;
-        
     }
 
-    public int getSceneType() {
-        return sceneType;
+    public SceneGroup getSceneGroup() {
+        return sceneGroup;
     }
 
-    public void setSceneType(int sceneType) {
-        this.sceneType = sceneType;
+    public void setSceneGroup(SceneGroup sceneGroup) {
+        this.sceneGroup = sceneGroup;
     }
 
     public String getDescription() {
@@ -76,17 +71,6 @@ public class Scene implements Serializable {
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
     }
-
-    public ImageIcon getIcon() {
-        return icon;
-    }
-
-    public void setIcon(ImageIcon icon) {
-        this.icon = icon;
-    }
-
-    
-    
     
     
     

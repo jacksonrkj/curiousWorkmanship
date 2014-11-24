@@ -42,6 +42,8 @@ public abstract class View implements ViewInterface {
             value = this.getInput(); // get the user's selection
             done = this.doAction(value); // do action based on selection        
         } while (!done);
+            
+        
 
     }
     

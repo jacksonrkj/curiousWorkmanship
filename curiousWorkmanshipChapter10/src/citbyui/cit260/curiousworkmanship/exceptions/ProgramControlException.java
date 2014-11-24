@@ -3,31 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package citbyui.cit260.curiousworkmanship.exceptions;
 
 /**
  *
  * @author jacksonrkj
  */
-public class BarrelControlException extends Exception {
+public class ProgramControlException extends Exception {
 
-    public BarrelControlException() {
+    public ProgramControlException() {
     }
 
-    public BarrelControlException(String message) {
+    public ProgramControlException(String message) {
         super(message);
     }
 
-    public BarrelControlException(String message, Throwable cause) {
+    public ProgramControlException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public BarrelControlException(Throwable cause) {
+    public ProgramControlException(Throwable cause) {
         super(cause);
     }
 
-    public BarrelControlException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ProgramControlException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
     

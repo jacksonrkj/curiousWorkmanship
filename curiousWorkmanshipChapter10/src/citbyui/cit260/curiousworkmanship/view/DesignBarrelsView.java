@@ -6,20 +6,9 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
-import citbyui.cit260.curiousworkmanship.control.BarrelControl;
-import citbyui.cit260.curiousworkmanship.control.Constants;
-import citbyui.cit260.curiousworkmanship.control.GameControl;
-import citbyui.cit260.curiousworkmanship.control.MapControl;
-import citbyui.cit260.curiousworkmanship.exceptions.BarrelControlException;
-import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
+import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
-import citbyui.cit260.curiousworkmanship.model.ActorOld;
-import citbyui.cit260.curiousworkmanship.model.Barrel;
-import citbyui.cit260.curiousworkmanship.model.InventoryItem;
-import curiousworkmanship.CuriousWorkmanship;
 import java.awt.Point;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,9 +18,9 @@ public class DesignBarrelsView extends View {
    
     public DesignBarrelsView() {
         super("\n"
-            + "\n---------------------------------------------"
-            + "\n| Select actor to move                       |"
-            + "\n---------------------------------------------"
+            + "\n---------------------------------------------------------------"
+            + "\n| Select inventory item that you need to build the barrels for|"
+            + "\n---------------------------------------------------------------"
             + "\nG - Grain"
             + "\nL - Legumes"
             + "\nO - Oil"
@@ -39,35 +28,35 @@ public class DesignBarrelsView extends View {
             + "\nH - Honey"
             + "\nS - Salt"
             + "\nQ - Quit to main main menu"
-            + "\n---------------------------------------------");
+            + "\n---------------------------------------------------------------");
     }
 
 
     @Override
     public boolean doAction(String choice) {
-        int inventoryType; 
+        Item item; 
         
         choice = choice.trim().toUpperCase(); // trim blanks and uppercase
         
         // check for valid actor
         switch (choice) {
             case "G":
-                inventoryType = Constants.ITEM_GRAIN;
+                item = Item.grain;
                 break;
             case "L":
-                inventoryType = Constants.ITEM_LEGUME;
+                item = Item.legume;
                 break;   
             case "O":
-                inventoryType = Constants.ITEM_OIL;
+                item = Item.oil;
                 break;  
             case "W":
-                inventoryType = Constants.ITEM_WATER;
+                item = Item.water;
                 break; 
             case "H":
-                inventoryType = Constants.ITEM_HONEY;
+                item = Item.honey;
                 break; 
             case "S":
-                inventoryType = Constants.ITEM_SALT;
+                item = Item.salt;
                 break; 
             case "Q":
                 return true;
@@ -80,28 +69,35 @@ public class DesignBarrelsView extends View {
         boolean done = false;
         do {
             try {
-                // prompt for and get the row and column numbers
-                System.out.println("\nEnter the width and height of the barrel in inches (e.g., 9 18)");
-                Point dimensions = this.getDimensions(); // get the row and column
-                if (dimensions == null) // entered "Q" to quit
+                // prompt for and get the dimension of the barrel
+                System.out.println("\nEnter the diameter and heigth  of the barrel in inches (e.g., 12 18)");
+                Point coordinates = this.getCoordinates(); // get the dimensions
+                if (coordinates == null) // entered "Q" to quit
                     break;
                 
-                // move actor to specified location
-                InventoryItem inventoryItem = BarrelControl.designBarrel(inventoryType, dimensions.x, dimensions.y);
+                // get the number of barrels to be built
+                System.out.println("\nEnter the number of barrels to be built");
+                Double numberOfBarrels = this.getDoubleNumber();
+                if (numberOfBarrels == null)  // entered "Q" to quit
+                    break;
                 
-                System.out.println(  "\n A barrel "         
-                                   + dimensions.x + " x " + dimensions.y + " inches "
-                                   + " has been for " + "inventoryItem " + inventoryItem.getDescription());
+                // call control function to build barrels and add to inventory
+                
+                System.out.println("\n" + numberOfBarrels + " " + item 
+                                   + " barrels were successfully built and "
+                                   + "added to the warehouse inventory.");
                 done = true;
-            } catch (ViewException | BarrelControlException ex) {
+                
+            } catch (Exception ex) {
                     System.out.println(ex.getMessage());
-            }   
+                    return false;
+            }       
         } while (!done);
 
         return false;  
     }
     
-    public Point getDimensions() throws ViewException {
+    public Point getCoordinates() throws ViewException {
         
         String value = this.getInput();
         value = value.trim().toUpperCase();
@@ -124,6 +120,31 @@ public class DesignBarrelsView extends View {
         } catch (NumberFormatException nf) {
             throw new ViewException("The row or column number is not a  number.");
         }        
+    }
+    
+    public Double getDoubleNumber() throws ViewException {
+        Double number = null;
+        
+        while (number == null) {
+            String value = this.getInput();
+            value = value.trim().toUpperCase();
+            
+            if (value.equals("Q")) 
+                break;
+
+            try {
+                // parse and convert number from text to a double
+                number = Double.parseDouble(value);
+                
+            } catch (NumberFormatException nf) {
+                
+                System.out.println("\nYou must enter a valid number."
+                        + " Try again or enter Q to quit.");
+                
+            }        
+        }
+        
+        return number;
     }
     
 }

@@ -45,6 +45,7 @@ public class GameMenuView extends View {
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
      
+        
         switch (choice) {
             case 'V': // Travel to new location
                 this.displayMap(); 
@@ -122,18 +123,19 @@ public class GameMenuView extends View {
             for (int column = 0; column < noColumns; column++) {
                 System.out.print("|"); // print column divider
                 Location location = rowLocations[column];
-//                if (location.isVisited() || location == null) { // if location is visited 
-//                    Scene scene = location.getScene();
-//                    System.out.print(scene.getMapSymbol());
-//                }
-//                else {
-//                    System.out.print(" ?? ");
-//                }  
-                
-                Scene scene = location.getScene();
-                System.out.print(scene.getMapSymbol());
-                
+                if (location != null && location.isVisited()) { // if location is visited 
+                    
+                    Scene scene = location.getScene();
+                    if (scene != null)
+                        System.out.print(scene.getMapSymbol());
+                    else
+                        System.out.print("    ");
+                }
+                else {
+                    System.out.print(" ?? ");
+                }      
             }
+            
             System.out.print("|"); // print column divider
         }
         
@@ -155,8 +157,8 @@ public class GameMenuView extends View {
     }
 
     private void designBarrels() {
-        System.out.println("*** designBarrels stub function called ***");
-        
+        DesignBarrelsView designBarrelsView = new DesignBarrelsView();
+        designBarrelsView.display();
     }
 
     private void manufactureItems() {

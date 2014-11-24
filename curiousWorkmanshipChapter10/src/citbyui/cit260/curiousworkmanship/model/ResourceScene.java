@@ -6,8 +6,9 @@
 
 package citbyui.cit260.curiousworkmanship.model;
 
-import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
+import citbyui.cit260.curiousworkmanship.enums.Item;
+import citbyui.cit260.curiousworkmanship.enums.SceneGroup;
+import citbyui.cit260.curiousworkmanship.enums.SceneType;
 
 /**
  *
@@ -16,19 +17,16 @@ import javax.swing.ImageIcon;
 public class ResourceScene extends Scene {
     
     private double amountOfResource;
-    private int resourceType;
+    private Item resourceType;
 
     public ResourceScene() {
     }
 
-    public ResourceScene(int sceneType, String description, 
-                         String mapSymbol, 
-                         ImageIcon image, 
-                         double travelTime, 
-                         boolean blocked, 
-                         double amountOfResource,
-                         int resourceType) {
-        super(sceneType, description, mapSymbol, travelTime, blocked, image);
+    public ResourceScene(SceneGroup sceneGroup, String description, 
+                         String mapSymbol, double travelTime, 
+                         boolean blocked, double amountOfResource,
+                         Item resourceType) {
+        super(sceneGroup, description, mapSymbol, travelTime, blocked);
         this.amountOfResource = amountOfResource;
         this.resourceType = resourceType;
     }
@@ -43,11 +41,11 @@ public class ResourceScene extends Scene {
         this.amountOfResource = amountOfResource;
     }
 
-    public int getResourceType() {
+    public Item getResourceType() {
         return resourceType;
     }
 
-    public void setResourceType(int resourceType) {
+    public void setResourceType(Item resourceType) {
         this.resourceType = resourceType;
     }
 

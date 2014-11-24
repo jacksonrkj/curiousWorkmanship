@@ -6,7 +6,8 @@
 
 package citbyui.cit260.curiousworkmanship.model;
 
-import javax.swing.ImageIcon;
+import citbyui.cit260.curiousworkmanship.enums.SceneGroup;
+import citbyui.cit260.curiousworkmanship.enums.SceneType;
 
 /**
  *
@@ -18,14 +19,13 @@ public class ConstructionScene extends Scene {
     public ConstructionScene() {
     }
 
-    public ConstructionScene(int sceneType, 
+    public ConstructionScene(SceneGroup sceneGroup, 
                              String description, 
-                             String mapSymbol,
-                             ImageIcon image, 
+                             String mapSymbol, 
                              double travelTime, 
                              boolean blocked,
                              InventoryItem[] requiredItems) {
-        super(sceneType, description, mapSymbol, travelTime, blocked,image);
+        super(sceneGroup, description, mapSymbol, travelTime, blocked);
         this.requiredItems = requiredItems;
     }
 
