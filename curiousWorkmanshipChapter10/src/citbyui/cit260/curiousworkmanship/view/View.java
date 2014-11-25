@@ -32,7 +32,6 @@ public abstract class View implements ViewInterface {
     }
     
     
-    
     public void display() {
         String value;
         boolean done = false;
@@ -62,7 +61,7 @@ public abstract class View implements ViewInterface {
             selection = selection.trim();
 
             if (selection.length() < 1) { // blank value entered
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display(this.getClass().getName(), "*** You must enter a selection. Try again");
                 continue;
             }
             

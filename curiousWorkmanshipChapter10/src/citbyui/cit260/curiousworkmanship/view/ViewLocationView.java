@@ -48,7 +48,8 @@ public class ViewLocationView extends View {
     }
     
     public Point getCoordinates(String value) throws ViewException {
-       
+        Point coordinates = null;
+        
         value = value.trim().toUpperCase();
         if (value.equals("Q"))
             return null;
@@ -57,18 +58,20 @@ public class ViewLocationView extends View {
         String[] values = value.split(" ");
 
         if (values.length < 2) {
-            throw new ViewException("You must enter both a row and column number.");
+            ErrorView.display("ViewLocationView", "You must enter both a row and column number.");
         }
 
         // parse out row and column numbers
         try {
             int row = Integer.parseInt(values[0]);
             int column = Integer.parseInt(values[1]);
-            return new Point(row, column);
+            coordinates = new Point(row, column);
 
         } catch (NumberFormatException nf) {
-            throw new ViewException("The row or column number is not a  number.");
-        }        
+            ErrorView.display("ViewLocationView", "The row or column entered is not a number.");
+        }  
+        
+        return coordinates;
     }
 
     private void displayLocationInfo(Point coordinates, Location location) {

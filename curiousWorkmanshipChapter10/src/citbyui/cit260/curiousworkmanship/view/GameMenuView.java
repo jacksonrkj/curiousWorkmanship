@@ -95,7 +95,7 @@ public class GameMenuView extends View {
             case 'Q':
                 return true;
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display("GameMenuView", "*** Invalid selection *** Try again");
         }
         return false;
     }

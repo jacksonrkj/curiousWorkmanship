@@ -73,7 +73,8 @@ public class MoveActorView extends View {
             case "Q":
                 return true;
             default:
-                System.out.println("Invalid selection");
+                
+                ErrorView.display("MoveActorView", "Invalid selection");
                 return false;
         }
         
@@ -90,12 +91,12 @@ public class MoveActorView extends View {
                 // move actor to specified location
                 MapControl.moveActorToLocation(actor, coordinates);
                 
-                System.out.println("\n" + actor + 
+                System.out.println(actor + 
                                    " was successfully moved to location: " + 
                                    coordinates.x + ", " + coordinates.y);
                 done = true;
             } catch (ViewException | MapControlException ex) {
-                    System.out.println(ex.getMessage());
+                    ErrorView.display("MoveActorView", ex.getMessage());
             }       
         } while (!done);
 
@@ -103,6 +104,7 @@ public class MoveActorView extends View {
     }
     
     public Point getCoordinates() throws ViewException {
+        Point coordinates = null;
         
         String value = this.getInput();
         value = value.trim().toUpperCase();
@@ -113,18 +115,20 @@ public class MoveActorView extends View {
         String[] values = value.split(" ");
 
         if (values.length < 2) {
-            throw new ViewException("You must enter both a row and column number.");
+            ErrorView.display("MoveActorView", "You must enter both a row and column number.");
         }
 
         // parse out row and column numbers
         try {
             int row = Integer.parseInt(values[0]);
             int column = Integer.parseInt(values[1]);
-            return new Point(row, column);
+            coordinates =  new Point(row, column);
 
         } catch (NumberFormatException nf) {
-            throw new ViewException("The row or column number is not a  number.");
-        }        
+            ErrorView.display("MoveActorView", "The row or column number is not a  number.");
+        }     
+        
+        return coordinates;
     }
     
 }

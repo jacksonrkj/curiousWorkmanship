@@ -75,7 +75,7 @@ public class StartProgramView implements ViewInterface {
             
             // if the name is invalid (less than one character in length)) 
             if (playersName.length() < 1) {
-                System.out.println("Invalid name - the name must not be blank");
+                ErrorView.display("StartProgramView", "You must enter a players name.");
                 continue; // and repeat again
             }
             break; // out of the (exit) the repetition

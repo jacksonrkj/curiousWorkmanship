@@ -53,7 +53,7 @@ public class MainMenuView extends View {
             case 'Q': // Exit the program
                 return true;
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display("MainMenuView", "*** Invalid selection *** Try again");
                 break;
         }
 
@@ -93,7 +93,7 @@ public class MainMenuView extends View {
             // start a saved game
             GameControl.getSavedGame(filePath);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ErrorView.display("MainMenuView", ex.getMessage());
         } 
 
         // display the game menu
@@ -113,7 +113,7 @@ public class MainMenuView extends View {
             // save the game to the speciried file
             GameControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ErrorView.display("MainMenuView", ex.getMessage());
         } 
     }
 

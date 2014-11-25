@@ -160,7 +160,7 @@ public class HelpMenuView extends View {
                 return true;
 
             default:
-                System.out.println("\n*** Invalid selection *** Try again");
+                ErrorView.display("HelpMenuView", "*** Invalid selection *** Try again");
         }
         return false;
        

@@ -5,16 +5,26 @@
  */
 package citbyui.cit260.curiousworkmanship.view;
 
+import curiousworkmanship.CuriousWorkmanship;
+
 /**
  *
  * @author jacksonrkj
  */
 public class ErrorView  {
+    
 
-    public static void display(String errorMessage) {
-        System.out.println("\n--- ERROR ------------------------------------------------------------------");
-        System.out.println("\t" + errorMessage);
-        System.out.println("----------------------------------------------------------------------------\n\n");
+    public static void display(String className, String errorMessage) {
+        
+        System.out.println(
+                "----------------------------------------------------------------------------");
+        System.out.println("- ERROR - " + errorMessage);
+        System.out.println(
+                "----------------------------------------------------------------------------");
+        
+        // log error
+        CuriousWorkmanship.getLogFile().println("\n" + className + " - "
+                                                +  errorMessage); 
     }
     
 }
