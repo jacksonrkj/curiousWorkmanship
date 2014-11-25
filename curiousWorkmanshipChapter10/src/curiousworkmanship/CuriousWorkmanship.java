@@ -58,11 +58,6 @@ public class CuriousWorkmanship {
             finally {
                 CuriousWorkmanship.logFile.close();
             }
-            
-
-
-         
-        
         
     }
 

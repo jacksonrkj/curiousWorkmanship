@@ -113,7 +113,7 @@ public class DesignBarrelsView extends View {
 
             if (values.length < 2) {
                 ErrorView.display("DesignBarrelsView", 
-                      "You must enter the diameter and height of the barrel .");
+                      "You must enter both the diameter and height of the barrel .");
                 continue;
             }
 
@@ -131,7 +131,7 @@ public class DesignBarrelsView extends View {
 
             } catch (NumberFormatException nf) {
                 ErrorView.display("DesignBarrelsView", 
-                        "The diamter or height is not a  number.");
+                        "Either the diameter or height is not a  number.");
             } 
         
         } while(dimensions == null);

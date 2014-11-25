@@ -15,6 +15,7 @@ import java.util.Scanner;
 public abstract class View implements ViewInterface {
     
     private String message;
+    private final Scanner keyboard = new Scanner(System.in);
 
     public View() {
     }
@@ -49,7 +50,6 @@ public abstract class View implements ViewInterface {
     
     public String getInput() {
 
-        Scanner keyboard = new Scanner(System.in);
         boolean valid = false;
         String selection = null;
 
@@ -61,7 +61,7 @@ public abstract class View implements ViewInterface {
             selection = selection.trim();
 
             if (selection.length() < 1) { // blank value entered
-                ErrorView.display(this.getClass().getName(), "*** You must enter a selection. Try again");
+                ErrorView.display(this.getClass().getName(), "You must enter a value.");
                 continue;
             }
             
