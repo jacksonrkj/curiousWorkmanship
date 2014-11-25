@@ -56,7 +56,6 @@ public class CuriousWorkmanship {
             }
             
             finally {
-                CuriousWorkmanship.console.close();
                 CuriousWorkmanship.logFile.close();
             }
             
