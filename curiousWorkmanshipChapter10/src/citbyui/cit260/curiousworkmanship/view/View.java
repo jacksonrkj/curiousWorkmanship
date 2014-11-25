@@ -15,7 +15,7 @@ import java.util.Scanner;
 public abstract class View implements ViewInterface {
     
     private String message;
-    private final Scanner keyboard = new Scanner(System.in);
+    protected final Scanner keyboard = new Scanner(System.in);
 
     public View() {
     }
