@@ -19,20 +19,20 @@ public class CuriousWorkmanship {
     private static Player player = null;  
     private static PrintStream logFile = null;
     private static PrintStream console = null;
-    private static PrintStream reportFile = null;
 
     public static void main(String[] args) { 
     
             try {
                 // open log file
-                String filePath = "/Users/jacksonrkj/Documents/temp/curiousWorkmanship/log.txt";
+                String filePath = "log.txt";
                 CuriousWorkmanship.logFile = new PrintStream(filePath);
                 CuriousWorkmanship.console = new PrintStream(System.out);
       
                 // create StartProgramView and start the program
                 StartProgramView startProgramView = new StartProgramView();
                 startProgramView.display();
-                return;            
+                return; 
+                
             } catch (Exception e) {
                 
                 // build stacktrace string.
@@ -101,18 +101,6 @@ public class CuriousWorkmanship {
     public static void setConsole(PrintStream console) {
         CuriousWorkmanship.console = console;
     }
-
-    public static PrintStream getReportFile() {
-        return reportFile;
-    }
-
-    public static void setReportFile(PrintStream reportFile) {
-        CuriousWorkmanship.reportFile = reportFile;
-    }
-
-
-    
-    
-    
+   
     
 }

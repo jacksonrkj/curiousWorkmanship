@@ -14,10 +14,8 @@ import citbyui.cit260.curiousworkmanship.model.Scene;
 import curiousworkmanship.CuriousWorkmanship;
 import java.awt.Point;
 import java.io.PrintStream;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 
 
 public class GameMenuView extends View {
@@ -308,7 +306,7 @@ public class GameMenuView extends View {
         if (filePath == null) {
             return;
         }
-         
+        
         // Create a new printwriter
         try (PrintStream reportFile = new PrintStream(filePath)) {
             
