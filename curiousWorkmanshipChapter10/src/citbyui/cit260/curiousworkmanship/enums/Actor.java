@@ -6,10 +6,7 @@
 
 package citbyui.cit260.curiousworkmanship.enums;
 
-import citbyui.cit260.curiousworkmanship.model.Location;
-import java.awt.Point;
 import java.io.Serializable;
-import javax.swing.ImageIcon;
 
 /**
  *
