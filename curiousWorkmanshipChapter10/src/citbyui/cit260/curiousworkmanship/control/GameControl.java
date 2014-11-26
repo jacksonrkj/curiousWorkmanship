@@ -187,118 +187,6 @@ public class GameControl {
    
         return inventory;
     }
-
-    public static void startSavedGame() {
-        System.out.println("*** startSavedGame() called ***");
-    }
-    
-
-
-    
-    /*
-    public static InventoryItem[] createInventoryList() {
-            
-        // created array(list) of inventory items    
-        InventoryItem[] inventory = 
-            new InventoryItem[14];
-        
-        InventoryItem lumber = new InventoryItem();
-        lumber.setDescription("Lumber");
-        lumber.setQuantityInStock(0);
-        lumber.setRequiredAmount(0);
-        inventory[0] = lumber;
-        
-        InventoryItem ore = new InventoryItem();
-        ore.setDescription("Ore");
-        ore.setQuantityInStock(0);
-        ore.setRequiredAmount(0);
-        inventory[1] = ore;
-        
-        InventoryItem grain = new InventoryItem();
-        grain.setDescription("Grain");
-        grain.setQuantityInStock(0);
-        grain.setRequiredAmount(0);
-        inventory[2] = grain;
-        
-        InventoryItem legumes = new InventoryItem();
-        legumes.setDescription("Legumes");
-        legumes.setQuantityInStock(0);
-        legumes.setRequiredAmount(0);
-        inventory[3] = legumes;
-        
-        InventoryItem oil = new InventoryItem();
-        oil.setDescription("Olive Oil");
-        oil.setQuantityInStock(0);
-        oil.setRequiredAmount(0);
-        inventory[4] = oil;
-        
-        InventoryItem water = new InventoryItem();
-        water.setDescription("Water");
-        water.setQuantityInStock(0);
-        water.setRequiredAmount(0);
-        inventory[5] = water;
-        
-        InventoryItem honey = new InventoryItem();
-        honey.setDescription("Honey");
-        honey.setQuantityInStock(0);
-        honey.setRequiredAmount(0);
-        inventory[6] = honey;
-        
-        InventoryItem salt = new InventoryItem();
-        salt.setDescription("Salt");
-        salt.setQuantityInStock(0);
-        salt.setRequiredAmount(0);
-        inventory[Constants.ITEM_SALT] = salt;
-        
-        InventoryItem axe = new InventoryItem();
-        axe.setDescription("Axe");
-        axe.setQuantityInStock(0);
-        axe.setRequiredAmount(2);
-        inventory[7] = axe;
-
-        InventoryItem hammer = new InventoryItem();
-        hammer.setDescription("Hammer");
-        hammer.setQuantityInStock(0);
-        hammer.setRequiredAmount(3);
-        inventory[8] = hammer;
-        
-        InventoryItem drill = new InventoryItem();
-        drill.setDescription("Drill");
-        drill.setQuantityInStock(0);
-        drill.setRequiredAmount(1);
-        inventory[9] = drill;
-        
-        InventoryItem shovel = new InventoryItem();
-        shovel.setDescription("Shovel");
-        shovel.setQuantityInStock(0);
-        shovel.setRequiredAmount(1);
-        inventory[10] = shovel;
-        
-        InventoryItem sickle = new InventoryItem();
-        sickle.setDescription("Sickle");
-        sickle.setQuantityInStock(0);
-        sickle.setRequiredAmount(2);
-        inventory[11] = sickle;
-        
-        
-        InventoryItem saw = new InventoryItem();
-        saw.setDescription("Saw");
-        saw.setQuantityInStock(0);
-        saw.setRequiredAmount(2);
-        inventory[12] = saw;
-        
-        
-        InventoryItem nails = new InventoryItem();
-        nails.setDescription("Sickle");
-        nails.setQuantityInStock(0);
-        nails.setRequiredAmount(50);
-        inventory[13] = nails;
-   
-        return inventory;
-    }
-    
-    */
-    
     
   
     public Actor[]  getSortActorList(Actor[] actors) {
@@ -353,16 +241,14 @@ public class GameControl {
     
     
     public static void moveActorToLocation(Actor actor, int row, int column) 
-                            throws MapControlException {
+                            throws GameControlException, MapControlException {
+        
         Map map = CuriousWorkmanship.getCurrentGame().getMap();
-        try {
-            if (row < 1  || row > map.getNoOfRows() ||
-                column < 1  || row > map.getNoOfColumns()) {
-
-                throw new CuriousWorkmanshipException("Row or column is outsides the bounds of the map");
-            }
-        } catch (CuriousWorkmanshipException ex) {
-            System.out.println(ex.getMessage());
+        
+        if (row < 1  || row > map.getNoOfRows() ||
+            column < 1  || row > map.getNoOfColumns()) {
+            throw new GameControlException (
+                            "Row or column is outsides the bounds of the map");
         }
         
         MapControl.moveActorToLocation(actor, new Point(row, column));

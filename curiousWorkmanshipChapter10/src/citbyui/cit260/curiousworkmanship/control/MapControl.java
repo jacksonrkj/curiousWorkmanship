@@ -584,10 +584,7 @@ public class MapControl {
         cliffCoordinates.add(new Point(15,19));
         for (Point point : cliffCoordinates) {
             locations[point.x][point.y].setScene(scenes[Constants.CLIFF]);   
-        }
-        
-        
-        
+        }   
         
     }
     
@@ -599,12 +596,7 @@ public class MapControl {
         Actor[] actors = Actor.values();
 
         for (Actor actor : actors) {
-            
-        // ...
-            
-        MapControl.moveActorToLocation(actor, actor.getCoordinates());
-        
-        
+            MapControl.moveActorToLocation(actor, actor.getCoordinates());
         }
         
     }
