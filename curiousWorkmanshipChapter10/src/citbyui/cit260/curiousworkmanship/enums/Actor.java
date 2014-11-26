@@ -31,19 +31,13 @@ public enum Actor implements Serializable {
     Zoram("Laban servant that became a faithful follower of Nephi");
     
     private final String description;
-    private final Point coordinates;
     
     Actor(String description) {
         this.description = description;
-        coordinates = new Point(1,1);
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public Point getCoordinates() {
-        return coordinates;
-    }
+    }   
     
 }

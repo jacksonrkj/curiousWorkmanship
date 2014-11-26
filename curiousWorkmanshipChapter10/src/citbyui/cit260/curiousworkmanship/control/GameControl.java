@@ -57,10 +57,9 @@ public class GameControl {
        game.setMap(map); // save map in game
 
        // move actors to starting position in the map
+       Actor[] actors = Actor.values();
        
-       // ...
-       
-       MapControl.moveActorsToStartingLocation(map);    
+       MapControl.moveActorsToStartingLocation(map, actors);    
     }
  
     
@@ -251,7 +250,7 @@ public class GameControl {
                             "Row or column is outsides the bounds of the map");
         }
         
-        MapControl.moveActorToLocation(actor, new Point(row, column));
+        MapControl.moveActorToLocation(actor, row, column);
         
     }
     

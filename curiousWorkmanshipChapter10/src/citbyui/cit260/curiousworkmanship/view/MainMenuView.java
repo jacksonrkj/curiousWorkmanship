@@ -67,13 +67,9 @@ public class MainMenuView extends View {
             // create a new game
             GameControl.createNewGame(CuriousWorkmanship.getPlayer());    
         } catch (MapControlException mce) {
-            System.out.println(mce.getMessage());
+            ErrorView.display("MainMenuView", mce.getMessage());
             return;
-        } catch (Throwable te) {
-            System.out.println(te.getMessage());
-            te.printStackTrace();
-            return;
-        }
+        } 
 
         // display the game menu
         GameMenuView gameMenu = new GameMenuView();

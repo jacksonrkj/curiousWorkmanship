@@ -75,9 +75,20 @@ public class ViewLocationView extends View {
     }
 
     private void displayLocationInfo(Point coordinates, Location location) {
+        if (coordinates == null || location == null) {
+            ErrorView.display("ViewLocationView", 
+                    "diplayLocationInfo - coordinates and/or location is null");
+            return;
+        }
+        
+        if (location.getScene() == null) {
+            System.out.println("\nThis location is empty");
+            return;
+        }
+        
         System.out.println("\n"
                 + "Location (" + coordinates.x + ", " + coordinates.y + ")"
-                + location.getScene().getDescription());
+                + "\n" + location.getScene().getDescription());
         System.out.println("\n\tActors in location");
         ArrayList<Actor> actorsInLocation = location.getActors();
         for (Actor actor : actorsInLocation) {

@@ -8,6 +8,7 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.enums.Actor;
+import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.InventoryItem;
 import citbyui.cit260.curiousworkmanship.model.Location;
 import citbyui.cit260.curiousworkmanship.model.Scene;
@@ -199,7 +200,7 @@ public class GameMenuView extends View {
         this.viewActors(CuriousWorkmanship.getConsole());
     }
     private void viewActors(PrintStream out) {
-  
+        Game game = CuriousWorkmanship.getCurrentGame();
         out.println("\n    LIST OF ACTORS");
         StringBuilder line = new StringBuilder("                                                          ");
         line.insert(0, "NAME"); 
@@ -208,7 +209,7 @@ public class GameMenuView extends View {
         
         Actor[] actors = Actor.values();
         for (Actor actor : actors) {
-            Point coordinates = actor.getCoordinates();
+            Point coordinates = game.getActorLocations()[actor.ordinal()];
             line = new StringBuilder("                                                          ");
             line.insert(0, actor.name());
             int row = coordinates.x+1;

@@ -6,12 +6,12 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
-import citbyui.cit260.curiousworkmanship.control.Constants;
-import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.control.MapControl;
 import citbyui.cit260.curiousworkmanship.enums.Actor;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
+import citbyui.cit260.curiousworkmanship.model.Game;
+import curiousworkmanship.CuriousWorkmanship;
 import java.awt.Point;
 
 /**
@@ -41,6 +41,7 @@ public class MoveActorView extends View {
     @Override
     public boolean doAction(String choice) {
         Actor actor; 
+        Game game = CuriousWorkmanship.getCurrentGame();
         
         choice = choice.trim().toUpperCase(); // trim blanks and uppercase
         
@@ -50,13 +51,13 @@ public class MoveActorView extends View {
                 actor = Actor.Lehi;
                 break;
             case "S":
-                actor = Actor.Sariah;;
+                actor = Actor.Sariah;
                 break;   
             case "A":
                 actor = Actor.Laman;
                 break;  
             case "E":
-                actor = Actor.Lemuel;;
+                actor = Actor.Lemuel;
                 break; 
             case "N":
                 actor = Actor.Nephi;
@@ -89,7 +90,7 @@ public class MoveActorView extends View {
                     break;
                 
                 // move actor to specified location
-                MapControl.moveActorToLocation(actor, coordinates);
+                MapControl.moveActorToLocation(actor, coordinates.x, coordinates.y);
                 
                 System.out.println(actor + 
                                    " was successfully moved to location: " + 

@@ -6,6 +6,8 @@
 
 package citbyui.cit260.curiousworkmanship.model;
 
+import citbyui.cit260.curiousworkmanship.enums.Actor;
+import java.awt.Point;
 import java.io.Serializable;
 
 /**
@@ -22,8 +24,7 @@ public class Game implements Serializable {
     private Wagon wagon;
     private Ship ship;
     private Map map;
-   
-    
+    private Point[] actorLocations = new Point[Actor.values().length];
 
     public Game() {
         this.totalTime = 0;
@@ -77,7 +78,18 @@ public class Game implements Serializable {
     public void setMap(Map map) {
         this.map = map;
     }
+
+    public Point[] getActorLocations() {
+        return actorLocations;
+    }
+
+    public void setActorLocations(Point[] actorLocations) {
+        this.actorLocations = actorLocations;
+    }
+
     
+
+
     
     @Override
     public String toString() {

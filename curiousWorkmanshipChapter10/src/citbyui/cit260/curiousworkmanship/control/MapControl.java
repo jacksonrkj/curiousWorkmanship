@@ -23,6 +23,7 @@ import citbyui.cit260.curiousworkmanship.model.Scene;
 import citbyui.cit260.curiousworkmanship.model.WarehouseScene;
 import curiousworkmanship.CuriousWorkmanship;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,7 +34,7 @@ import java.util.HashMap;
 public class MapControl {
    
 
-    public static Map createMap() {
+    public static Map createMap() throws MapControlException {
         // create the map
         Map map = new Map(20, 20);
         
@@ -47,13 +48,36 @@ public class MapControl {
     }
     
     
-    
-    private static Scene[] createScenes() {
-        
+    private static Scene[] createScenes() throws MapControlException {
+        BufferedImage image = null;
+
         Game game = CuriousWorkmanship.getCurrentGame();
-        
+
         Scene[] scenes = new Scene[SceneType.values().length];
-          
+
+        Scene startingScene = new Scene();
+        startingScene.setDescription(
+                  "\nAnd we did come to the land which was called Bountiful, "
+                + "because of its much fruit and also wild honey; and all  "
+                + "these things were prepared of the Lord that we might not "
+                + "perish. And we beheld the sea, which we called Irreantum, "
+                + "which, being interpreted, is many waters");
+        startingScene.setMapSymbol(" ST ");
+        startingScene.setBlocked(false);
+        startingScene.setTravelTime(240);
+        scenes[SceneType.start.ordinal()] = startingScene;
+
+
+        Scene finishScene = new Scene();
+        finishScene.setDescription(
+                  "\nCongratulations! Well done thou good and faithful servant. "
+                + "You have just launced your ship of  curious workmanship and "
+                + "\nbegun your journey to the promised land.");
+        finishScene.setMapSymbol(" FN ");
+        finishScene.setBlocked(false);
+        finishScene.setTravelTime(Double.POSITIVE_INFINITY);
+        scenes[SceneType.finish.ordinal()] = finishScene;
+
         Scene cliffScene = new Scene();
         cliffScene.setDescription(
                   "\nThis is a tall cliff. You can not climb over the cliff. "
@@ -62,7 +86,7 @@ public class MapControl {
         cliffScene.setBlocked(true);
         cliffScene.setTravelTime(Double.POSITIVE_INFINITY);
         scenes[SceneType.cliff.ordinal()] = cliffScene;
-        
+
         Scene oceanScene = new Scene();
         oceanScene.setDescription(
                   "\nAll you see is the deep blue ocean. You can not enter "
@@ -71,7 +95,8 @@ public class MapControl {
         oceanScene.setBlocked(true);
         oceanScene.setTravelTime(Double.POSITIVE_INFINITY);
         scenes[SceneType.ocean.ordinal()] = oceanScene;
-        
+
+
         Scene riverScene = new Scene();
         riverScene.setDescription(
                   "\nYou have come to a river. It is too deep to cross here.");
@@ -79,7 +104,7 @@ public class MapControl {
         riverScene.setBlocked(true);
         riverScene.setTravelTime(Double.POSITIVE_INFINITY);
         scenes[SceneType.river.ordinal()] = riverScene;
-        
+
         Scene sandyDesert = new Scene();
         sandyDesert.setBlocked(false);
         sandyDesert.setDescription(
@@ -88,7 +113,7 @@ public class MapControl {
         sandyDesert.setMapSymbol("::::");
         sandyDesert.setTravelTime(20);
         scenes[SceneType.desert.ordinal()] = sandyDesert;
-               
+
         Scene savana = new Scene();
         savana.setBlocked(false);
         savana.setDescription(
@@ -96,15 +121,15 @@ public class MapControl {
         savana.setMapSymbol(",,,,");
         savana.setTravelTime(15);
         scenes[SceneType.savana.ordinal()] = savana;
-        
+
         Scene mountain = new Scene();
         mountain.setBlocked(false);
         mountain.setDescription(
-                  "\nYou are walking through the mountain. The going can be slow here");
+                  "\nYou are walking through the mountains. The going can be slow here");
         mountain.setMapSymbol("^^^^");
         mountain.setTravelTime(30);
         scenes[SceneType.mountain.ordinal()] = mountain;
-        
+
         Scene riverCrossing = new Scene();
         riverCrossing.setBlocked(false);
         riverCrossing.setDescription(
@@ -113,8 +138,8 @@ public class MapControl {
         riverCrossing.setMapSymbol("=}{=");
         riverCrossing.setTravelTime(20);
         scenes[SceneType.riverCrossing.ordinal()] = riverCrossing;
+    //
 
-        
         Scene beach = new Scene();
         beach.setBlocked(false);
         beach.setDescription(
@@ -122,7 +147,7 @@ public class MapControl {
         beach.setMapSymbol("....");
         beach.setTravelTime(20);
         scenes[SceneType.beach.ordinal()] = beach;
-        
+
         Scene swamp = new Scene();
         swamp.setBlocked(false);
         swamp.setDescription(
@@ -131,8 +156,19 @@ public class MapControl {
         swamp.setMapSymbol("####");
         swamp.setTravelTime(60);
         scenes[SceneType.swamp.ordinal()] = swamp;
+
+        ResourceScene lumber = new ResourceScene();
+        lumber.setDescription(
+                  "\nYou have entered a forest of hardwood. This is a great "
+                + "source of lumber to build things with.");
+        lumber.setMapSymbol("tttt");
+        lumber.setBlocked(false);
+        lumber.setTravelTime(20);
+        lumber.setAmountOfResource(100);
+        lumber.setResourceType(Item.lumber);
+        scenes[SceneType.lumber.ordinal()] = lumber;
         
-                
+        
         ResourceScene iron = new ResourceScene();
                 iron.setBlocked(false);
         iron.setDescription(
@@ -144,7 +180,7 @@ public class MapControl {
         iron.setAmountOfResource(100);
         iron.setResourceType(Item.ore);
         scenes[SceneType.iron.ordinal()] = iron;
-        
+
         ResourceScene wheat= new ResourceScene();
                 wheat.setBlocked(false);
         wheat.setDescription(
@@ -154,9 +190,19 @@ public class MapControl {
         wheat.setAmountOfResource(2000);
         wheat.setResourceType(Item.grain);
         scenes[SceneType.wheat.ordinal()] = wheat;
-        
-        
-        
+
+        ResourceScene water= new ResourceScene();
+        water.setBlocked(false);
+        water.setDescription(
+                    "\nThis is a well of clean wather. You will need this for "
+                    + "for your trip.");
+        wheat.setMapSymbol(" WA ");
+        water.setTravelTime(20);
+        water.setAmountOfResource(2000);
+        water.setResourceType(Item.water);
+        scenes[SceneType.water.ordinal()] = water;
+
+
         ResourceScene rye = new ResourceScene();
                 rye.setBlocked(false);
         rye.setDescription(
@@ -166,8 +212,8 @@ public class MapControl {
         rye.setAmountOfResource(900);
         rye.setResourceType(Item.grain);
         scenes[SceneType.rye.ordinal()] = rye;
-        
-        
+
+
         ResourceScene rice = new ResourceScene();
                 rice.setBlocked(false);
         rice.setDescription(
@@ -177,17 +223,17 @@ public class MapControl {
         rice.setAmountOfResource(1200);
         rice.setResourceType(Item.grain);
         scenes[SceneType.rice.ordinal()] = rice;
-          
-        ResourceScene oliveOrchard = new ResourceScene();
-        oliveOrchard.setBlocked(false);
-        oliveOrchard.setDescription(
+
+        ResourceScene oliveOil = new ResourceScene();
+        oliveOil.setBlocked(false);
+        oliveOil.setDescription(
                   "\nThese olive trees should be a great source for our oil");
-        oliveOrchard.setMapSymbol(" OO ");
-        oliveOrchard.setTravelTime(20);
-        oliveOrchard.setAmountOfResource(30);
-        oliveOrchard.setResourceType(Item.oil);
-        scenes[SceneType.oliveOrchard.ordinal()] = oliveOrchard;        
-        
+        oliveOil.setMapSymbol(" OO ");
+        oliveOil.setTravelTime(20);
+        oliveOil.setAmountOfResource(30);
+        oliveOil.setResourceType(Item.oil);
+        scenes[SceneType.oliveOrchard.ordinal()] = oliveOil;        
+
         ResourceScene lentils = new ResourceScene();
                 lentils.setBlocked(false);
         lentils.setDescription(
@@ -197,8 +243,8 @@ public class MapControl {
         lentils.setAmountOfResource(600);
         lentils.setResourceType(Item.legume);
         scenes[SceneType.lentil.ordinal()] = lentils;
-        
-        
+
+
         ResourceScene chickpeas = new ResourceScene();
                 chickpeas.setBlocked(false);
         chickpeas.setDescription(
@@ -208,7 +254,7 @@ public class MapControl {
         chickpeas.setAmountOfResource(1000);
         chickpeas.setResourceType(Item.legume);
         scenes[SceneType.chickpeas.ordinal()] = chickpeas;
-        
+
         ResourceScene fababeans = new ResourceScene();
                 fababeans.setBlocked(false);
         fababeans.setDescription(
@@ -218,8 +264,8 @@ public class MapControl {
         fababeans.setAmountOfResource(900);
         fababeans.setResourceType(Item.legume);
         scenes[SceneType.fababeans.ordinal()] = fababeans;
-        
-        
+
+
         ResourceScene honey = new ResourceScene();
                 honey.setBlocked(false);
         honey.setDescription(
@@ -228,9 +274,8 @@ public class MapControl {
         honey.setTravelTime(15);
         honey.setAmountOfResource(30);
         honey.setResourceType(Item.honey);
-        honey.setResourceType(Item.honey);
         scenes[SceneType.honey.ordinal()] = honey;
-        
+
         ResourceScene salt = new ResourceScene();
                 salt.setBlocked(false);
         salt.setDescription(
@@ -240,10 +285,10 @@ public class MapControl {
         salt.setAmountOfResource(60);
         salt.setResourceType(Item.salt);
         scenes[SceneType.salt.ordinal()] = salt;
+    //
 
-        
         InventoryItem[] inventory = game.getInventory();
-        
+
         ConstructionScene blacksmith = new ConstructionScene();
         blacksmith.setBlocked(false);
         blacksmith.setDescription(
@@ -256,8 +301,8 @@ public class MapControl {
         requiredItems[1] = inventory[Item.ore.ordinal()];
         blacksmith.setRequiredItems(requiredItems);
         scenes[SceneType.blacksmith.ordinal()] = blacksmith;
+    //
 
-                
         ConstructionScene bridge = new ConstructionScene();
         bridge.setBlocked(false);
         bridge.setDescription(
@@ -273,7 +318,7 @@ public class MapControl {
         requiredItems[4] = inventory[Item.nails.ordinal()];
         bridge.setRequiredItems(requiredItems);
         scenes[SceneType.bridge.ordinal()] = bridge;
-        
+
         WarehouseScene toolshed = new WarehouseScene();
         toolshed.setBlocked(false);
         toolshed.setDescription("All of the tools are stored in here");
@@ -289,7 +334,7 @@ public class MapControl {
         itemsStored[6] = inventory[Item.nails.ordinal()];
         toolshed.setItemsStored(itemsStored);
         scenes[SceneType.toolShed.ordinal()] = toolshed;
-        
+
         WarehouseScene warehouse = new WarehouseScene();
         warehouse.setBlocked(false);
         warehouse.setDescription("This warehouse contains all of your food storage items");
@@ -304,7 +349,7 @@ public class MapControl {
         itemsStored[5] = inventory[Item.salt.ordinal()];
         warehouse.setItemsStored(itemsStored);
         scenes[SceneType.warehouse.ordinal()] = warehouse;
-        
+
         WarehouseScene lumberyard = new WarehouseScene();
         lumberyard.setBlocked(false);
         lumberyard.setDescription("All of the lumber is stored here");
@@ -314,37 +359,104 @@ public class MapControl {
         itemsStored[0] = inventory[Item.lumber.ordinal()];
         lumberyard.setItemsStored(itemsStored);
         scenes[SceneType.lumberYard.ordinal()] = lumberyard;
-        
-        
-        
+
+
+
         Question[] questions = new Question[2];
         questions[0] = new Question(
-                        "Where can I find honey?", 
-                        "Go east near the sea shore and seach near the cliffs");
+                        "Lord, what should we do here in this land of Bountiful?", 
+                        "Thou shalt construct a ship after the manner which I "
+                        + "shall show thee, that I may carry thy people "
+                        + "across these waters. And I will prepare the way "
+                        + "before you, if it so be that ye shall keep "
+                        + "my commandments ye shall be led towards the promised land; "
+                        + "and ye shall know that it is by me that ye are led. light "
+                        + "in the wilderness; and I will ");
         questions[1] = new Question(
-                        "Whre can I go to find ore to build tools with?", 
+                        "Lord, whither shall I go that I may find ore to molten, "
+                        + "that I amy make tools to construct the ship?", 
                         "Go to the cliffs on the east side of this mountain range. ");
         KnowledgeScene highMountain = new KnowledgeScene(
                                       SceneGroup.knowledge,
-                                      "You are in the tops of the mountains. "
-                                      + "This is a greate place to receive revelation.",
+                                      "You have come to the tops of the mountains. "
+                                      + "This is the place where Nephi was instruced "
+                                      + "to go to receive further instructions "
+                                      + "from the Lord.",
                                       " HM ",
-                                      180,
+                                      720,
                                       false,
                                       questions);
         scenes[SceneType.highMountain.ordinal()] = highMountain;
-        
+
+        Scene instructionScene = new Scene();
+        instructionScene.setDescription(
+                    "The voice of the Lord comes unto Nephi,"
+                    + "\nArise, and get thee into the montain.");
+        instructionScene.setMapSymbol(" IN ");
+        instructionScene.setBlocked(false);
+        instructionScene.setTravelTime(480);
+        scenes[SceneType.instructions.ordinal()] = instructionScene;
+
+
+        Scene rebellionScene = new Scene();
+        rebellionScene.setDescription(
+                  "\nLaman and Lemuel have refused to help you build a ship. "
+                + "\nNephi chastizes and rebukes them.");
+        rebellionScene.setMapSymbol(" RB ");
+        rebellionScene.setBlocked(false);
+        rebellionScene.setTravelTime(10000);
+        scenes[SceneType.rebellion.ordinal()] = rebellionScene;
+
+
+        Scene boatyardScene = new Scene();
+        boatyardScene.setDescription(
+                  "\nThis is the boatyard where you work on building the ship. ");
+        boatyardScene.setMapSymbol(" BY ");
+        boatyardScene.setBlocked(false);
+        boatyardScene.setTravelTime(600);
+        scenes[SceneType.boatyard.ordinal()] = boatyardScene;
+
+
+        Scene blacksmithScene = new Scene();
+        blacksmithScene.setDescription(
+                  "\nThis is the blacksmith where you work on building the ship. ");
+        blacksmithScene.setMapSymbol(" BY ");
+        blacksmithScene.setBlocked(false);
+        blacksmithScene.setTravelTime(600);
+        scenes[SceneType.blacksmith.ordinal()] = blacksmithScene;
+
+
+        Scene campScene = new Scene();
+        campScene.setDescription(
+                  "\nThis is the camp where you work on building the ship. ");
+        campScene.setMapSymbol(" BY ");
+        campScene.setBlocked(false);
+        campScene.setTravelTime(600);
+        scenes[SceneType.camp.ordinal()] = campScene;
+
+
         return scenes;
-        
-        
+
+
     }
-    
+
     private static void assignScenesToLocations(Map map, Scene[] scenes) {
         Location[][] locations = map.getLocations();
-        Point coordinate;
+
+        // start point
+        locations[0][0].setScene(scenes[SceneType.desert.ordinal()]);
+        locations[0][1].setScene(scenes[SceneType.desert.ordinal()]);
+        locations[0][2].setScene(scenes[SceneType.start.ordinal()]);
+        locations[0][3].setScene(scenes[SceneType.beach.ordinal()]);
+      
+        locations[9][9].setScene(scenes[SceneType.ocean.ordinal()]);
+
         
-        HashMap<String, ArrayList<Point>> sceneLocations =  new HashMap<String, ArrayList<Point>>();
         
+        HashMap<String, ArrayList<Point>> sceneLocations =  
+                new HashMap<String, ArrayList<Point>>();
+ 
+
         // create list of scenes to be assigned to locations
         ArrayList<Point> lumberCoordinates = new ArrayList<Point>();
         lumberCoordinates.add(new Point(1,8));
@@ -363,8 +475,8 @@ public class MapControl {
         lumberCoordinates.add(new Point(11,14));
         lumberCoordinates.add(new Point(12,5));
         sceneLocations.put("LUMBER", lumberCoordinates);
-        
-        
+
+
         ArrayList<Point> oceanCoordinates = new ArrayList<Point>();
         for (int row = 0; row < 20; row++) {
             oceanCoordinates.add(new Point(row,0));
@@ -390,8 +502,8 @@ public class MapControl {
         for (Point point : oceanCoordinates) {
             locations[point.x][point.y].setScene(scenes[Constants.OCEAN]);   
         }
-        
-        
+
+
         ArrayList<Point> desertCoordinates = new ArrayList<Point>();
         for (int col = 3; col < 11; col++) {
             desertCoordinates.add(new Point(0,col));
@@ -429,7 +541,7 @@ public class MapControl {
         for (Point point : desertCoordinates) {
             locations[point.x][point.y].setScene(scenes[Constants.DESERT]);   
         }
-        
+
         ArrayList<Point> mountainCoordinates = new ArrayList<Point>();
         mountainCoordinates.add(new Point(1,3));
         mountainCoordinates.add(new Point(1,4));
@@ -439,32 +551,63 @@ public class MapControl {
         mountainCoordinates.add(new Point(3,4));
         mountainCoordinates.add(new Point(3,5));
         mountainCoordinates.add(new Point(3,6));
-        mountainCoordinates.add(new Point(3,4));
-        mountainCoordinates.add(new Point(3,5));
+        mountainCoordinates.add(new Point(4,4));
+        mountainCoordinates.add(new Point(4,5));
+        mountainCoordinates.add(new Point(4,6));
         mountainCoordinates.add(new Point(5,3));
-        mountainCoordinates.add(new Point(5,6));
+        mountainCoordinates.add(new Point(5,5));
+        mountainCoordinates.add(new Point(6,3));
+        mountainCoordinates.add(new Point(6,4));
+        mountainCoordinates.add(new Point(6,5));     
+        mountainCoordinates.add(new Point(7,3));
+        mountainCoordinates.add(new Point(7,5));
         mountainCoordinates.add(new Point(8,3));
-        mountainCoordinates.add(new Point(8,4));
-        mountainCoordinates.add(new Point(8,5));
+        mountainCoordinates.add(new Point(8,4));;
         mountainCoordinates.add(new Point(9,4));
         mountainCoordinates.add(new Point(10,4));
         mountainCoordinates.add(new Point(11,4));
+        mountainCoordinates.add(new Point(12,3));
         mountainCoordinates.add(new Point(12,4));
         mountainCoordinates.add(new Point(13,4));
+
+        mountainCoordinates.add(new Point(3,15));
+        mountainCoordinates.add(new Point(4,16));
+        mountainCoordinates.add(new Point(5,14));
+        mountainCoordinates.add(new Point(5,15));
+        mountainCoordinates.add(new Point(5,17));
+        mountainCoordinates.add(new Point(6,14));
+        mountainCoordinates.add(new Point(6,15));
+        mountainCoordinates.add(new Point(6,16));
+        mountainCoordinates.add(new Point(7,14));
+        mountainCoordinates.add(new Point(7,16));
+        mountainCoordinates.add(new Point(7,17));
+        mountainCoordinates.add(new Point(7,18));
+        for (int i = 13; i < 20; i++) {
+            mountainCoordinates.add(new Point(8,i));
+        }
+        mountainCoordinates.add(new Point(9,15));
+        mountainCoordinates.add(new Point(9,18));
+        mountainCoordinates.add(new Point(9,19));
+        mountainCoordinates.add(new Point(10,14));
+        mountainCoordinates.add(new Point(10,15));
+        mountainCoordinates.add(new Point(10,17));
+        mountainCoordinates.add(new Point(10,18));
+        mountainCoordinates.add(new Point(11,15));
+        mountainCoordinates.add(new Point(11,16));
+        mountainCoordinates.add(new Point(12,17));
+    // 
         for (Point point : mountainCoordinates) {
             locations[point.x][point.y].setScene(scenes[Constants.MOUNTAIN]);   
         }
-        
-        
+
         ArrayList<Point> beachCoordinates = new ArrayList<Point>();
-      
+
         for (int row = 4; row < 17; row++) {
             beachCoordinates.add(new Point(row,1));
         }
         beachCoordinates.add(new Point(15,1));
         beachCoordinates.add(new Point(16,1));
         beachCoordinates.add(new Point(17,2));
-        beachCoordinates.add(new Point(17,3));
         beachCoordinates.add(new Point(18,2));
         beachCoordinates.add(new Point(18,3));
         beachCoordinates.add(new Point(18,4));
@@ -483,9 +626,12 @@ public class MapControl {
         for (Point point : beachCoordinates) {
             locations[point.x][point.y].setScene(scenes[Constants.BEACH]);   
         }
-        
-        
+
+
         ArrayList<Point> savanaCoordinates = new ArrayList<Point>();
+        savanaCoordinates.add(new Point(2,2));
+        savanaCoordinates.add(new Point(3,2));
+        savanaCoordinates.add(new Point(4,2));
         for (int row = 9; row < 16; row++) {
             savanaCoordinates.add(new Point(row,2));
         }
@@ -507,7 +653,6 @@ public class MapControl {
         for (int row = 3; row < 11; row++) {
             savanaCoordinates.add(new Point(row,8));
         }
-        savanaCoordinates.add(new Point(4,9));
         savanaCoordinates.add(new Point(9,9));
         savanaCoordinates.add(new Point(9,11));
         for (int row = 4; row < 16; row++) {
@@ -516,16 +661,22 @@ public class MapControl {
         for (int row = 9; row < 16; row++) {
             savanaCoordinates.add(new Point(row,13));
         }
-        
+
         for (int col = 14; col < 19; col++) {
             savanaCoordinates.add(new Point(13,col));
         }
         savanaCoordinates.add(new Point(14,19));
+        savanaCoordinates.add(new Point(12,8));
+        savanaCoordinates.add(new Point(13,8));
+        savanaCoordinates.add(new Point(17,3));
+        savanaCoordinates.add(new Point(11,3));
+        savanaCoordinates.add(new Point(13,3));
+        savanaCoordinates.add(new Point(16,2));
         for (Point point : savanaCoordinates) {
             locations[point.x][point.y].setScene(scenes[Constants.SAVANA]);   
         }
-        
-        
+
+
         ArrayList<Point> riverCoordinates = new ArrayList<Point>();
         for (int row = 15; row < 19; row++) {
             riverCoordinates.add(new Point(row,8));
@@ -546,11 +697,12 @@ public class MapControl {
         }
         riverCoordinates.add(new Point(0,12));
         riverCoordinates.add(new Point(1,12));
-        for (Point point : oceanCoordinates) {
-            locations[point.x][point.y].setScene(scenes[Constants.SAVANA]);   
+        riverCoordinates.add(new Point(18,11));
+        for (Point point : riverCoordinates) {
+            locations[point.x][point.y].setScene(scenes[Constants.RIVER]);   
         }
-        
-        
+
+
         ArrayList<Point> cliffCoordinates = new ArrayList<Point>();
         for (int row = 5; row < 9; row++) {
             cliffCoordinates.add(new Point(row,2));
@@ -564,6 +716,7 @@ public class MapControl {
         cliffCoordinates.add(new Point(2,5));
         cliffCoordinates.add(new Point(8,5));
         cliffCoordinates.add(new Point(10,5));
+        cliffCoordinates.add(new Point(11,5));
         cliffCoordinates.add(new Point(1,5));
         cliffCoordinates.add(new Point(5,6));
         cliffCoordinates.add(new Point(6,6));
@@ -582,21 +735,106 @@ public class MapControl {
         cliffCoordinates.add(new Point(14,18));
         cliffCoordinates.add(new Point(15,18));
         cliffCoordinates.add(new Point(15,19));
+        cliffCoordinates.add(new Point(17,4));
+        cliffCoordinates.add(new Point(17,5));
         for (Point point : cliffCoordinates) {
             locations[point.x][point.y].setScene(scenes[Constants.CLIFF]);   
-        }   
-        
+        }
+
+        ArrayList<Point> swampCoordinates = new ArrayList<Point>();
+        for (int row = 15; row < 19; row++) {
+            swampCoordinates.add(new Point(row,7));
+        }
+        swampCoordinates.add(new Point(17,6));
+        swampCoordinates.add(new Point(14,8));
+        swampCoordinates.add(new Point(14,8));
+        swampCoordinates.add(new Point(8,9));
+        swampCoordinates.add(new Point(10,9));
+        for (int row = 14; row < 18; row++) {
+            swampCoordinates.add(new Point(row,11));
+        }
+        for (int row = 16; row < 19; row++) {
+            swampCoordinates.add(new Point(row,12));
+        }
+        for (Point point : swampCoordinates) {
+            locations[point.x][point.y].setScene(scenes[Constants.SWAMP]);   
+        }
+
+
+        // water
+        locations[11][8].setScene(scenes[SceneType.water.ordinal()]);
+        locations[9][14].setScene(scenes[SceneType.water.ordinal()]);
+        locations[9][5].setScene(scenes[SceneType.iron.ordinal()]);
+        locations[8][6].setScene(scenes[SceneType.iron.ordinal()]);
+        locations[7][15].setScene(scenes[SceneType.iron.ordinal()]);
+        locations[5][4].setScene(scenes[SceneType.honey.ordinal()]);
+        locations[14][7].setScene(scenes[SceneType.honey.ordinal()]);
+        locations[2][12].setScene(scenes[SceneType.honey.ordinal()]);
+        locations[6][13].setScene(scenes[SceneType.honey.ordinal()]);
+        locations[11][17].setScene(scenes[SceneType.honey.ordinal()]);
+        locations[15][16].setScene(scenes[SceneType.honey.ordinal()]);
+        locations[6][7].setScene(scenes[SceneType.rye.ordinal()]);
+        locations[7][7].setScene(scenes[SceneType.rye.ordinal()]);
+        locations[8][11].setScene(scenes[SceneType.chickpeas.ordinal()]);
+        locations[6][11].setScene(scenes[SceneType.wheat.ordinal()]);
+        locations[10][11].setScene(scenes[SceneType.wheat.ordinal()]);
+        locations[11][11].setScene(scenes[SceneType.wheat.ordinal()]);
+        locations[12][11].setScene(scenes[SceneType.rice.ordinal()]);
+        locations[13][11].setScene(scenes[SceneType.rice.ordinal()]);
+        locations[4][15].setScene(scenes[SceneType.oliveOrchard.ordinal()]);
+        locations[5][16].setScene(scenes[SceneType.oliveOrchard.ordinal()]);
+        locations[6][17].setScene(scenes[SceneType.oliveOrchard.ordinal()]);
+        locations[7][15].setScene(scenes[SceneType.oliveOrchard.ordinal()]);
+        locations[12][14].setScene(scenes[SceneType.oliveOrchard.ordinal()]);
+        locations[12][15].setScene(scenes[SceneType.oliveOrchard.ordinal()]);
+        locations[12][16].setScene(scenes[SceneType.oliveOrchard.ordinal()]);
+        locations[12][6].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[1][8].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[1][9].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[2][8].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[2][9].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[2][13].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[3][12].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[3][13].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[3][14].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[4][13].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[4][14].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[5][13].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[9][16].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[9][17].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[10][16].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[11][6].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[12][5].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[11][14].setScene(scenes[SceneType.lumber.ordinal()]);
+        locations[3][9].setScene(scenes[SceneType.chickpeas.ordinal()]);
+        locations[7][11].setScene(scenes[SceneType.chickpeas.ordinal()]);
+        locations[4][9].setScene(scenes[SceneType.lentil.ordinal()]);
+        locations[5][9].setScene(scenes[SceneType.lentil.ordinal()]);
+        locations[7][11].setScene(scenes[SceneType.chickpeas.ordinal()]);
+        locations[7][13].setScene(scenes[SceneType.fababeans.ordinal()]);
+        locations[9][10].setScene(scenes[SceneType.riverCrossing.ordinal()]);
+        locations[10][6].setScene(scenes[SceneType.salt.ordinal()]);
+        locations[18][3].setScene(scenes[SceneType.boatyard.ordinal()]);
+        locations[19][3].setScene(scenes[SceneType.finish.ordinal()]);
+        locations[1][2].setScene(scenes[SceneType.instructions.ordinal()]);
+        locations[7][4].setScene(scenes[SceneType.highMountain.ordinal()]);
+        locations[13][5].setScene(scenes[SceneType.rebellion.ordinal()]);
+        locations[16][4].setScene(scenes[SceneType.toolShed.ordinal()]);
+        locations[16][5].setScene(scenes[SceneType.blacksmith.ordinal()]);
+        locations[16][6].setScene(scenes[SceneType.warehouse.ordinal()]);
+        locations[14][5].setScene(scenes[SceneType.camp.ordinal()]);
+
     }
+
     
 
  
-    public static void moveActorsToStartingLocation(Map map) 
+    public static void moveActorsToStartingLocation(Map map, Actor[] actors) 
                             throws MapControlException {
-        // for every actor
-        Actor[] actors = Actor.values();
-
+        Game game = CuriousWorkmanship.getCurrentGame();
         for (Actor actor : actors) {
-            MapControl.moveActorToLocation(actor, actor.getCoordinates());
+            game.getActorLocations()[actor.ordinal()] = new Point();
+            MapControl.moveActorToLocation(actor, 1, 3);
         }
         
     }
@@ -604,12 +842,14 @@ public class MapControl {
     
         
     
-    public static void moveActorToLocation(Actor actor, Point coordinates) 
+    public static void moveActorToLocation(Actor actor, int newRow, int newColumn) 
                             throws MapControlException {
-        
+        Game game = CuriousWorkmanship.getCurrentGame();    
         Map map = CuriousWorkmanship.getCurrentGame().getMap();
-        int newRow = coordinates.x-1;
-        int newColumn = coordinates.y-1;
+        Point actorCoordinates = game.getActorLocations()[actor.ordinal()];
+        
+        newRow--;
+        newColumn--;
         
         if (newRow < 0  || newRow >= map.getNoOfRows() ||
             newColumn < 0  || newColumn >= map.getNoOfColumns()) {
@@ -618,7 +858,6 @@ public class MapControl {
         }
         
         Location newLocation = map.getLocations()[newRow][newColumn];
-        Point actorCoordinates = actor.getCoordinates();
         Location oldLocation = map.getLocations()[actorCoordinates.x][actorCoordinates.y];
         
         // check to see if the actor is in the current location

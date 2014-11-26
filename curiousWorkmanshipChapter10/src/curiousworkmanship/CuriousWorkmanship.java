@@ -49,7 +49,7 @@ public class CuriousWorkmanship {
                     + "\nMessage: " + e.getMessage()
                     + "\nRestarting the program."              
                     + "\nIf this error persist, contact support."
-                    + e.getStackTrace()[0].toString()
+                    + "\n\n" + e.getStackTrace()[0].toString()
                     ); 
                 
                 // create StartProgramView and start the program
