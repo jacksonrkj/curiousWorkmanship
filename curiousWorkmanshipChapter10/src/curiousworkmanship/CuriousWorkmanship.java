@@ -10,23 +10,25 @@ import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
 import citbyui.cit260.curiousworkmanship.view.ErrorView;
 import citbyui.cit260.curiousworkmanship.view.StartProgramView;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 
 
 public class CuriousWorkmanship {
     
     private static Game currentGame = null;
     private static Player player = null;  
-    private static PrintWriter logFile = null;
-    private static PrintWriter console = null;
+    private static PrintStream logFile = null;
+    private static PrintStream console = null;
+    private static PrintStream reportFile = null;
 
     public static void main(String[] args) { 
     
             try {
                 // open log file
                 String filePath = "/Users/jacksonrkj/Documents/temp/curiousWorkmanship/log.txt";
-                CuriousWorkmanship.setLogFile(new PrintWriter(filePath));
-                
+                CuriousWorkmanship.logFile = new PrintStream(filePath);
+                CuriousWorkmanship.console = new PrintStream(System.out);
+      
                 // create StartProgramView and start the program
                 StartProgramView startProgramView = new StartProgramView();
                 startProgramView.display();
@@ -47,7 +49,8 @@ public class CuriousWorkmanship {
                     + "\nMessage: " + e.getMessage()
                     + "\nRestarting the program."              
                     + "\nIf this error persist, contact support."
-                    + "\n\n\n"); 
+                    + e.getStackTrace()[0].toString()
+                    ); 
                 
                 // create StartProgramView and start the program
                 StartProgramView startProgramView = new StartProgramView();
@@ -57,6 +60,7 @@ public class CuriousWorkmanship {
             
             finally {
                 CuriousWorkmanship.logFile.close();
+                CuriousWorkmanship.console.close();
             }
         
     }
@@ -82,21 +86,30 @@ public class CuriousWorkmanship {
         CuriousWorkmanship.player = player;
     }
 
-    public static PrintWriter getLogFile() {
+    public static PrintStream getLogFile() {
         return logFile;
     }
 
-    public static void setLogFile(PrintWriter logFile) {
+    public static void setLogFile(PrintStream logFile) {
         CuriousWorkmanship.logFile = logFile;
     }
 
-    public static PrintWriter getConsole() {
+    public static PrintStream getConsole() {
         return console;
     }
 
-    public static void setConsole(PrintWriter console) {
+    public static void setConsole(PrintStream console) {
         CuriousWorkmanship.console = console;
     }
+
+    public static PrintStream getReportFile() {
+        return reportFile;
+    }
+
+    public static void setReportFile(PrintStream reportFile) {
+        CuriousWorkmanship.reportFile = reportFile;
+    }
+
 
     
     
