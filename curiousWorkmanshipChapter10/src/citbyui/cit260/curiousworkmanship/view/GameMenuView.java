@@ -211,7 +211,9 @@ public class GameMenuView extends View {
             Point coordinates = actor.getCoordinates();
             line = new StringBuilder("                                                          ");
             line.insert(0, actor.name());
-            line.insert(17, coordinates.x + ", " + coordinates.y);
+            int row = coordinates.x+1;
+            int column = coordinates.y+1;
+            line.insert(17,  + row + ", " + column);
             out.println(line.toString());
         }
         
