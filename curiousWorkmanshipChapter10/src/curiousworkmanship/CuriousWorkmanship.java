@@ -10,23 +10,27 @@ import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
 import citbyui.cit260.curiousworkmanship.view.ErrorView;
 import citbyui.cit260.curiousworkmanship.view.StartProgramView;
-import java.io.PrintStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 
 public class CuriousWorkmanship {
     
     private static Game currentGame = null;
     private static Player player = null;  
-    private static PrintStream logFile = null;
-    private static PrintStream console = null;
+    private static PrintWriter logFile = null;
+    private static PrintWriter outFile = null;
+    private static BufferedReader inFile = null;
 
     public static void main(String[] args) { 
     
             try {
                 // open log file
                 String filePath = "log.txt";
-                CuriousWorkmanship.logFile = new PrintStream(filePath);
-                CuriousWorkmanship.console = new PrintStream(System.out);
+                CuriousWorkmanship.logFile = new PrintWriter(filePath);
+                CuriousWorkmanship.outFile = new PrintWriter(System.out, true);
+                CuriousWorkmanship.inFile = new BufferedReader(new InputStreamReader(System.in));
       
                 // create StartProgramView and start the program
                 StartProgramView startProgramView = new StartProgramView();
@@ -60,15 +64,11 @@ public class CuriousWorkmanship {
             
             finally {
                 CuriousWorkmanship.logFile.close();
-                CuriousWorkmanship.console.close();
+                CuriousWorkmanship.outFile.close();
             }
         
     }
 
-    
-    
-    
-    
     
     public static Game getCurrentGame() {
         return currentGame;
@@ -86,21 +86,30 @@ public class CuriousWorkmanship {
         CuriousWorkmanship.player = player;
     }
 
-    public static PrintStream getLogFile() {
+    public static PrintWriter getLogFile() {
         return logFile;
     }
 
-    public static void setLogFile(PrintStream logFile) {
+    public static void setLogFile(PrintWriter logFile) {
         CuriousWorkmanship.logFile = logFile;
     }
 
-    public static PrintStream getConsole() {
-        return console;
+    public static PrintWriter getOutFile() {
+        return outFile;
     }
 
-    public static void setConsole(PrintStream console) {
-        CuriousWorkmanship.console = console;
+    public static void setOutFile(PrintWriter outFile) {
+        CuriousWorkmanship.outFile = outFile;
     }
-   
+
+    public static BufferedReader getInFile() {
+        return inFile;
+    }
+
+    public static void setInFile(BufferedReader inFile) {
+        CuriousWorkmanship.inFile = inFile;
+    }
+
+    
     
 }

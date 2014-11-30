@@ -263,8 +263,8 @@ public class GameControl {
 
         try( FileOutputStream fops = new FileOutputStream(filepath)) {
             ObjectOutputStream output = new ObjectOutputStream(fops);
-            // write the game object out to the disk
-            output.writeObject(game);
+            
+            output.writeObject(game); // write the game object out to file
         }
         catch(IOException e) {
             throw new GameControlException(e.getMessage());
@@ -276,13 +276,15 @@ public class GameControl {
 
         try( FileInputStream fips = new FileInputStream(filepath)) {
             ObjectInputStream output = new ObjectInputStream(fips);
-            // write the game object out to the disk
-            game = (Game) output.readObject();
+            
+            game = (Game) output.readObject(); // read the game object from file
+        }
+        catch(FileNotFoundException fnfe) {
+            throw new GameControlException(fnfe.getMessage());
         }
         catch(Exception e) {
             throw new GameControlException(e.getMessage());
-        }  
-       // read the game object out to the disk
+        }
 
        // close the outuput file
        CuriousWorkmanship.setCurrentGame(game); // save in CuriousWorkmanship

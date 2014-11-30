@@ -14,7 +14,7 @@ import citbyui.cit260.curiousworkmanship.model.Location;
 import citbyui.cit260.curiousworkmanship.model.Scene;
 import curiousworkmanship.CuriousWorkmanship;
 import java.awt.Point;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -116,10 +116,10 @@ public class GameMenuView extends View {
     }
     
     public void displayMap() { 
-       this.viewMap(curiousworkmanship.CuriousWorkmanship.getConsole()); 
+       this.viewMap(CuriousWorkmanship.getOutFile()); 
     }
     
-    public void viewMap(PrintStream out) {
+    public void viewMap(PrintWriter out) {
         int lineLength = 0;
         
         // get the map for the game
@@ -197,9 +197,9 @@ public class GameMenuView extends View {
     }
     
     private void displayActors() {
-        this.viewActors(CuriousWorkmanship.getConsole());
+        this.viewActors(CuriousWorkmanship.getOutFile());
     }
-    private void viewActors(PrintStream out) {
+    private void viewActors(PrintWriter out) {
         Game game = CuriousWorkmanship.getCurrentGame();
         out.println("\n    LIST OF ACTORS");
         StringBuilder line = new StringBuilder("                                                          ");
@@ -231,9 +231,9 @@ public class GameMenuView extends View {
     }
 
     private void displayInventory() {
-        this.viewInventory(CuriousWorkmanship.getConsole());
+        this.viewInventory(CuriousWorkmanship.getOutFile());
     }
-    private void viewInventory(PrintStream out) {
+    private void viewInventory(PrintWriter out) {
         // get the sorted list of inventory items for the current game
         InventoryItem[] inventory = GameControl.getSortedInventoryList();
         
@@ -265,7 +265,7 @@ public class GameMenuView extends View {
     }
 
 
-    private void printColumnHeaders(PrintStream out, int noOfColumns) {
+    private void printColumnHeaders(PrintWriter out, int noOfColumns) {
         for (int i = 1; i < noOfColumns+1; i++) {
             if (i < 10) {
                 out.print("   " + i + " ");
@@ -276,7 +276,7 @@ public class GameMenuView extends View {
         }
     }
 
-    private void printRowDivider(PrintStream out, int noColumns) {
+    private void printRowDivider(PrintWriter out, int noColumns) {
         out.println();
         out.print("  ");
         for (int i = 0; i < noColumns; i++) { // print row divider
@@ -285,7 +285,7 @@ public class GameMenuView extends View {
         out.print("-");
     }
 
-    private void printTitle(PrintStream out, int noOfColumns, String title) {
+    private void printTitle(PrintWriter out, int noOfColumns, String title) {
         
         int titleLength = title.length();
         int lineLength = noOfColumns * 5 + 3;
@@ -311,7 +311,7 @@ public class GameMenuView extends View {
         }
         
         // Create a new printwriter
-        try (PrintStream reportFile = new PrintStream(filePath)) {
+        try (PrintWriter reportFile = new PrintWriter(filePath)) {
             
             
             LocalDateTime currentTime = LocalDateTime.now();
@@ -328,7 +328,7 @@ public class GameMenuView extends View {
             reportFile.println();
             this.viewActors(reportFile); 
             
-            CuriousWorkmanship.getConsole().println(
+            CuriousWorkmanship.getOutFile().println(
                     "\n*** Report printed to file: " + filePath + " ***");
             
         } catch (Exception ex) {

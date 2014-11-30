@@ -6,7 +6,9 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
-import java.util.Scanner;
+import curiousworkmanship.CuriousWorkmanship;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 /**
  *
@@ -15,7 +17,8 @@ import java.util.Scanner;
 public abstract class View implements ViewInterface {
     
     private String message;
-    protected final Scanner keyboard = new Scanner(System.in);
+    protected final BufferedReader keyboard = CuriousWorkmanship.getInFile();
+    protected final PrintWriter console = CuriousWorkmanship.getOutFile();
 
     public View() {
     }
@@ -38,7 +41,7 @@ public abstract class View implements ViewInterface {
         boolean done = false;
         
         do { 
-            System.out.println(this.message); // display the prompt message
+            console.println(this.message); // display the prompt message
             value = this.getInput(); // get the user's selection
             done = this.doAction(value); // do action based on selection        
         } while (!done);
@@ -48,24 +51,29 @@ public abstract class View implements ViewInterface {
     }
     
     
+    @Override
     public String getInput() {
 
         boolean valid = false;
         String selection = null;
+        try {
+            // while a valid name has not been retrieved
+            while (!valid) {
 
-        // while a valid name has not been retrieved
-        while (!valid) {
+                // get the value entered from the keyboard
+                selection = keyboard.readLine();
+                selection = selection.trim();
 
-            // get the value entered from the keyboard
-            selection = keyboard.nextLine();
-            selection = selection.trim();
+                if (selection.length() < 1) { // blank value entered
+                    ErrorView.display(this.getClass().getName(), "You must enter a value.");
+                    continue;
+                }
 
-            if (selection.length() < 1) { // blank value entered
-                ErrorView.display(this.getClass().getName(), "You must enter a value.");
-                continue;
+                break;
             }
-            
-            break;
+        } catch (Exception e) {
+            ErrorView.display(this.getClass().getName(), 
+                              "Error reading input: " + e.getMessage());
         }
 
         return selection; // return the name        
@@ -81,13 +89,10 @@ public abstract class View implements ViewInterface {
                 Runtime.getRuntime().exec("clear");
             }
         } catch (final Exception e) {
-            //  Handle any exceptions.
+            ErrorView.display(this.getClass().getName(), 
+                              "Error clearing the console: " + e.getMessage());
         }
-
     }
-    
-    
-
    
     
 }
