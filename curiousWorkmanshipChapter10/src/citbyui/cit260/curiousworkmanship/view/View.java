@@ -14,9 +14,12 @@ import java.io.PrintWriter;
  *
  * @author jacksonrkj
  */
+
+
 public abstract class View implements ViewInterface {
     
     private String message;
+    
     protected final BufferedReader keyboard = CuriousWorkmanship.getInFile();
     protected final PrintWriter console = CuriousWorkmanship.getOutFile();
 
@@ -41,12 +44,10 @@ public abstract class View implements ViewInterface {
         boolean done = false;
         
         do { 
-            console.println(this.message); // display the prompt message
+            this.console.println(this.message); // display the prompt message
             value = this.getInput(); // get the user's selection
             done = this.doAction(value); // do action based on selection        
         } while (!done);
-            
-        
 
     }
     
@@ -61,11 +62,12 @@ public abstract class View implements ViewInterface {
             while (!valid) {
 
                 // get the value entered from the keyboard
-                selection = keyboard.readLine();
+                selection = this.keyboard.readLine();
                 selection = selection.trim();
 
                 if (selection.length() < 1) { // blank value entered
-                    ErrorView.display(this.getClass().getName(), "You must enter a value.");
+                    ErrorView.display(this.getClass().getName(), 
+                                      "You must enter a value.");
                     continue;
                 }
 
@@ -74,6 +76,7 @@ public abstract class View implements ViewInterface {
         } catch (Exception e) {
             ErrorView.display(this.getClass().getName(), 
                               "Error reading input: " + e.getMessage());
+            return null;
         }
 
         return selection; // return the name        

@@ -32,6 +32,7 @@ public class MainMenuView extends View {
    
     
        
+    @Override
     public boolean doAction(String value) {
         
         value = value.toUpperCase(); // convert to all upper case
@@ -42,7 +43,7 @@ public class MainMenuView extends View {
                 this.startNewGame();
                 break;
             case 'G': // get and start an existing game
-                this.startExistingGame();
+                this.startSavedGame();
                 break;
             case 'H': // display the help menu
                 this.displayHelpMenu();
@@ -53,7 +54,8 @@ public class MainMenuView extends View {
             case 'Q': // Exit the program
                 return true;
             default:
-                ErrorView.display("MainMenuView", "*** Invalid selection *** Try again");
+                ErrorView.display("MainMenuView", 
+                                  "*** Invalid selection *** Try again");
                 break;
         }
 
@@ -76,7 +78,7 @@ public class MainMenuView extends View {
         gameMenu.display();
     }
 
-    private void startExistingGame() {
+    private void startSavedGame() {
         
         // prompt for and get the name of the file to save the game in
         System.out.println("\n\nEnter the file path for file where the game "

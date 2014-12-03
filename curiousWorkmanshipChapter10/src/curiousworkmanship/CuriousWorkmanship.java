@@ -8,7 +8,6 @@ package curiousworkmanship;
 
 import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
-import citbyui.cit260.curiousworkmanship.view.ErrorView;
 import citbyui.cit260.curiousworkmanship.view.StartProgramView;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,10 +19,12 @@ public class CuriousWorkmanship {
     
     private static Game currentGame = null;
     private static Player player = null;  
-    private static PrintWriter logFile = null;
+    
     private static PrintWriter outFile = null;
     private static BufferedReader inFile = null;
-
+    
+    private static PrintWriter logFile = null;
+    
     public static void main(String[] args) { 
 
         try {
@@ -45,44 +46,33 @@ public class CuriousWorkmanship {
             return; 
 
         } catch (Exception e) {
-
-            // build stacktrace string.
-            StringBuilder sb = new StringBuilder();
-            for (StackTraceElement element : e.getStackTrace()) {
-                sb.append("\t" + element.toString());
-                sb.append("\n");
-            }
-
-            ErrorView.display("CuriousWorkmanship",  
-                "An abnormal error occured. "
-                + "Exception: " + e.toString()  
-                + "\nCause: " + e.getCause()
-                + "\nMessage: " + e.getMessage()
-                + "\nRestarting the program."              
-                + "\nIf this error persist, contact support."
-                + "\n\n" + e.getStackTrace()[0].toString()
-                ); 
-
-            // create StartProgramView and start the program
-            StartProgramView startProgramView = new StartProgramView();
-            startProgramView.display();
+                System.out.println("Exception: " + e.toString() + 
+                                   "\nCause: " + e.getCause() + 
+                                   "\nMessage: " + e.getMessage());
 
         }
 
         finally {
-            
             try {
-                CuriousWorkmanship.inFile.close();
-                CuriousWorkmanship.outFile.close();
-                CuriousWorkmanship.logFile.close();
+                if (CuriousWorkmanship.inFile != null)
+                    CuriousWorkmanship.inFile.close();
                 
+                if (CuriousWorkmanship.outFile != null)
+                    CuriousWorkmanship.outFile.close();
+                
+                if (CuriousWorkmanship.logFile != null)
+                    CuriousWorkmanship.outFile.close();
             } catch (IOException ex) {
-                ErrorView.display("CuriousWorkmanship", "Error closing files");
-            }
-
+                System.out.println("Error closing files");
+                return;
+            }   
         }
-        
     }
+        
+//    private static PrintWriter logFile = null;
+  
+// 
+        
 
     
     public static Game getCurrentGame() {
@@ -101,14 +91,6 @@ public class CuriousWorkmanship {
         CuriousWorkmanship.player = player;
     }
 
-    public static PrintWriter getLogFile() {
-        return logFile;
-    }
-
-    public static void setLogFile(PrintWriter logFile) {
-        CuriousWorkmanship.logFile = logFile;
-    }
-
     public static PrintWriter getOutFile() {
         return outFile;
     }
@@ -125,6 +107,14 @@ public class CuriousWorkmanship {
         CuriousWorkmanship.inFile = inFile;
     }
 
-    
+
+
+    public static PrintWriter getLogFile() {
+        return logFile;
+    }
+
+    public static void setLogFile(PrintWriter logFile) {
+        CuriousWorkmanship.logFile = logFile;
+    }
     
 }

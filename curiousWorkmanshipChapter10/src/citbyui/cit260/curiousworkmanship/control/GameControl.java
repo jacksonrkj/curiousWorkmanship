@@ -259,7 +259,8 @@ public class GameControl {
     }
 
     
-    public static void saveGame(Game game, String filepath) throws FileNotFoundException, IOException, GameControlException {
+    public static void saveGame(Game game, String filepath) 
+            throws GameControlException {
 
         try( FileOutputStream fops = new FileOutputStream(filepath)) {
             ObjectOutputStream output = new ObjectOutputStream(fops);
@@ -271,7 +272,9 @@ public class GameControl {
         } 
     }
 
-    public static void getSavedGame(String filepath) throws ClassNotFoundException, GameControlException {
+    
+    public static void getSavedGame(String filepath) 
+                        throws GameControlException {
         Game game = null;
 
         try( FileInputStream fips = new FileInputStream(filepath)) {
