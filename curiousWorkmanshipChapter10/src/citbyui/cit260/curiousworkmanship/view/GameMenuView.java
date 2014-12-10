@@ -36,7 +36,7 @@ public class GameMenuView extends View {
             + "\nE - Estimate the resources needed for trip"
             + "\nB - Design barrels to hold resources"
             + "\nC - Construct tools and items needed"
-            + "\nH - Harvest resource at location"
+            + "\nR - Harvest resource at location"
             + "\nD - Deliver harvested resources to warehouse"
             + "\nW - Work on ship"
             + "\nK - Pack ship for journey"
@@ -209,7 +209,7 @@ public class GameMenuView extends View {
         
         Actor[] actors = Actor.values();
         for (Actor actor : actors) {
-            Point coordinates = game.getActorLocations()[actor.ordinal()];
+            Point coordinates = game.getActorsLocation()[actor.ordinal()];
             line = new StringBuilder("                                                          ");
             line.insert(0, actor.name());
             int row = coordinates.x+1;

@@ -7,6 +7,7 @@
 package citbyui.cit260.curiousworkmanship.control;
 
 import citbyui.cit260.curiousworkmanship.enums.Actor;
+import citbyui.cit260.curiousworkmanship.enums.Direction;
 import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.enums.SceneGroup;
 import citbyui.cit260.curiousworkmanship.enums.SceneType;
@@ -24,6 +25,7 @@ import citbyui.cit260.curiousworkmanship.model.WarehouseScene;
 import curiousworkmanship.CuriousWorkmanship;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -833,42 +835,98 @@ public class MapControl {
                             throws MapControlException {
         Game game = CuriousWorkmanship.getCurrentGame();
         for (Actor actor : actors) {
-            game.getActorLocations()[actor.ordinal()] = new Point();
-            MapControl.moveActorToLocation(actor, 1, 3);
+            Point position = new Point(0, 2);
+            game.getActorsLocation()[actor.ordinal()] = new Point();
+            MapControl.moveActorToLocation(game, actor, position);
         }
         
     }
     
     
-        
-    
-    public static void moveActorToLocation(Actor actor, int newRow, int newColumn) 
+     public static boolean moveActor(Actor actor, Direction direction, int distance) 
                             throws MapControlException {
+         
+        if (actor == null  || direction == null  || distance < 1) {
+            throw new InvalidParameterException("actor, direction or distance is invalid");
+        }
+        
         Game game = CuriousWorkmanship.getCurrentGame();    
         Map map = CuriousWorkmanship.getCurrentGame().getMap();
-        Point actorCoordinates = game.getActorLocations()[actor.ordinal()];
+        Point currentPosition = game.getActorsLocation()[actor.ordinal()];
+        Point newPosition = null;
         
-        newRow--;
-        newColumn--;
+        if (currentPosition == null) {
+            throw new MapControlException("Actor is currently is not assigned "
+                                          + "to a location");
+        }
         
+        int currentRow = currentPosition.x;
+        int currentColumn = currentPosition.y;
+
+        if (currentRow < 0  || currentRow >= map.getNoOfRows() ||
+            currentColumn < 0  || currentColumn >= map.getNoOfColumns()) {
+            throw new MapControlException("Actor is currently in an invalid "
+                                          + "location");
+        }
+        
+        // get new position
+        int newRow = currentPosition.x + (direction.getxIncrement() * distance);
+        int newColumn = currentPosition.y + (direction.getyIncrement() * distance);
+        
+                   
         if (newRow < 0  || newRow >= map.getNoOfRows() ||
             newColumn < 0  || newColumn >= map.getNoOfColumns()) {
-            throw new MapControlException("The row or column number is "
+            throw new MapControlException("Trying to move to a location "
                                           + "outside bounds of the map");
+        }  
+        // Check to see if the path is blocked
+        boolean blocked = false;
+        Location[][] locations = map.getLocations();
+        for (int row = currentRow+1; row <= newRow; row++) {
+            if (locations[row][currentColumn].getScene().isBlocked()){
+                newRow = row-1;
+                blocked = true;
+            }    
         }
         
-        Location newLocation = map.getLocations()[newRow][newColumn];
-        Location oldLocation = map.getLocations()[actorCoordinates.x][actorCoordinates.y];
-        
-        // check to see if the actor is in the current location
-        if (oldLocation != null) {
-            oldLocation.removeActor(actor); // remove actor from old location
+        for (int column = currentColumn+1; column <= newColumn; column++) {
+            if (locations[currentRow][column].getScene().isBlocked()){
+                newColumn = column-1;
+                blocked = true;
+            }     
         }
         
-        newLocation.addActor(actor); // add actor to new location
-        actorCoordinates.x = newRow;
-        actorCoordinates.y = newColumn; // set actor to new location
-        newLocation.setVisited(true); // mark as a visted locations
+        if (currentRow != newRow || currentColumn != newColumn) {
+            Location currentLocation = map.getLocations()[currentRow][currentColumn];
+            currentLocation.removeActor(actor); // remove actor from old location
+
+            // set actor to new location
+            newPosition = new Point(newRow, newColumn);
+            MapControl.moveActorToLocation(game, actor, newPosition);
+        }
+
+        
+        return blocked;
+    }    
+    
+    public static void moveActorToLocation(Game game, Actor actor, Point position) 
+            throws MapControlException {
+        Map map = game.getMap();
+        
+        Location location = game.getMap().getLocations()[position.x][position.y];
+            
+        if (position.x < 0  || position.x >= map.getNoOfRows() ||
+            position.y < 0  || position.y >= map.getNoOfColumns()) {
+            throw new MapControlException("Trying to move to a location "
+                                          + "outside bounds of the map");
+        }    
+        
+        location.addActor(actor); // add actor to new location
+
+        // set actor to new location
+        game.getActorsLocation()[actor.ordinal()].setLocation(position);
+        
+        location.setVisited(true); // mark as a visted locations// mark as a visted locations// mark as a visted locations// mark as a visted locations
     }
     
     

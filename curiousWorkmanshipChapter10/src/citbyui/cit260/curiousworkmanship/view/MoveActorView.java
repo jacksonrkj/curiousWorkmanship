@@ -8,6 +8,7 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.MapControl;
 import citbyui.cit260.curiousworkmanship.enums.Actor;
+import citbyui.cit260.curiousworkmanship.enums.Direction;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
 import citbyui.cit260.curiousworkmanship.model.Game;
@@ -82,19 +83,34 @@ public class MoveActorView extends View {
         
         boolean done = false;
         do {
+            System.out.println("\nYou can move up (U), down(D), left(L) or right (R)");
             try {
                 // prompt for and get the row and column numbers
-                System.out.println("\nEnter the row and column number of the location (e.g., 1 3)");
-                Point coordinates = this.getCoordinates(); // get the row and column
-                if (coordinates == null) // entered "Q" to quit
+                System.out.println("\nEnter the direction and distance to move (e.g. U 2) ");
+                Movement movement = this.getCoordinates(); // get the row and column
+                if (movement == null) // entered "Q" to quit
                     break;
                 
                 // move actor to specified location
-                MapControl.moveActorToLocation(actor, coordinates.x, coordinates.y);
+                boolean blocked = MapControl.moveActor(actor, 
+                                                       movement.direction, 
+                                                       movement.distance);
                 
-                System.out.println(actor + 
-                                   " was successfully moved to location: " + 
-                                   coordinates.x + ", " + coordinates.y);
+                Point coordinates = game.getActorsLocation()[actor.ordinal()];
+                int xPosition = coordinates.x + 1;
+                int yPosition = coordinates.y + 1;
+                if (blocked) {
+                    System.out.println("The path was blocked. " +  actor +
+                                       " was only able to move to position " + 
+                                       xPosition + ", " + yPosition);    
+                    
+                }
+                else {
+                    System.out.println(actor + 
+                                       " was successfully moved to position " + 
+                                       xPosition + ", " + yPosition);
+                }
+                
                 done = true;
             } catch (ViewException | MapControlException ex) {
                     ErrorView.display("MoveActorView", ex.getMessage());
@@ -104,32 +120,69 @@ public class MoveActorView extends View {
         return false;  
     }
     
-    public Point getCoordinates() throws ViewException {
-        Point coordinates = null;
+    public Movement getCoordinates() throws ViewException {
+        Movement movement = null;
         
         String value = this.getInput();
         value = value.trim().toUpperCase();
         if (value.equals("Q"))
             return null;
-
-        //tokenize values int string
+        
+                //tokenize values int string
         String[] values = value.split(" ");
-
+        
+        
         if (values.length < 2) {
-            ErrorView.display("MoveActorView", "You must enter both a row and column number.");
+            ErrorView.display(this.getClass().getName(),
+                              "You must enter both a direction and distance.");
+            return null;
+        }
+        
+        // get the direction
+        Direction direction;
+        switch (value.charAt(0)) {
+            case 'U' : direction = Direction.U;
+                break;
+            case 'D' : direction = Direction.D;
+                break;
+            case 'L' : direction = Direction.L;
+                break;
+            case 'R' : direction = Direction.R;
+                break;
+            default: 
+                ErrorView.display(this.getClass().getName(),
+                                 "The direction must be U, D, L or R");
+                return null;
         }
 
-        // parse out row and column numbers
+        // convert the distance to a number
         try {
-            int row = Integer.parseInt(values[0]);
-            int column = Integer.parseInt(values[1]);
-            coordinates =  new Point(row, column);
-
-        } catch (NumberFormatException nf) {
-            ErrorView.display("MoveActorView", "The row or column number is not a  number.");
+            int distance = Integer.parseInt(values[1]);
+            if (distance < 1) {
+                ErrorView.display(this.getClass().getName(),
+                                 "The distance must be greater than zero.");
+                return null;
+            }
+            
+            movement = new Movement(direction, distance);
+        }     
+        catch (NumberFormatException nf) {
+            ErrorView.display(this.getClass().getName(),
+                             "The distance is not a  number.");
         }     
         
-        return coordinates;
+        return movement;
+    }
+    
+    private class Movement {
+        
+        Direction direction;
+        int distance;
+        
+        public Movement(Direction direction, int distance) {
+            this.direction = direction;
+            this.distance = distance;
+        }
     }
     
 }

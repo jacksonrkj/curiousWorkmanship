@@ -238,22 +238,6 @@ public class GameControl {
     }
     
     
-    
-    public static void moveActorToLocation(Actor actor, int row, int column) 
-                            throws GameControlException, MapControlException {
-        
-        Map map = CuriousWorkmanship.getCurrentGame().getMap();
-        
-        if (row < 1  || row > map.getNoOfRows() ||
-            column < 1  || row > map.getNoOfColumns()) {
-            throw new GameControlException (
-                            "Row or column is outsides the bounds of the map");
-        }
-        
-        MapControl.moveActorToLocation(actor, row, column);
-        
-    }
-    
     public static InventoryItem[] getInventory() {
         return CuriousWorkmanship.getCurrentGame().getInventory();
     }

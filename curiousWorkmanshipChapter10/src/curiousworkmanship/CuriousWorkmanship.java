@@ -46,9 +46,27 @@ public class CuriousWorkmanship {
             return; 
 
         } catch (Exception e) {
+              // build stacktrace string.
+                StringBuilder sb = new StringBuilder();
+                for (StackTraceElement element : e.getStackTrace()) {
+                    sb.append("\t" + element.toString());
+                    sb.append("\n");
+                }
+
+                System.out.println("\n"
+                        + "\n*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+                        + "\nAn abnormal error occured. ");
+
                 System.out.println("Exception: " + e.toString() + 
                                    "\nCause: " + e.getCause() + 
                                    "\nMessage: " + e.getMessage());
+
+                System.out.println("\n" + e.toString() + "\n" + sb);
+
+                System.out.println("\nRestarting the program."              
+                        + "\nIf this error persist, contact support."
+                        + "\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+                        + "\n\n\n");
 
         }
 

@@ -24,7 +24,7 @@ public class Game implements Serializable {
     private Wagon wagon;
     private Ship ship;
     private Map map;
-    private Point[] actorLocations = new Point[Actor.values().length];
+    private Point[] actorsLocation = new Point[Actor.values().length];
 
     public Game() {
         this.totalTime = 0;
@@ -79,12 +79,12 @@ public class Game implements Serializable {
         this.map = map;
     }
 
-    public Point[] getActorLocations() {
-        return actorLocations;
+    public Point[] getActorsLocation() {
+        return actorsLocation;
     }
 
-    public void setActorLocations(Point[] actorLocations) {
-        this.actorLocations = actorLocations;
+    public void setActorsLocation(Point[] actorsLocation) {
+        this.actorsLocation = actorsLocation;
     }
 
     
