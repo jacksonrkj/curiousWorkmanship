@@ -26,7 +26,8 @@ public class ViewLocationView extends View {
 
 
     @Override
-    public boolean doAction(String choice) {
+    public boolean doAction(Object obj) {
+        String choice = (String) obj;
         try{
             Point coordinates = this.getCoordinates(choice); // get the row and column
             if (coordinates == null)
@@ -39,7 +40,7 @@ public class ViewLocationView extends View {
             this.displayLocationInfo(coordinates, location);
 
         } catch (ViewException ex) {
-                System.out.println(ex.getMessage());
+                this.console.println(ex.getMessage());
                 return false;
         }       
 
@@ -82,17 +83,17 @@ public class ViewLocationView extends View {
         }
         
         if (location.getScene() == null) {
-            System.out.println("\nThis location is empty");
+            this.console.println("\nThis location is empty");
             return;
         }
         
-        System.out.println("\n"
+        this.console.println("\n"
                 + "Location (" + coordinates.x + ", " + coordinates.y + ")"
                 + "\n" + location.getScene().getDescription());
-        System.out.println("\n\tActors in location");
+        this.console.println("\n\tActors in location");
         ArrayList<Actor> actorsInLocation = location.getActors();
         for (Actor actor : actorsInLocation) {
-            System.out.println("\t" + actor);        
+            this.console.println("\t" + actor);        
         }
         
     }

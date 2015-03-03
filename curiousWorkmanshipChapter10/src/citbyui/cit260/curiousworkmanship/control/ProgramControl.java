@@ -9,16 +9,14 @@ package citbyui.cit260.curiousworkmanship.control;
 import citbyui.cit260.curiousworkmanship.model.Player;
 import curiousworkmanship.CuriousWorkmanship;
 
-/**
- *
- * @author jacksonrkj
- */
+
 public class ProgramControl {
-      
-    private final static int INVENTORY_COUNT = 10;
-    
     
     public static Player createPlayer(String name) {
+        
+        if (name == null) {
+            return null;
+        }    
         
         Player player = new Player();
         player.setName(name);
@@ -27,7 +25,6 @@ public class ProgramControl {
         
         return player;
     }
-
-    
-    
+ 
 }
+

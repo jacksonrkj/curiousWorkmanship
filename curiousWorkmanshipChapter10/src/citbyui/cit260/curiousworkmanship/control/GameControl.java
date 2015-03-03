@@ -7,6 +7,7 @@
 package citbyui.cit260.curiousworkmanship.control;
 
 import citbyui.cit260.curiousworkmanship.enums.Actor;
+import citbyui.cit260.curiousworkmanship.enums.FoodItem;
 import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
@@ -25,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.security.InvalidParameterException;
 
 /**
  *
@@ -34,6 +36,19 @@ import java.io.ObjectOutputStream;
 
 
 public class GameControl {
+    
+    public enum Estimate_status {
+        OK,
+        TOO_LOW,
+        TOO_HIGH,
+        LOW_PROBABILITY,
+        HIGH_PROBABILITY;
+    }
+    
+    
+    public GameControl() {
+    }
+
 
     public static void createNewGame(Player player) 
             throws MapControlException {
@@ -277,4 +292,66 @@ public class GameControl {
        CuriousWorkmanship.setCurrentGame(game); // save in CuriousWorkmanship
     }
  
+    
+    public static double getLengthOfTrip(double speed) {
+        return Constants.TRIP_DISTANCE / 24 / speed;
+    }
+    
+    public static Estimate_status checkSpeedOfShip(double speed) throws GameControlException {
+        
+        if (speed >= Constants.DEV_ONE_LOW && speed <= Constants.DEV_ONE_HIGH) {
+            return Estimate_status.HIGH_PROBABILITY;
+        }
+        else if (speed >= Constants.DEV_TWO_LOW && speed <= Constants.DEV_TWO_HIGH) {
+            return Estimate_status.LOW_PROBABILITY;
+        }
+        else if (speed < Constants.DEV_TWO_LOW) {
+            return Estimate_status.TOO_LOW;
+        }
+        else {
+            return Estimate_status.TOO_HIGH;
+        }
+
+    }   
+    
+    public static boolean checkNoOfPeople(int noOfPeople) {
+        if (noOfPeople >= Constants.MIN_PERSONS_SAILING &&
+            noOfPeople <= Constants.MAX_PERSONS_SAILING) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public static Estimate_status  checkRequiredAmount(FoodItem item, 
+                                             double noOfDays, 
+                                             int noOfPeople, 
+                                             double estimatedAmount) 
+                                throws GameControlException { 
+        
+        if (item == null  ||  
+            noOfDays < 0  ||  
+            noOfPeople < Constants.MIN_PERSONS_SAILING ||
+            estimatedAmount < 0) {
+            throw new InvalidParameterException("calculateRequiredAMount");
+        }
+
+        double requiredAmount = item.getRecommendedAmountPerDay() * noOfDays * noOfPeople;
+        
+        if (estimatedAmount < requiredAmount * .90) {
+            return Estimate_status.TOO_LOW;            
+        } 
+        else if (estimatedAmount > requiredAmount * 1.10) {
+            return Estimate_status.TOO_HIGH;            
+        } 
+        else {
+            return Estimate_status.OK;
+        }
+
+    }
+    
+   
+    
+  
+    
 }

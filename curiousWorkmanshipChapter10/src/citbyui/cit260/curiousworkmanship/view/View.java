@@ -18,39 +18,49 @@ import java.io.PrintWriter;
 
 public abstract class View implements ViewInterface {
     
-    private String message;
+    private String promptMessage;
+    private boolean input = true;
     
     protected final BufferedReader keyboard = CuriousWorkmanship.getInFile();
     protected final PrintWriter console = CuriousWorkmanship.getOutFile();
 
     public View() {
+        this.input = true;
+    }
+    
+    public View(boolean input, String message) {
+        this.input = input;
+        this.promptMessage = message;
     }
 
-    public View(String menu) {
-        this.message = menu;
+    public View(String message) {
+        this.promptMessage = message;
+        this.input = true;
     }
 
-    public String getMessage() {
-        return message;
+    public String getPromptMessage() {
+        return promptMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setPromptMessage(String message) {
+        this.promptMessage = message;
     }
     
     
     public void display() {
-        String value;
+        String value = "";
         boolean done = false;
         
         do { 
-            this.console.println(this.message); // display the prompt message
-            value = this.getInput(); // get the user's selection
+            this.console.println(this.promptMessage); // display the prompt promptMessage
+            if (this.input) {
+                value = this.getInput(); // get the user's selection
+            }
             done = this.doAction(value); // do action based on selection        
         } while (!done);
 
     }
-    
+
     
     @Override
     public String getInput() {

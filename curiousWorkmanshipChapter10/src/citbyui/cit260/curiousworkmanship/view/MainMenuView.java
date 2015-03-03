@@ -33,7 +33,8 @@ public class MainMenuView extends View {
     
        
     @Override
-    public boolean doAction(String value) {
+    public boolean doAction(Object obj) {
+        String value = (String) obj;
         
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
@@ -81,7 +82,7 @@ public class MainMenuView extends View {
     private void startSavedGame() {
         
         // prompt for and get the name of the file to save the game in
-        System.out.println("\n\nEnter the file path for file where the game "
+        this.console.println("\n\nEnter the file path for file where the game "
                            + "is to be saved.");
         
         String filePath = this.getInput();
@@ -100,7 +101,7 @@ public class MainMenuView extends View {
 
     private void saveGame() {
         // prompt for and get the name of the file to save the game in
-        System.out.println("\n\nEnter the file path for file where the game "
+        this.console.println("\n\nEnter the file path for file where the game "
                            + "is to be saved.");
         String filePath = this.getInput();     
         

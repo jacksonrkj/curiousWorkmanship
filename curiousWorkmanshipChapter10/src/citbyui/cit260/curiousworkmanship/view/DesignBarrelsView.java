@@ -33,9 +33,11 @@ public class DesignBarrelsView extends View {
 
 
     @Override
-    public boolean doAction(String choice) {
+    public boolean doAction(Object obj) {
+
         Item item; 
         
+        String choice = (String) obj;
         choice = choice.trim().toUpperCase(); // trim blanks and uppercase
         
         // check for valid actor
@@ -84,7 +86,7 @@ public class DesignBarrelsView extends View {
 
             // call control function to build barrels and add to inventory
 
-            System.out.println("\n" + numberOfBarrels + " " + item 
+            this.console.println("\n" + numberOfBarrels + " " + item 
                                + " barrels were successfully built and "
                                + "added to the warehouse inventory.");
 
@@ -101,7 +103,7 @@ public class DesignBarrelsView extends View {
         
         do {  
             // prompt for and get the dimension of the barrel
-            System.out.println("\nEnter the diameter and heigth  of the barrel in inches (e.g., 12 18)");
+            this.console.println("\nEnter the diameter and heigth  of the barrel in inches (e.g., 12 18)");
             
             String value = this.getInput();
             value = value.trim().toUpperCase();
@@ -143,7 +145,7 @@ public class DesignBarrelsView extends View {
         Double number = null;
         
         while (number == null) {
-            System.out.println("\nEnter the number of barrels to be built");
+            this.console.println("\nEnter the number of barrels to be built");
             
             String value = this.getInput();
             value = value.trim().toUpperCase();

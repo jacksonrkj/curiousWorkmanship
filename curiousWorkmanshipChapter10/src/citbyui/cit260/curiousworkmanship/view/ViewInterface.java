@@ -10,10 +10,20 @@ package citbyui.cit260.curiousworkmanship.view;
  *
  * @author jacksonrkj
  */
+
+
+
+
 public interface ViewInterface {
     
     public void display();
     public String getInput();
-    public boolean doAction(String value);
+    public boolean doAction(Object obj);
+    
+}
+
+
+
+class abc {
     
 }

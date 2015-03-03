@@ -36,14 +36,15 @@ public class HelpMenuView extends View {
     }   
     
     
-    public boolean doAction(String value) {
+    public boolean doAction(Object obj) {
+        String value = (String) obj;
         
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
      
         switch (choice) {
             case 'G':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nThe goals of the game are to first determine what"
                     + "\nresources are needed for the trip. Then you must"
                     + "\nsearch for, locate and harvest the resources"
@@ -56,7 +57,7 @@ public class HelpMenuView extends View {
                     + "\nlaunch the ship to the promised land.");
                 break;
             case 'T':
-                 System.out.println("\n"
+                 this.console.println("\n"
                     + "\nMove a person to a new location in the game. Select"
                     + "\nthe Travel to new location option in the Game"
                     + "\nMenu. Select the person that will be moved"
@@ -70,7 +71,7 @@ public class HelpMenuView extends View {
 
                 break;
             case 'V':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nView the description of a location and who is"
                     + "\ncurrently at that location. You can not view a "
                     + "\nlocation until someone has visited the location at"
@@ -79,7 +80,7 @@ public class HelpMenuView extends View {
                     + "\nlocation you would like to view.");
                 break;
             case 'E':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nAs part of the planning phase of the game, you will"
                     + "\nneed to estimate the resources that will be needed"
                     + "\nto survive the voyage to the promised land. Select"
@@ -97,7 +98,7 @@ public class HelpMenuView extends View {
                     + "\nalready done so");
                 break;
             case 'B':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nDesign the barrels to hold the different types of "
                     + "\nresources to be loaded on the ship. Select the Design "
                     + "\nBarrels option on the Game menu. Select a resource "
@@ -105,7 +106,7 @@ public class HelpMenuView extends View {
                     + "\nthe resource being selected.");
                 break;
             case 'M':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nYou will need to manufacture items needed to build"
                     + "\nthe ship and store the items that you will take on"
                     + "\nyour journey. Select the Manufacture items option"
@@ -113,14 +114,14 @@ public class HelpMenuView extends View {
                     + "\nthe item and the amount to be manufacured.");
                 break;
             case 'R':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nYou must locate the resources needed in the land"
                     + "\nof Bountiful and then harvest the resource."
                     + "\nSelect the Havest resource option in the Game"
                     + "\nMenu and enter the amount that you want to harvest.");
                 break;
             case 'D':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nOnce you have harvested a resource you will need"
                     + "\nto deliver the resource to the warehouse. Move the"
                     + "\nperson who just harvested a resource to the"
@@ -130,14 +131,14 @@ public class HelpMenuView extends View {
                 break;
 
             case 'W':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nYou will need to assign people to work on building"
                     + "\nthe ship. Select the indvidual to work on the ship"
                     + "\nand enter the number of days that they will work"
                     + "\non the ship.");
                 break;
             case 'P':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nYou will need to load and pack the resources on"
                     + "\nthe ship before you can launch it. You can start"
                     + "\nloading the ship once that it is 75% complete."
@@ -147,7 +148,7 @@ public class HelpMenuView extends View {
                 break;
 
             case 'J':
-                System.out.println("\n"
+                this.console.println("\n"
                     + "\nLaunch the ship and embark on your journey to the "
                     + "\ntPromised Land. You must have completed the ship"
                     + "\nand loaded ship with all of the required resources"

@@ -40,12 +40,13 @@ public class StartProgramView extends View {
     }
     
     @Override
-    public boolean doAction(String value) {
+    public boolean doAction(Object obj) {
+        
         boolean valid = false;
-        String playersName = null;
+        String playersName = (String) obj;
         
         while(!valid) { // while a valid name has not been retrieved
-            playersName = value.trim(); 
+            playersName = playersName.trim(); 
             
             if (playersName.equals("Q")) { // user wants to quit
                 return true;
@@ -56,6 +57,9 @@ public class StartProgramView extends View {
          
         // Create the player object and save it in the ProgramControl class
         Player player = ProgramControl.createPlayer(playersName);
+        if (player == null) {
+            System.out.println("The players name is invalid");
+        }
        
         // Display a personalized welcome message
         this.displayWelcomeMessage(player);

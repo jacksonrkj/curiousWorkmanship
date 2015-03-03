@@ -40,10 +40,12 @@ public class MoveActorView extends View {
 
 
     @Override
-    public boolean doAction(String choice) {
+    public boolean doAction(Object obj) {
+
         Actor actor; 
         Game game = CuriousWorkmanship.getCurrentGame();
         
+        String choice = (String) obj;
         choice = choice.trim().toUpperCase(); // trim blanks and uppercase
         
         // check for valid actor
@@ -83,10 +85,10 @@ public class MoveActorView extends View {
         
         boolean done = false;
         do {
-            System.out.println("\nYou can move up (U), down(D), left(L) or right (R)");
+            this.console.println("\nYou can move up (U), down(D), left(L) or right (R)");
             try {
                 // prompt for and get the row and column numbers
-                System.out.println("\nEnter the direction and distance to move (e.g. U 2) ");
+                this.console.println("\nEnter the direction and distance to move (e.g. U 2) ");
                 Movement movement = this.getCoordinates(); // get the row and column
                 if (movement == null) // entered "Q" to quit
                     break;
@@ -100,13 +102,13 @@ public class MoveActorView extends View {
                 int xPosition = coordinates.x + 1;
                 int yPosition = coordinates.y + 1;
                 if (blocked) {
-                    System.out.println("The path was blocked. " +  actor +
+                    this.console.println("The path was blocked. " +  actor +
                                        " was only able to move to position " + 
                                        xPosition + ", " + yPosition);    
                     
                 }
                 else {
-                    System.out.println(actor + 
+                    this.console.println(actor + 
                                        " was successfully moved to position " + 
                                        xPosition + ", " + yPosition);
                 }

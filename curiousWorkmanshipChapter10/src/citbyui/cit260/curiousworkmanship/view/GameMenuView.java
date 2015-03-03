@@ -52,8 +52,8 @@ public class GameMenuView extends View {
     
     
     @Override
-    public boolean doAction(String value) {
-        
+    public boolean doAction(Object obj) {
+        String value = (String) obj;
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
      
@@ -86,7 +86,7 @@ public class GameMenuView extends View {
             case 'C': // Construct tools and other items
                 this.manufactureItems(); 
                 break;
-            case 'R': // Harvest resource
+               case 'R': // Harvest resource
                 this.harvestResources(); 
                 break;
             case 'D': // Deliver resource
@@ -172,8 +172,12 @@ public class GameMenuView extends View {
     }
 
     private void estimateResources() {
-        System.out.println("*** estimateResources stub function called ***");        
+        EstimateResourcesView estimateResourcesView = new EstimateResourcesView();
+        estimateResourcesView.display();
+
     }
+    
+    
 
     private void designBarrels() {
         DesignBarrelsView designBarrelsView = new DesignBarrelsView();
@@ -181,19 +185,19 @@ public class GameMenuView extends View {
     }
 
     private void manufactureItems() {
-        System.out.println("*** manufactureItems stub function called ***");         
+        this.console.println("*** manufactureItems stub function called ***");         
     }
     
     private void harvestResources() {
-        System.out.println("*** harvestResources stub function called ***");        
+        this.console.println("*** harvestResources stub function called ***");        
     }
 
     private void deliverResources() {
-        System.out.println("*** deliverResources stub function called ***");        
+        this.console.println("*** deliverResources stub function called ***");        
     }
 
     private void workOnShip() {
-        System.out.println("*** workOnShip stub function called ***");        
+        this.console.println("*** workOnShip stub function called ***");        
     }
     
     private void displayActors() {
@@ -221,7 +225,7 @@ public class GameMenuView extends View {
     }
 
     private void viewShipStatus() {
-        System.out.println("*** viewShipStatus stub function called ***");        
+        this.console.println("*** viewShipStatus stub function called ***");        
     }
     
     
@@ -257,11 +261,11 @@ public class GameMenuView extends View {
     }
 
     private void packShip() {
-        System.out.println("*** packShip stub function called ***");       
+        this.console.println("*** packShip stub function called ***");       
     }
 
     private void launchShip() {
-        System.out.println("*** launchShip stub function called ***");        
+        this.console.println("*** launchShip stub function called ***");        
     }
 
 
@@ -303,7 +307,7 @@ public class GameMenuView extends View {
     
      public void printReport() {
         // get the filepath and name of the file
-        System.out.println("\nEnter the file path where the report is to be saved");
+        this.console.println("\nEnter the file path where the report is to be saved");
         
         String filePath = this.getInput();
         if (filePath == null) {
