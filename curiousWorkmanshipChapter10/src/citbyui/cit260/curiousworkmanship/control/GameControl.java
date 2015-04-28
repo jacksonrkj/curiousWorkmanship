@@ -350,6 +350,31 @@ public class GameControl {
 
     }
     
+    
+    public double getPercentage(String value1, String value2) {
+        double percentage = 0.0;
+        
+        try {
+             
+            try {
+                double firstNumber = Double.parseDouble(value1);
+                double secondNumber = Double.parseDouble(value2);
+                percentage = (firstNumber / secondNumber) * 100;            
+            } catch (ArithmeticException ae) {
+                System.out.println("The second value can not be zero.");
+            } finally {
+                System.out.println("Inner try statement completed.");
+            }
+             
+        } catch (Exception e) {
+            System.out.println("Some other exception occurred.");
+        } finally {
+            System.out.println("Outer try statement completed."); 
+        }
+               
+        return percentage;
+    }
+
    
     
   
