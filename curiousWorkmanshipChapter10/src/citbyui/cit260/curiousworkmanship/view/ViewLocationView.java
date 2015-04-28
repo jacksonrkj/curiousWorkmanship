@@ -90,7 +90,18 @@ public class ViewLocationView extends View {
         this.console.println("\n"
                 + "Location (" + coordinates.x + ", " + coordinates.y + ")"
                 + "\n" + location.getScene().getDescription());
-        this.console.println("\n\tActors in location");
+        
+        String fullDescription = location.getScene().getDescription();
+        int noOfLines = fullDescription.length() / 80;
+        for (int i = 0; i < noOfLines; i++) {
+            int start = 0;
+            int end = start + 79;
+            String line = fullDescription.substring(start, end);
+            System.out.println(line);
+            start += 80;
+        }
+        
+        this.console.println("\nActors in location");
         ArrayList<Actor> actorsInLocation = location.getActors();
         for (Actor actor : actorsInLocation) {
             this.console.println("\t" + actor);        

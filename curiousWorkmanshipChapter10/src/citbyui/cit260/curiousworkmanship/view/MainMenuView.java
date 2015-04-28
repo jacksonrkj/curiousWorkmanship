@@ -29,13 +29,11 @@ public class MainMenuView extends View {
               + "\nQ - Quit"
               + "\n-----------------------------------------");
     }
-   
-    
-       
+
     @Override
     public boolean doAction(Object obj) {
-        String value = (String) obj;
-        
+ 
+        String value = (String) obj;       
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
 

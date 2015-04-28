@@ -60,9 +60,9 @@ public abstract class View implements ViewInterface {
         } while (!done);
 
     }
-
     
-    @Override
+    
+     @Override
     public String getInput() {
 
         boolean valid = false;
@@ -91,7 +91,7 @@ public abstract class View implements ViewInterface {
 
         return selection; // return the name        
     }
-    
+       
     public void clearConsole() {
         try {
             final String os = System.getProperty("os.name");
@@ -107,5 +107,4 @@ public abstract class View implements ViewInterface {
         }
     }
    
-    
 }
