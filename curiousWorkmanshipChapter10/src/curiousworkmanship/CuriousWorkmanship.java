@@ -22,7 +22,6 @@ public class CuriousWorkmanship {
     
     private static PrintWriter outFile = null;
     private static BufferedReader inFile = null;
-    
     private static PrintWriter logFile = null;
     
     public static void main(String[] args) { 
@@ -45,29 +44,13 @@ public class CuriousWorkmanship {
             startProgramView.display();
             return; 
 
-        } catch (Exception e) {
-              // build stacktrace string.
-                StringBuilder sb = new StringBuilder();
-                for (StackTraceElement element : e.getStackTrace()) {
-                    sb.append("\t" + element.toString());
-                    sb.append("\n");
-                }
-
-                System.out.println("\n"
-                        + "\n*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-                        + "\nAn abnormal error occured. ");
-
+        } catch (Throwable e) {
+              
                 System.out.println("Exception: " + e.toString() + 
                                    "\nCause: " + e.getCause() + 
                                    "\nMessage: " + e.getMessage());
 
-                System.out.println("\n" + e.toString() + "\n" + sb);
-
-                System.out.println("\nRestarting the program."              
-                        + "\nIf this error persist, contact support."
-                        + "\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-                        + "\n\n\n");
-
+                e.printStackTrace();;
         }
 
         finally {
@@ -79,7 +62,7 @@ public class CuriousWorkmanship {
                     CuriousWorkmanship.outFile.close();
                 
                 if (CuriousWorkmanship.logFile != null)
-                    CuriousWorkmanship.outFile.close();
+                    CuriousWorkmanship.logFile.close();
             } catch (IOException ex) {
                 System.out.println("Error closing files");
                 return;
