@@ -50,9 +50,8 @@ public class MapControl {
     }
     
     
-    private static Scene[] createScenes() throws MapControlException {
-        BufferedImage image = null;
-
+    private static Scene[] createScenes() {
+     
         Game game = CuriousWorkmanship.getCurrentGame();
 
         Scene[] scenes = new Scene[SceneType.values().length];
@@ -72,7 +71,7 @@ public class MapControl {
 
         Scene finishScene = new Scene();
         finishScene.setDescription(
-                  "\nCongratulations! Well done thou good and faithful servant. "
+                  "\nCongratulations! Well done thou good and faithful servant."
                 + "You have just launced your ship of  curious workmanship and "
                 + "\nbegun your journey to the promised land.");
         finishScene.setMapSymbol(" FN ");
