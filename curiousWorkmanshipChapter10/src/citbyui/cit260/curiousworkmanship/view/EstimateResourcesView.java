@@ -7,8 +7,10 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.enums.FoodItem;
+import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
 import citbyui.cit260.curiousworkmanship.model.Game;
+import citbyui.cit260.curiousworkmanship.model.InventoryItem;
 import curiousworkmanship.CuriousWorkmanship;
 
 /**
@@ -22,6 +24,7 @@ public class EstimateResourcesView extends View {
     private int noOfPeople = 0;
     private double amountEstimated;
     private boolean quit = false;
+    private int inventoryIndex;
 
     public EstimateResourcesView() {
         super(false, 
@@ -105,22 +108,28 @@ public class EstimateResourcesView extends View {
             
             switch (choice) {
                 case 'G':
-                    selectedFoodItem = FoodItem.Grain;
+                    selectedFoodItem = FoodItem.grain;
+                    inventoryIndex = Item.grain.ordinal();
                     break;
                 case 'L':
-                    selectedFoodItem = FoodItem.Legumes;
+                    selectedFoodItem = FoodItem.legumes;
+                    inventoryIndex = Item.legume.ordinal();
                     break;
                 case 'O':
-                    selectedFoodItem = FoodItem.Oil;
+                    selectedFoodItem = FoodItem.oil;
+                    inventoryIndex = Item.oil.ordinal();
                     break;
                 case 'W':
-                    selectedFoodItem = FoodItem.Water;
+                    selectedFoodItem = FoodItem.water;
+                    inventoryIndex = Item.water.ordinal();
                     break;
                 case 'H':
-                    selectedFoodItem = FoodItem.Honey;
+                    selectedFoodItem = FoodItem.honey;
+                    inventoryIndex = Item.honey.ordinal();
                     break;
                 case 'S':
-                    selectedFoodItem = FoodItem.Salt;  
+                    selectedFoodItem = FoodItem.salt;
+                    inventoryIndex = Item.salt.ordinal();
                     break;
                 case 'Q':
                     quit = true;
@@ -330,6 +339,10 @@ public class EstimateResourcesView extends View {
                         String unitOfMeasure = selectedFoodItem.getUnitOfMeasure();
                         
                         unitOfMeasure = (estimatedAmount > 1) ? unitOfMeasure + "s": unitOfMeasure;
+                        
+                        // set required resources for inventor item
+                        InventoryItem[] inventory = CuriousWorkmanship.getCurrentGame().getInventory();
+                        inventory[inventoryIndex].setRequiredAmount(estimatedAmount);
                         
                         this.console.println("\n" + this.getBlockedMessage(
                               "The amount you estimated should "
