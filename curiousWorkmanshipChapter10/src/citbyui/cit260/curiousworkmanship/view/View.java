@@ -107,4 +107,30 @@ public abstract class View implements ViewInterface {
         }
     }
    
+    
+    public String getBlockedMessage(String message) {
+        String newMessage = "";
+        int noOfLines = (message.length() / 81) + 1;
+        String[] words = message.split(" ");
+        String line = "";
+        
+        for (String word : words) {
+            
+            if (line.length() + word.length() < 80) {
+                line += word.trim() + " ";
+            }
+            else {
+                newMessage += line + "\n";
+                line = word.trim() + " ";
+            }
+        }
+        newMessage += line;
+        
+        
+        return newMessage;
+        
+        
+    }
+    
+    
 }

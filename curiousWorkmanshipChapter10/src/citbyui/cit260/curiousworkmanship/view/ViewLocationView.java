@@ -87,24 +87,19 @@ public class ViewLocationView extends View {
             return;
         }
         
-        this.console.println("\n"
-                + "Location (" + coordinates.x + ", " + coordinates.y + ")"
-                + "\n" + location.getScene().getDescription());
-        
-        String fullDescription = location.getScene().getDescription();
-        int noOfLines = fullDescription.length() / 80;
-        for (int i = 0; i < noOfLines; i++) {
-            int start = 0;
-            int end = start + 79;
-            String line = fullDescription.substring(start, end);
-            System.out.println(line);
-            start += 80;
-        }
-        
-        this.console.println("\nActors in location");
+        String message = "\nLocation (" + coordinates.x + ", " + coordinates.y + ")\n"
+                         + this.getBlockedMessage(location.getScene().getDescription());
+        this.console.println(message);
+   
         ArrayList<Actor> actorsInLocation = location.getActors();
-        for (Actor actor : actorsInLocation) {
-            this.console.println("\t" + actor);        
+        if (actorsInLocation.size() < 1) {
+            this.console.println("\nThere are no actors in this location");
+        }
+        else {
+            this.console.println("\nThe following actors are currently in this location");
+            for (Actor actor : actorsInLocation) {
+                this.console.println("   " + actor);        
+            }
         }
         
     }

@@ -8,7 +8,6 @@ package citbyui.cit260.curiousworkmanship.view;
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.enums.FoodItem;
 import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
-import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
 import citbyui.cit260.curiousworkmanship.model.Game;
 import curiousworkmanship.CuriousWorkmanship;
 
@@ -17,10 +16,16 @@ import curiousworkmanship.CuriousWorkmanship;
  * @author jacksonrkj
  */
 public class EstimateResourcesView extends View {
+    
+    private FoodItem selectedFoodItem = null;
+    private double lengthOfTrip = 0.0;
+    private int noOfPeople = 0;
+    private double amountEstimated;
+    private boolean quit = false;
 
     public EstimateResourcesView() {
         super(false, 
-              "Estimate the required resources that you will need of each item "
+              "Estimate the required amount food that you will need "
               + "for the voyage to the promised land.");
     }
 
@@ -28,227 +33,327 @@ public class EstimateResourcesView extends View {
     @Override
     public boolean doAction(Object obj) {
         Game game = CuriousWorkmanship.getCurrentGame();
-        boolean success = false;
         
+        boolean done = false;
         // estimate speed and get length of the voyage.
-        double lengthOfTrip = getShipsSpeed();
-        if (lengthOfTrip < 1) {
-            return false;
+        new GetShipSpeedView("").display();
+        if (quit) {
+            return true;
         }
- 
+
         // get number of people of trip
-        int noOfPeople = this.getNumberOfPeople();
-            if (lengthOfTrip < 1) {
-            return false;
-        } 
+        new GetNoOfPeopleView("").display();
+        if (quit) {
+            return true;
+        }
         
         // while not quit
-        while (!success) {
-            // select a resource
-//            this.getResource();
-            // get the amount required per day
-            // check to see a valid amount was entered
-            // Set the required amount in inventory for the resource
+        boolean success = false;
+        while (!quit) {
             
+            // select a resource
+            new GetResourceView("").display();
+            if (quit) {
+                return true;
+            }
+            
+            // get the amount required per day        
+            new GetAmountView("").display();
+            if (quit) {
+                return true;
+            }
+            else {
+                // Set the required amount in inventory for the resource
+                CuriousWorkmanship.getCurrentGame().
+                        getInventory()[selectedFoodItem.ordinal()].
+                        setRequiredAmount(amountEstimated);
+            }
+  
          }
-        return success;
+        return done;
     }
     
-    private double getShipsSpeed() {
-        double speed = -1;
+    
+    private class GetResourceView extends View {
         
-        boolean done = false;
-        while (!done) {
-            this.console.println("Enter the estimated average speed of the ship"
-                                + " that you will be sailing");
+        public GetResourceView(String message) {
+            super( 
+                   "\n---------------------------------------------------------------"
+                 + "\n| You will need each of the following food items for the trip.|"
+                 + "\n|                                                             |"   
+                 + "\n| Select and estimate the amount of each food item that is    |"
+                 + "\n| needed to complete the voyage. Your estimate should be based|"
+                 + "\n| the length of the trip, the number of people traveling on   |"
+                 + "\n| the ship and the minimum amount required per day per person.|"
+                 + "\n---------------------------------------------------------------"
+                 + "\nG - Grain"
+                 + "\nL - Legumes"
+                 + "\nO - Oil"
+                 + "\nW - Water"
+                 + "\nH - Honey"
+                 + "\nS - Salt"
+                 + "\nQ - Quit to main main menu"
+                 + "\n---------------------------------------------------------------");
+        }
+
+        @Override
+        public boolean doAction(Object obj) {
+            String value = (String) obj;
+            char choice = value.trim().toUpperCase().charAt(0);
+   
+            selectedFoodItem = null;
             
-            String value = this.getInput().trim();
-            if (value.equals("Q"))
-                break;
+            switch (choice) {
+                case 'G':
+                    selectedFoodItem = FoodItem.Grain;
+                    break;
+                case 'L':
+                    selectedFoodItem = FoodItem.Legumes;
+                    break;
+                case 'O':
+                    selectedFoodItem = FoodItem.Oil;
+                    break;
+                case 'W':
+                    selectedFoodItem = FoodItem.Water;
+                    break;
+                case 'H':
+                    selectedFoodItem = FoodItem.Honey;
+                    break;
+                case 'S':
+                    selectedFoodItem = FoodItem.Salt;  
+                    break;
+                case 'Q':
+                    quit = true;
+                    return true;  
+                default:
+                    ErrorView.display("EstimateResourcesView", "Invalid resource entered");
+                    return false;
+            }  
             
+            return true;
+        }
+    }
+    
+    private class GetShipSpeedView extends View {
+        
+        public GetShipSpeedView(String message) {
+            super("\nEnter the estimated average speed of the ship "
+                  + "that you will be sailing");
+        }
+
+        @Override
+        public boolean doAction(Object obj) {
+            String value = (String) obj;
+            
+            if ( value.trim().toUpperCase().charAt(0) == 'Q') {
+                quit = true;
+                return true;
+            }
+
+            double speed = Double.parseDouble(value);
+            double numberOfDays = Math.round(GameControl.getLengthOfTrip(speed));
+            
+            GameControl.Probability probability;
             try {
                 speed = Double.parseDouble(value);
-                
-            } catch (NumberFormatException e) {
-                ErrorView.display(this.getClass().getName(), 
-                                  "The speed  must be a valid number");
-                continue;
+                probability = GameControl.checkSpeedOfShip(speed);
+            }
+            catch (NumberFormatException ne) {
+                ErrorView.display("EstimateResourcesView", 
+                                  "You must enter a valid number for the speed.");
+                return false;
+            } catch (GameControlException ex) {
+                ErrorView.display(EstimateResourcesView.class.getName(), ex.getMessage());
+                return false;
             }
 
-            try {   
-                done = this.validSpeed(speed);
-                if (done) {
-                    double numberOfDays = GameControl.getLengthOfTrip(speed);
-                    this.console.println( "The trip will take you approximately" 
-                               + numberOfDays + "  days to complete the trip at"
-                               + "that average speed.");
+            switch (probability) {
+                case HIGH_PROBABILITY: 
+                    this.console.println("\n" + this.getBlockedMessage( 
+                          "You have greater than a 68% probability that trip will be "
+                        + "completed in " + numberOfDays +  " days at an average "
+                        + "speed of " + speed + " mph. You can be "
+                        + "confident in the amount of resources that you "
+                        + "estimate for the voyage."));
+                    lengthOfTrip = numberOfDays;
+                    return true;
+
+                case LOW_PROBABILITY:
+                    this.console.println("\n" + this.getBlockedMessage(
+                         "You have less than a 16% probability that trip will be "
+                        + "completed in " + numberOfDays +  " days at an average "
+                        + "speed of " + speed + " mph. Your estimate of the "
+                        + "amount of resources need for the trip may be way off."));
+
+                   this.console.println("\nDo you want to re-estimate your speed? (Y/N)");
+                   String answer = this.getInput().trim().toUpperCase();
+                   if (answer.charAt(0) != 'Y') {
+                      return false;
+                   }
+                   lengthOfTrip = numberOfDays;
+                   return true;
+                 
+                case TOO_LOW:
+                    this.console.println( this.getBlockedMessage(
+                            "\nYour estimated average speed is too "
+                            + "low. Most sailing vessels can go "
+                            + "faster than that."));
+                    return false;
+                    
+                case TOO_HIGH:
+                    this.console.println(this.getBlockedMessage( 
+                                "\nYour estimated average speed is too "
+                                + "high. Even the best sailing vessels "
+                                + "can not maintain that average speed"));
+                    return false;
+                    
+                case OK:
+                    lengthOfTrip = numberOfDays;
+                    return true;
+                    
+                default: ErrorView.display(this.getClass().getName(), 
+                                           "Invalid speed entered.");
+                    return false;
+            }   
+        
+        }
+        
+    }
+    
+    private class GetNoOfPeopleView extends View {
+        
+        public GetNoOfPeopleView(String message) {
+            super("\nEnter the number of people that sailing on "
+                  + "the ship.");
+        }
+
+        @Override
+        public boolean doAction(Object obj) {
+            int peopleEntered = 0;
+            
+            String value = (String) obj;
+            
+            if ( value.trim().toUpperCase().charAt(0) == 'Q') {
+                quit = true;
+                return true;
+            }
+
+            try {
+                peopleEntered = Integer.parseInt(value);
+
+                if (peopleEntered < 0) {
+                    ErrorView.display( "EstimateResourcesView"
+                                     , "The number of people must be greater than zero.");
+                    return false;
                 }
-            } catch (Exception e) {
-                ErrorView.display(this.getClass().getName(), e.getMessage());
+               
+                GameControl.Probability probabilty = 
+                        GameControl.checkNoOfPeople(peopleEntered);
+                
+                switch (probabilty) {
+                    case TOO_LOW:
+                        ErrorView.display( "EstimateResourcesView"
+                                     , "The number of people specified is too low.");
+                        return false;
+                    case TOO_HIGH:
+                        ErrorView.display( "EstimateResourcesView"
+                                     , "The number of people specified is too high.");
+                        return false;
+                    case OK:
+                        noOfPeople = peopleEntered;
+                        return true;
+                    default:
+                        ErrorView.display("EstimateResourcesView", 
+                                  "Invalid probability value.");
+                        return false;
+                }
             }
-
+            catch (NumberFormatException ne) {
+                ErrorView.display("EstimateResourcesView", 
+                                  "You must enter a valid number for the number of people.");
+                return false;
+            } catch (GameControlException ex) {
+                ErrorView.display("EstimateResourcesView", ex.getMessage());
+                return false;
+            }
         }
         
-        return speed;    
     }
-    
-    
-    private boolean validSpeed(double speed) throws GameControlException {
-        boolean valid = false;
-        
-        double numberOfDays = GameControl.getLengthOfTrip(speed);
-        GameControl.Estimate_status status = GameControl.checkSpeedOfShip(speed);
 
-        this.console.println( "The trip will take you approximately" 
-                       + numberOfDays + "  days to complete the trip at"
-                       + "that average speed.");
-        switch (status) {
-            case HIGH_PROBABILITY: 
-                    valid = true;
-                    this.console.println( 
-                        "\nYou have a greater than 68% probability that trip will be "
-                      + "\ncompleted in the number of days indicated above. You "
-                      + "\ncan be confident in the amount of resources that you "
-                      + "\nestimate are needed for the voyage.");
-                    break;
-
-            case LOW_PROBABILITY:
-                this.console.println( 
-                     "\nYou have less than a 16% probability that the trip will "
-                   + "\ntake that many days to complete the trip at the speed "
-                   + "\nspecified. The amount of resources you take on the ship "
-                   + "\nmay be way off resulting in a good possibility of either "
-                   + "\nstarvation or the wasting a lot of valuable time in "
-                   + "\ncollecting resources that are needed for the voyage.");
-
-               this.console.println("\nDo you want to re-estimate your speed? (Y/N)");
-               String answer = this.getInput().trim().toUpperCase();
-               if (answer.charAt(0) != 'Y') {
-                  valid = true;
-               }
-               break;
-            case TOO_LOW:
-                this.console.println( "Your estimated average speed is too "
-                            + "low. \nMost sailing vessels of the time can make a "
-                            + "better time than that.");
-                break;
-            case TOO_HIGH:
-                this.console.println( "Your estimated average speed is too "
-                            + "high. \nEven the best sailing vessels of the time "
-                            + "can not maintain that average speed");
-                break;
-            default: ErrorView.display(this.getClass().getName(), 
-                                       "Invalid speed entered.");
-        }   
-        
-        return valid;
-        
-    }
     
-    private int getNumberOfPeople() {
+    private class GetAmountView extends View {
         
-        int noOfPeople = -1;
-        
-        boolean done = false;
-        while (!done) {
-            this.console.println("Enter the number of people that sailing on "
-                                + " ship.");
-            
-            String value = this.getInput().trim();
-            if (value.equals("Q"))
-                return -1;
+        public GetAmountView(String message) {
+            super("\nEstimate and enter the amount of " 
+                    + selectedFoodItem.name() 
+                    + " needed for the voyage below (in " 
+                    + selectedFoodItem.getUnitOfMeasure()
+                    + "s)");
+        }
+
+        @Override
+        public boolean doAction(Object obj) {
+            String value = (String) obj;
+           
+            if ( value.trim().toUpperCase().charAt(0) == 'Q') {
+                quit = true;
+                return true;
+            }
+               
+            double estimatedAmount = 0;
             
             try {
-                noOfPeople = Integer.parseInt(value);
+                estimatedAmount = Double.parseDouble(value);
                 
-            } catch (NumberFormatException e) {
-                ErrorView.display(this.getClass().getName(), 
-                                  "You must enter a valid number for "
-                                + "the number of people");
-                continue;
+                if (estimatedAmount < 0) {
+                    ErrorView.display( "EstimateResourcesView"
+                                     , "The amount you estimated must be greater than zero.");
+                    return false;
+                }
+                
+                GameControl.Probability probabilty = GameControl.checkRequiredAmount( 
+                                                        selectedFoodItem, 
+                                                        lengthOfTrip, 
+                                                        noOfPeople, 
+                                                        estimatedAmount);
+                switch (probabilty) {
+                    case TOO_LOW:
+                        ErrorView.display( "EstimateResourcesView"
+                                     , "The amount you estimated is too low.");
+                        return false;
+                    case TOO_HIGH:
+                        ErrorView.display( "EstimateResourcesView"
+                                     , "The amount you estimated is too high.");
+                        return false;
+                    case OK:
+                        
+                        String unitOfMeasure = selectedFoodItem.getUnitOfMeasure();
+                        
+                        unitOfMeasure = (estimatedAmount > 1) ? unitOfMeasure + "s": unitOfMeasure;
+                        
+                        this.console.println("\n" + this.getBlockedMessage(
+                              "The amount you estimated should "
+                            + "allow " + noOfPeople  + " people to survive the voyage. "
+                            + "You now need to go search for and harvest " 
+                            + estimatedAmount + " " + unitOfMeasure 
+                            + " of " + selectedFoodItem.name() + "."));
+                        return true;
+                    default:
+                        ErrorView.display("EstimateResourcesView", 
+                                  "Invalid probability value.");
+                        return false;
+                }
             }
-
-            if (GameControl.checkNoOfPeople(noOfPeople)) {
-                return noOfPeople;
+            catch (NumberFormatException ne) {
+                ErrorView.display("EstimateResourcesView", 
+                                  "You must enter a valid number for the number of people.");
+                return false;
+            } catch (GameControlException ex) {
+                ErrorView.display("EstimateResourcesView", ex.getMessage());
+                return false;
             }
-
         }
         
-        return noOfPeople;    
     }
-
-    private FoodItem getResource() throws ViewException {
-        this.console.println("\n"
-            + "\n---------------------------------------------------------------"
-            + "\n| Select a resource to estimate the amount required.           |"
-            + "\n---------------------------------------------------------------"
-            + "\nG - Grain"
-            + "\nL - Legumes"
-            + "\nO - Oil"
-            + "\nW - Water"
-            + "\nH - Honey"
-            + "\nS - Salt"
-            + "\nQ - Quit to main main menu"
-            + "\n---------------------------------------------------------------");
-        
-        char selection = this.getInput().trim().toUpperCase().charAt(0);
-        if (selection == 'Q') 
-            return null;
-        
-        switch (selection) {
-            case 'G':
-                return FoodItem.Grain;
-            case 'L':
-                return FoodItem.Legumes;
-            case 'O':
-                return FoodItem.Oil;
-            case 'W':
-                return FoodItem.Water;
-            case 'H':
-                return FoodItem.Honey;
-            case 'S':
-                return FoodItem.Salt;  
-            default:
-                throw new ViewException("Invalid resource entered");
-        }  
-    }
-
-    
-    private double getAmount(FoodItem item, int noOfPeople, int noOfDays) {
-        double amount = -1;
-        
-        boolean done = false;
-        while (!done) {
-            this.console.println("Enter the number of pounds of "
-                                + item + " required for "
-                                + noOfPeople + " for a voyage of "
-                                + noOfDays + " days.");
-            
-            String value = this.getInput().trim();
-            if (value.charAt(0) == 'Q')
-                return -1;
-            
-            try {
-                amount = Double.parseDouble(value);
-                
-            } catch (NumberFormatException e) {
-                ErrorView.display(this.getClass().getName(), 
-                                  "You must enter a valid number for "
-                                + "the amount");
-                continue;
-            }
-            
-            
-            if (GameControl.checkNoOfPeople(noOfPeople)) {
-                return amount;
-            }
-
-        }
-        
-        return amount;    
-
-        
-    }
-    
     
 }

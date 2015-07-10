@@ -58,8 +58,8 @@ public class MapControl {
 
         Scene startingScene = new Scene();
         startingScene.setDescription(
-                  "\nAnd we did come to the land which was called Bountiful, "
-                + "because of its much fruit and also wild honey; and all  "
+                  "And we did come to the land which was called Bountiful, "
+                + "because of its much fruit and also wild honey; and all "
                 + "these things were prepared of the Lord that we might not "
                 + "perish. And we beheld the sea, which we called Irreantum, "
                 + "which, being interpreted, is many waters");
@@ -71,9 +71,9 @@ public class MapControl {
 
         Scene finishScene = new Scene();
         finishScene.setDescription(
-                  "\nCongratulations! Well done thou good and faithful servant."
+                  "Congratulations! Well done thou good and faithful servant. "
                 + "You have just launced your ship of  curious workmanship and "
-                + "\nbegun your journey to the promised land.");
+                + "begun your journey to the promised land.");
         finishScene.setMapSymbol(" FN ");
         finishScene.setBlocked(false);
         finishScene.setTravelTime(Double.POSITIVE_INFINITY);
@@ -81,8 +81,8 @@ public class MapControl {
 
         Scene cliffScene = new Scene();
         cliffScene.setDescription(
-                  "\nThis is a tall cliff. You can not climb over the cliff. "
-                + "\nYou will have to go another way.");
+                  "This is a tall cliff. You can not climb over the cliff. "
+                + "You will have to go another way.");
         cliffScene.setMapSymbol(" || ");
         cliffScene.setBlocked(true);
         cliffScene.setTravelTime(Double.POSITIVE_INFINITY);
@@ -90,7 +90,7 @@ public class MapControl {
 
         Scene oceanScene = new Scene();
         oceanScene.setDescription(
-                  "\nAll you see is the deep blue ocean. You can not enter "
+                  "All you see is the deep blue ocean. You can not enter "
                 + "the ocean unless you are on a ship.");
         oceanScene.setMapSymbol("~~~~");
         oceanScene.setBlocked(true);
@@ -100,7 +100,7 @@ public class MapControl {
 
         Scene riverScene = new Scene();
         riverScene.setDescription(
-                  "\nYou have come to a river. It is too deep to cross here.");
+                  "You have come to a river. It is too deep to cross here.");
         riverScene.setMapSymbol("}}}}");
         riverScene.setBlocked(true);
         riverScene.setTravelTime(Double.POSITIVE_INFINITY);
@@ -109,8 +109,8 @@ public class MapControl {
         Scene sandyDesert = new Scene();
         sandyDesert.setBlocked(false);
         sandyDesert.setDescription(
-                  "\nYou have wandered into the dry sandy desert. Very little "
-                + "\ngrows here.");
+                  "You have wandered into the dry sandy desert. Very little "
+                + "grows here.");
         sandyDesert.setMapSymbol("::::");
         sandyDesert.setTravelTime(20);
         scenes[SceneType.desert.ordinal()] = sandyDesert;
@@ -118,7 +118,7 @@ public class MapControl {
         Scene savana = new Scene();
         savana.setBlocked(false);
         savana.setDescription(
-                  "\nYou have entered the savana. Lush grass and flowers grow here.");
+                  "You have entered the savana. Lush grass and flowers grow here.");
         savana.setMapSymbol(",,,,");
         savana.setTravelTime(15);
         scenes[SceneType.savana.ordinal()] = savana;
@@ -126,7 +126,7 @@ public class MapControl {
         Scene mountain = new Scene();
         mountain.setBlocked(false);
         mountain.setDescription(
-                  "\nYou are walking through the mountains. The going can be slow here");
+                  "You are walking through the mountains. The going can be slow here");
         mountain.setMapSymbol("^^^^");
         mountain.setTravelTime(30);
         scenes[SceneType.mountain.ordinal()] = mountain;
@@ -134,8 +134,8 @@ public class MapControl {
         Scene riverCrossing = new Scene();
         riverCrossing.setBlocked(false);
         riverCrossing.setDescription(
-                  "\nThe river is shallow here. It is a good place to cross. "
-                + "\nYou might even think about building a bridge here.");
+                  "The river is shallow here. It is a good place to cross. "
+                + "You might even think about building a bridge here.");
         riverCrossing.setMapSymbol("=}{=");
         riverCrossing.setTravelTime(20);
         scenes[SceneType.riverCrossing.ordinal()] = riverCrossing;
@@ -144,7 +144,7 @@ public class MapControl {
         Scene beach = new Scene();
         beach.setBlocked(false);
         beach.setDescription(
-                  "\nYou are walking across a beautiful sandy beach.");
+                  "You are walking across a beautiful sandy beach.");
         beach.setMapSymbol("....");
         beach.setTravelTime(20);
         scenes[SceneType.beach.ordinal()] = beach;
@@ -152,15 +152,15 @@ public class MapControl {
         Scene swamp = new Scene();
         swamp.setBlocked(false);
         swamp.setDescription(
-                  "\nYou are walking through a swampy area. You can really"
-                + "\nget \"bogged\" down here");
+                  "You are walking through a swampy area. You can really "
+                + "get \"bogged\" down here");
         swamp.setMapSymbol("####");
         swamp.setTravelTime(60);
         scenes[SceneType.swamp.ordinal()] = swamp;
 
         ResourceScene lumber = new ResourceScene();
         lumber.setDescription(
-                  "\nYou have entered a forest of hardwood. This is a great "
+                  "You have entered a forest of hardwood. This is a great "
                 + "source of lumber to build things with.");
         lumber.setMapSymbol("tttt");
         lumber.setBlocked(false);
@@ -173,8 +173,8 @@ public class MapControl {
         ResourceScene iron = new ResourceScene();
                 iron.setBlocked(false);
         iron.setDescription(
-                    "\nThere is a outcropping with a large rusting red streaks."
-                  + "\nThere appears to be a large vein of iron ore here.");
+                    "There is a outcropping with a large rusting red streaks."
+                  + "There appears to be a large vein of iron ore here.");
                 iron.setBlocked(false);
         iron.setMapSymbol(" IR ");
         iron.setTravelTime(20);
@@ -185,7 +185,7 @@ public class MapControl {
         ResourceScene wheat= new ResourceScene();
                 wheat.setBlocked(false);
         wheat.setDescription(
-                  "\nYou are standing in a field of wheat.");
+                  "You are standing in a field of wheat.");
         wheat.setMapSymbol(" WH ");
         wheat.setTravelTime(20);
         wheat.setAmountOfResource(2000);
@@ -195,7 +195,7 @@ public class MapControl {
         ResourceScene water= new ResourceScene();
         water.setBlocked(false);
         water.setDescription(
-                    "\nThis is a well of clean wather. You will need this for "
+                    "This is a well of clean wather. You will need this for "
                     + "for your trip.");
         wheat.setMapSymbol(" WA ");
         water.setTravelTime(20);
@@ -207,7 +207,7 @@ public class MapControl {
         ResourceScene rye = new ResourceScene();
                 rye.setBlocked(false);
         rye.setDescription(
-                  "\nYou are standing in a field of rye.");
+                  "You are standing in a field of rye.");
         rye.setMapSymbol(" RY ");
         rye.setTravelTime(20);
         rye.setAmountOfResource(900);
@@ -218,7 +218,7 @@ public class MapControl {
         ResourceScene rice = new ResourceScene();
                 rice.setBlocked(false);
         rice.setDescription(
-                  "\nYou are standing in a field of rice.");
+                  "You are standing in a field of rice.");
         rice.setMapSymbol(" RI ");
         rice.setTravelTime(20);
         rice.setAmountOfResource(1200);
@@ -228,7 +228,7 @@ public class MapControl {
         ResourceScene oliveOil = new ResourceScene();
         oliveOil.setBlocked(false);
         oliveOil.setDescription(
-                  "\nThese olive trees should be a great source for our oil");
+                  "These olive trees should be a great source for our oil");
         oliveOil.setMapSymbol(" OO ");
         oliveOil.setTravelTime(20);
         oliveOil.setAmountOfResource(30);
@@ -238,7 +238,7 @@ public class MapControl {
         ResourceScene lentils = new ResourceScene();
                 lentils.setBlocked(false);
         lentils.setDescription(
-                  "\nYou have located a patch of lentils.");
+                  "You have located a patch of lentils.");
         lentils.setMapSymbol(" LN ");
         lentils.setTravelTime(20);
         lentils.setAmountOfResource(600);
@@ -249,7 +249,7 @@ public class MapControl {
         ResourceScene chickpeas = new ResourceScene();
                 chickpeas.setBlocked(false);
         chickpeas.setDescription(
-                  "\nThere are a lot of chickpeas growing here.");
+                  "There are a lot of chickpeas growing here.");
         chickpeas.setMapSymbol(" CP ");
         chickpeas.setTravelTime(20);
         chickpeas.setAmountOfResource(1000);
@@ -259,7 +259,7 @@ public class MapControl {
         ResourceScene fababeans = new ResourceScene();
                 fababeans.setBlocked(false);
         fababeans.setDescription(
-                  "\nLooks like someone planted a bunch of Faba beans here.");
+                  "Looks like someone planted a bunch of Faba beans here.");
         fababeans.setMapSymbol(" FB ");
         fababeans.setTravelTime(20);
         fababeans.setAmountOfResource(900);
@@ -270,7 +270,7 @@ public class MapControl {
         ResourceScene honey = new ResourceScene();
                 honey.setBlocked(false);
         honey.setDescription(
-                  "\nThat beehive can give us a log of good honey for our trip");
+                  "That beehive can give us a log of good honey for our trip");
         honey.setMapSymbol(" HO ");
         honey.setTravelTime(15);
         honey.setAmountOfResource(30);
@@ -280,7 +280,7 @@ public class MapControl {
         ResourceScene salt = new ResourceScene();
                 salt.setBlocked(false);
         salt.setDescription(
-                  "\nYou have found a cave full of interesting salt formations.");
+                  "You have found a cave full of interesting salt formations.");
         salt.setMapSymbol(" SA ");
         salt.setTravelTime(15);
         salt.setAmountOfResource(60);
@@ -293,7 +293,7 @@ public class MapControl {
         ConstructionScene blacksmith = new ConstructionScene();
         blacksmith.setBlocked(false);
         blacksmith.setDescription(
-                  "\nYou just entered the blacksmith shop where you can build "
+                  "You just entered the blacksmith shop where you can build "
                   + "all sorts of tools.");
         blacksmith.setMapSymbol(" BL ");
         blacksmith.setTravelTime(180);
@@ -307,7 +307,7 @@ public class MapControl {
         ConstructionScene bridge = new ConstructionScene();
         bridge.setBlocked(false);
         bridge.setDescription(
-                  "\nYou are crossing a bridge over the river. It is a lot "
+                  "You are crossing a bridge over the river. It is a lot "
                 + "faster to cross the river");
         bridge.setMapSymbol("====");
         bridge.setTravelTime(5);
@@ -365,7 +365,7 @@ public class MapControl {
 
         Question[] questions = new Question[2];
         questions[0] = new Question(
-                        "Lord, what should we do here in this land of Bountiful?", 
+                        "Lord, what should we do here in this land of Bountiful? ", 
                         "Thou shalt construct a ship after the manner which I "
                         + "shall show thee, that I may carry thy people "
                         + "across these waters. And I will prepare the way "
@@ -391,8 +391,8 @@ public class MapControl {
 
         Scene instructionScene = new Scene();
         instructionScene.setDescription(
-                    "The voice of the Lord comes unto Nephi,"
-                    + "\nArise, and get thee into the montain.");
+                    "The voice of the Lord comes unto Nephi, "
+                  + "Arise, and get thee into the montain.");
         instructionScene.setMapSymbol(" IN ");
         instructionScene.setBlocked(false);
         instructionScene.setTravelTime(480);
@@ -401,8 +401,8 @@ public class MapControl {
 
         Scene rebellionScene = new Scene();
         rebellionScene.setDescription(
-                  "\nLaman and Lemuel have refused to help you build a ship. "
-                + "\nNephi chastizes and rebukes them.");
+                  "Laman and Lemuel have refused to help you build a ship. "
+                + "Nephi chastizes and rebukes them.");
         rebellionScene.setMapSymbol(" RB ");
         rebellionScene.setBlocked(false);
         rebellionScene.setTravelTime(10000);
@@ -411,7 +411,7 @@ public class MapControl {
 
         Scene boatyardScene = new Scene();
         boatyardScene.setDescription(
-                  "\nThis is the boatyard where you work on building the ship. ");
+                  "This is the boatyard where you work on building the ship. ");
         boatyardScene.setMapSymbol(" BY ");
         boatyardScene.setBlocked(false);
         boatyardScene.setTravelTime(600);
@@ -420,7 +420,7 @@ public class MapControl {
 
         Scene blacksmithScene = new Scene();
         blacksmithScene.setDescription(
-                  "\nThis is the blacksmith where you work on building the ship. ");
+                  "This is the blacksmith where you work on building the ship. ");
         blacksmithScene.setMapSymbol(" BY ");
         blacksmithScene.setBlocked(false);
         blacksmithScene.setTravelTime(600);
@@ -429,7 +429,7 @@ public class MapControl {
 
         Scene campScene = new Scene();
         campScene.setDescription(
-                  "\nThis is the camp where you work on building the ship. ");
+                  "This is the camp where you work on building the ship. ");
         campScene.setMapSymbol(" BY ");
         campScene.setBlocked(false);
         campScene.setTravelTime(600);
@@ -842,9 +842,11 @@ public class MapControl {
     }
     
     
-     public static boolean moveActor(Actor actor, Direction direction, int distance) 
+     public static Point moveActor(Actor actor, Direction direction, int distance) 
                             throws MapControlException {
-         
+        
+        Point blockedLocation = null;
+        
         if (actor == null  || direction == null  || distance < 1) {
             throw new InvalidParameterException("actor, direction or distance is invalid");
         }
@@ -878,22 +880,42 @@ public class MapControl {
             throw new MapControlException("Trying to move to a location "
                                           + "outside bounds of the map");
         }  
+        
+        
         // Check to see if the path is blocked
         boolean blocked = false;
         Location[][] locations = map.getLocations();
-        for (int row = currentRow+1; row <= newRow; row++) {
-            if (locations[row][currentColumn].getScene().isBlocked()){
-                newRow = row-1;
+        
+        int noOfRows = (newRow - currentRow) * direction.getxIncrement();
+        int row = currentRow + direction.getxIncrement();      
+        for (int i = 0; i < noOfRows; i++ ) {
+            locations[row][currentColumn].setVisited(true);
+            
+            if (locations[row][currentColumn].getScene().isBlocked()){   
                 blocked = true;
-            }    
+                newRow = row - direction.getxIncrement();
+                blockedLocation = new Point(row+1, currentColumn+1);
+                break;
+            }
+            
+            row += direction.getxIncrement();
         }
         
-        for (int column = currentColumn+1; column <= newColumn; column++) {
-            if (locations[currentRow][column].getScene().isBlocked()){
-                newColumn = column-1;
+        
+        int noOfColumns = (newColumn - currentColumn) * direction.getyIncrement();
+        int column = currentColumn + direction.getyIncrement();       
+        for (int i = 0; i < noOfColumns; i++ ) {
+            locations[currentRow][column].setVisited(true);
+
+            if (locations[currentRow][column].getScene().isBlocked()){ 
                 blocked = true;
-            }     
-        }
+                newColumn = column - direction.getyIncrement();
+                blockedLocation = new Point(currentRow+1, column+1);
+                break;
+            }  
+            column += direction.getyIncrement();
+        } 
+        
         
         if (currentRow != newRow || currentColumn != newColumn) {
             Location currentLocation = map.getLocations()[currentRow][currentColumn];
@@ -905,7 +927,7 @@ public class MapControl {
         }
 
         
-        return blocked;
+        return blockedLocation;
     }    
     
     public static void moveActorToLocation(Game game, Actor actor, Point position) 

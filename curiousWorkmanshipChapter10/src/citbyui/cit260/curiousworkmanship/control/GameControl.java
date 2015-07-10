@@ -37,7 +37,7 @@ import java.security.InvalidParameterException;
 
 public class GameControl {
     
-    public enum Estimate_status {
+    public enum Probability {
         OK,
         TOO_LOW,
         TOO_HIGH,
@@ -194,7 +194,7 @@ public class GameControl {
         
         
         InventoryItem nails = new InventoryItem();
-        nails.setDescription("Sickle");
+        nails.setDescription("Nails");
         nails.setQuantityInStock(0);
         nails.setRequiredAmount(50);
         inventory[Item.nails.ordinal()] = nails;
@@ -297,33 +297,46 @@ public class GameControl {
         return Constants.TRIP_DISTANCE / 24 / speed;
     }
     
-    public static Estimate_status checkSpeedOfShip(double speed) throws GameControlException {
+    public static Probability checkSpeedOfShip(double speed) throws GameControlException {
+        if (speed < 0) {
+            throw new GameControlException("The speed must be a number greater than zero.");
+        }
         
         if (speed >= Constants.DEV_ONE_LOW && speed <= Constants.DEV_ONE_HIGH) {
-            return Estimate_status.HIGH_PROBABILITY;
+            return Probability.HIGH_PROBABILITY;
         }
         else if (speed >= Constants.DEV_TWO_LOW && speed <= Constants.DEV_TWO_HIGH) {
-            return Estimate_status.LOW_PROBABILITY;
+            return Probability.LOW_PROBABILITY;
         }
         else if (speed < Constants.DEV_TWO_LOW) {
-            return Estimate_status.TOO_LOW;
+            return Probability.TOO_LOW;
         }
         else {
-            return Estimate_status.TOO_HIGH;
+            return Probability.TOO_HIGH;
         }
 
     }   
     
-    public static boolean checkNoOfPeople(int noOfPeople) {
-        if (noOfPeople >= Constants.MIN_PERSONS_SAILING &&
-            noOfPeople <= Constants.MAX_PERSONS_SAILING) {
-            return true;
+    public static Probability checkNoOfPeople(int noOfPeople) throws GameControlException {
+        
+        if (noOfPeople < 0) {
+            throw new GameControlException( "The number of people must be a "
+                                          + "number greater than zero.");
         }
         
-        return false;
+        if (noOfPeople < Constants.MIN_PERSONS_SAILING) {
+            return Probability.TOO_LOW;
+        }
+        else if (noOfPeople > Constants.MAX_PERSONS_SAILING) {
+            return Probability.TOO_HIGH;
+        }
+        else {
+            return Probability.OK;
+        }
+
     }
     
-    public static Estimate_status  checkRequiredAmount(FoodItem item, 
+    public static Probability checkRequiredAmount(FoodItem item, 
                                              double noOfDays, 
                                              int noOfPeople, 
                                              double estimatedAmount) 
@@ -339,13 +352,13 @@ public class GameControl {
         double requiredAmount = item.getRecommendedAmountPerDay() * noOfDays * noOfPeople;
         
         if (estimatedAmount < requiredAmount * .90) {
-            return Estimate_status.TOO_LOW;            
+            return Probability.TOO_LOW;            
         } 
         else if (estimatedAmount > requiredAmount * 1.10) {
-            return Estimate_status.TOO_HIGH;            
+            return Probability.TOO_HIGH;            
         } 
         else {
-            return Estimate_status.OK;
+            return Probability.OK;
         }
 
     }

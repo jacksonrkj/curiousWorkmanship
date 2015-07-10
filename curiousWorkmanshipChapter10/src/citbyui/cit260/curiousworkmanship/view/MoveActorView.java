@@ -94,23 +94,31 @@ public class MoveActorView extends View {
                     break;
                 
                 // move actor to specified location
-                boolean blocked = MapControl.moveActor(actor, 
+                Point blockedLocation = MapControl.moveActor(actor, 
                                                        movement.direction, 
                                                        movement.distance);
                 
                 Point coordinates = game.getActorsLocation()[actor.ordinal()];
-                int xPosition = coordinates.x + 1;
-                int yPosition = coordinates.y + 1;
-                if (blocked) {
-                    this.console.println("The path was blocked. " +  actor +
-                                       " was only able to move to position " + 
-                                       xPosition + ", " + yPosition);    
+                Point newPosition = new Point(coordinates.x + 1, coordinates.y + 1);
+      
+                String locationDescription;
+                String message = "";
+                if (blockedLocation != null) {
+                    locationDescription = MapControl.getLocation(blockedLocation).getScene().getDescription();
+                    message = "The path was blocked at position " 
+                                    +   blockedLocation.x + ", " + blockedLocation.y + ".\n"
+                                    +   this.getBlockedMessage(locationDescription)
+                                    +   "\n\n" + actor + " is currently in position " 
+                                    +   newPosition.x + ", " + newPosition.y;  
+                    this.console.println(message);
                     
                 }
                 else {
-                    this.console.println(actor + 
-                                       " was successfully moved to position " + 
-                                       xPosition + ", " + yPosition);
+                    locationDescription = MapControl.getLocation(newPosition).getScene().getDescription();
+                    message = actor + " was successfully moved to position " 
+                            + newPosition.x + ", " + newPosition.y + ".\n"
+                            + this.getBlockedMessage(locationDescription);
+                    this.console.println(message);                
                 }
                 
                 done = true;
