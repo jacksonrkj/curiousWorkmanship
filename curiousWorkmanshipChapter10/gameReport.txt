@@ -1,4 +1,4 @@
-Report printed: 2015/07/08 09:39:07
+Report printed: 2016/01/12 10:36:53
 
 
                                          THE LAND OF BOUNTIFUL
@@ -55,13 +55,13 @@ Hammer                 3.0       0.0
 Honey                  0.0       0.0                                 
 Legumes                0.0       0.0                                   
 Lumber                 0.0       0.0                                  
+Nails                  50.0      0.0                                  
 Olive Oil              0.0       0.0                                     
 Ore                    0.0       0.0                               
 Salt                   0.0       0.0                                
 Saw                    2.0       0.0                               
 Shovel                 1.0       0.0                                  
 Sickle                 2.0       0.0                                  
-Sickle                 50.0      0.0                                   
 Water                  0.0       0.0                                 
 
 

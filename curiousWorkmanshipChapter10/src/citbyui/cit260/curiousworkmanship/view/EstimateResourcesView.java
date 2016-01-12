@@ -196,7 +196,7 @@ public class EstimateResourcesView extends View {
 
                    this.console.println("\nDo you want to re-estimate your speed? (Y/N)");
                    String answer = this.getInput().trim().toUpperCase();
-                   if (answer.charAt(0) != 'Y') {
+                   if (answer.charAt(0) == 'Y') {
                       return false;
                    }
                    lengthOfTrip = numberOfDays;

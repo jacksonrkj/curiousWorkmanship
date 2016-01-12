@@ -1,2 +1,0 @@
-EstimateResourcesView - The amount you estimated is too low.
-EstimateResourcesView - The amount you estimated is too low.
