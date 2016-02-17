@@ -5,6 +5,7 @@
  */
 package citbyui.cit260.curiousworkmanship.view;
 
+import citbyui.cit260.curiousworkmanship.model.MainMenuView;
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.model.Player;
 
@@ -50,6 +51,7 @@ public class StartProgramView {
     }
 
     private String getPlayersName() {
+        return null;
         
     }
     
@@ -72,13 +74,25 @@ public class StartProgramView {
         }
         
         // display next view
-	this.displayNextView();
+	this.displayNextView(player);
 
         return true; // success !  
     }
 
-    private void displayNextView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void displayNextView(Player player) {
+        
+        // display a custom welcome message
+        System.out.println("\n============================================="
+                          + "\n Welcome to the game " + player.getName()
+                          + "\n We hope you have a lot of fun!"
+                          + "\n============================================="
+                          );
+        
+        // Create MainMenuView object
+        MainMenuView mainMenuView = new MainMenuView()
+                
+        // Display the main menu view
+        mainMenuView.displayMainMenuView();    
     }
 
 }
@@ -86,6 +100,8 @@ public class StartProgramView {
 
 
 
+       
+        
 
     /**
      * Display the start program view

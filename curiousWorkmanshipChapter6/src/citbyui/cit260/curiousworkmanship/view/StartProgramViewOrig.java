@@ -4,6 +4,7 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
+import citbyui.cit260.curiousworkmanship.model.MainMenuView;
 import citbyui.cit260.curiousworkmanship.control.ProgramControl;
 import citbyui.cit260.curiousworkmanship.model.Player;
 import java.util.Scanner;
