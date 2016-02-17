@@ -6,6 +6,7 @@
 
 package citbyui.cit260.curiousworkmanship.model;
 
+import citbyui.cit260.curiousworkmanship.control.Constants;
 import java.io.Serializable;
 
 /**
@@ -16,9 +17,22 @@ public class Location implements Serializable {
 
     private int row;
     private int column;
+    private boolean visited;
+    private Scene scene;
+    private Actor[] actors;
+    
+
+    public Location(int row, int column, Scene scene, Actor[] actors) {
+        this.row = row;
+        this.column = column;
+        this.visited = false;
+        this.scene = scene;
+        this.actors = actors;
+    }
     
 
     public Location() {
+        this.actors = new Actor[Constants.ACTOR_COUNT];
     }
 
     public Location(int row, int column) {
@@ -41,6 +55,33 @@ public class Location implements Serializable {
     public void setColumn(int column) {
         this.column = column;
     }
+    
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+    
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public Actor[] getActors() {
+        return actors;
+    }
+
+    public void setActors(Actor[] actors) {
+        this.actors = actors;
+    }
+    
+    
+    
 
     @Override
     public String toString() {

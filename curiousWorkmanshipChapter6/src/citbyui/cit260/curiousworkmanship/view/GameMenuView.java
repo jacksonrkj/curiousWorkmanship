@@ -6,185 +6,228 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
-import java.util.Scanner;
+import citbyui.cit260.curiousworkmanship.control.GameControl;
+import citbyui.cit260.curiousworkmanship.control.MapControl;
+import citbyui.cit260.curiousworkmanship.model.InventoryItem;
+import citbyui.cit260.curiousworkmanship.model.Location;
+import citbyui.cit260.curiousworkmanship.model.Scene;
 
 
-public class GameMenuView {
+public class GameMenuView extends MenuView {
 
-       private static final String MENU = "\n"
-            + "\n-----------------------------------------"
-            + "\n| Game Menu                             |"
-            + "\n-----------------------------------------"  
-            + "\nT - Travel to new location"
-            + "\nV - View location"
-            + "\nE - Estimate the resource needed"
-            + "\nB - Design barrels"
-            + "\nM - Manufacture items"
-            + "\nR - Harvest resource"
-            + "\nD - Deliver resource"
-            + "\nW - Work on ship"
+    public GameMenuView() {
+        super("\n"
+            + "\n---------------------------------------------"
+            + "\n| Game Menu                                 |"
+            + "\n---------------------------------------------"
+            + "\nV - View map"
             + "\nI - View list of items in inventory"
-            + "\nS - View ship status"
-            + "\nP - Pack ship"
-            + "\nJ - Launch ship"
-            + "\nH - Help"
-            + "\nQ - Quit"              
-            + "\n-----------------------------------------";
-    
-
-    public void displayMenu() {
-        
-        boolean done = false;
-        do {
-            // display menu
-            System.out.println(MENU);
-            
-            char selection = this.getInput();
-
-            // get selection and take the appropriate action
-            done = this.doAction(selection);
-        } while(!done);
-        
-        
-        
+            + "\nA - View list of actors"
+            + "\nS - View the ship's status"
+            + "\nL - View location"
+            + "\nM - Move actor to a new location"
+            + "\nE - Estimate the resources needed for trip"
+            + "\nB - Design barrels to hold resources"
+            + "\nC - Construct tools and items needed"
+            + "\nR - Harvest resource at location"
+            + "\nD - Deliver harvested resources to warehouse"
+            + "\nW - Work on ship"
+            + "\nP - Pack ship for journey"
+            + "\nJ - Launch ship to the promised land"
+            + "\nH - Display help menu"
+            + "\nQ - Quit to main main menu"
+            + "\n---------------------------------------------");
     }
+
+   
     
     
-    public boolean doAction(char selection) {
-        int returnValue = -1; // set default to indicate an error
+    public void doAction(char selection) {
         
         switch (selection) {
-            case 'T': // Travel to new location
-                returnValue = this.moveToLocation(); 
-                break;
-            case 'V': // View location
-                returnValue = this.viewLocation(); 
-                break;
-            case 'E': // Estimate the resource needed
-                returnValue = this.estimateResources();
-            case 'B': // Design barrels
-                returnValue = this.designBarrels(); 
-                break;
-            case 'M': // Manufacture items
-                returnValue = this.manufactureItems(); 
-                break;
-            case 'R': // Harvest resource
-                returnValue = this.harvestResources(); 
-                break;
-            case 'D': // Deliver resource
-                returnValue = this.deliverResources(); 
-                break;
-            case 'W': // Work on ship
-                returnValue = returnValue = this.workOnShip();
+            case 'V': // Travel to new location
+                this.displayMap(); 
                 break;
             case 'I': // View list of items in inventory
-                returnValue = this.viewInventory(); 
+                this.viewInventory(); 
+                break;
+            case 'A': // View list of actors
+                this.viewActors(); 
+                break;
+            case 'S': // View the ship's status
+                this.viewShipStatus(); 
+                break;
+            case 'L': // View description of location
+                this.viewLocation(); 
+                break;    
+            case 'M': // Move actor to new location
+                this.moveToLocation(); 
+                break;                
+            case 'E': // Estimate the resource needed
+                this.estimateResources();
+                break;
+            case 'B': // Design barrels
+                this.designBarrels(); 
+                break;
+            case 'C': // Construct tools and other items
+                this.manufactureItems(); 
+                break;
+            case 'R': // Harvest resource
+                this.harvestResources(); 
+                break;
+            case 'D': // Deliver resource
+                this.deliverResources(); 
+                break;
+            case 'W': // Work on ship
+                this.workOnShip();
                 break;
             case 'P': // Pack ship
-                returnValue = this.packShip(); 
+                this.packShip(); 
                 break;
             case 'J': // Launch ship
-                returnValue = this.launchShip();      
+                this.launchShip();      
                 break;
             case 'H': // display the help menu
-                HelpMenuView helpMenu = new HelpMenuView();
-                helpMenu.displayMenu();
+                this.displayHelpMenu();
                 break;
             case 'Q':
-                return true;
-
+                return;
             default:
                 System.out.println("\n*** Invalid selection *** Try again");
         }
-       
-        return false;
-        
+ 
     }
     
-    private char getInput() {
+    public void displayMap() {
+        int lineLength = 0;
         
-        Scanner keyboard = new Scanner(System.in);
-        boolean valid = false;
-        String strValue;
-        char selection = ' ';    
+        // get the map for the game
+        Location[][] locations = GameControl.getMapLocations();
+        int noColumns = locations[0].length; // get number columns in row
+        this.printColumnHeaders(noColumns);
         
-        // while a valid name has not been retrieved
-        while(!valid) {
-            
-            // prompt for the player's name
-            System.out.println("\t\nEnter your selection below:");
-        
-            // get the value entered from the keyboard
-            strValue = keyboard.nextLine(); 
-            
-            if (strValue.trim().length() < 1) { // blank value entered
-                // display and error
-                System.out.println("\n*** Invalid selection *** Try again");
+        for (Location[] row : locations) { // for every row in the map           
+            this.printRowDivider(noColumns);
+
+            // for every column in the row
+            for (int column = 0; column < noColumns; column++) {
+                System.out.println("|"); // print column divider
+                Location location = row[column];
+                if (location.isVisited() || location == null) { // if location is visited 
+                    Scene scene = location.getScene();
+                    System.out.println(scene.getMapSymbol());
+                }
+                else {
+                    System.out.println(" ?? ");
+                }  
             }
-            
-            selection = strValue.trim().toUpperCase().charAt(0);
-            
-            // signal that a valid name was entered
-            valid = true;            
+            System.out.println("|"); // print column divider
         }
         
-        return selection; // return the name        
+        this.printRowDivider(noColumns);
+    }  
+
+    private void moveToLocation() {
+        
+        // get the list of actors chosen
+        // get the location
+        // MapControl.moveActorsToLocation(curiousworkmanship.CuriousWorkmanship.getCurrentGame().getMap(), actors, row, column);
+          
     }
 
-    private int moveToLocation() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void viewLocation() {
+        System.out.println("*** viewLocation stub function called ***");        
     }
 
-    private int viewLocation() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void estimateResources() {
+        System.out.println("*** estimateResources stub function called ***");        
     }
 
-    private int estimateResources() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void designBarrels() {
+        System.out.println("*** designBarrels stub function called ***");
+        
     }
 
-    private int designBarrels() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
-    }
-
-    private int manufactureItems() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0; 
+    private void manufactureItems() {
+        System.out.println("*** manufactureItems stub function called ***");         
     }
     
-    private int harvestResources() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void harvestResources() {
+        System.out.println("*** harvestResources stub function called ***");        
     }
 
-    private int deliverResources() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void deliverResources() {
+        System.out.println("*** deliverResources stub function called ***");        
     }
 
-    private int workOnShip() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void workOnShip() {
+        System.out.println("*** workOnShip stub function called ***");        
+    }
+    
+    private void viewActors() {
+        System.out.println("*** viewActors stub function called ***");       
     }
 
-    private int viewInventory() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void viewShipStatus() {
+        System.out.println("*** viewShipStatus stub function called ***");        
+    }
+    
+    
+    private void displayHelpMenu() {
+        HelpMenuView helpMenu = new HelpMenuView();
+        helpMenu.displayMenu(); 
     }
 
-    private int packShip() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void viewInventory() {
+        // get the sorted list of inventory items for the current game
+        InventoryItem[] inventory = GameControl.getSortedInventoryList();
+        
+        System.out.println("\nList of Inventory Items");
+        System.out.println("Description" + "\t" + 
+                           "Required" + "\t" +
+                           "In Stock");
+        
+        // for each inventory item
+        for (InventoryItem inventoryItem : inventory) {
+            // DISPLAY the description, the required amount and amount in stock
+            System.out.println(inventoryItem.getDescription() + "\t    " +
+                               inventoryItem.getRequiredAmount() + "\t    " +
+                               inventoryItem.getQuantityInStock());
+        }   
     }
 
-    private int launchShip() {
-        System.out.println("--- moveToLocation Called ---");
-        return 0;
+    private void packShip() {
+        System.out.println("*** packShip stub function called ***");       
     }
-             
+
+    private void launchShip() {
+        System.out.println("*** launchShip stub function called ***");        
+    }
+
+
+    private void printColumnHeaders(int noOfColumns) {
+        for (int i = 0; i < noOfColumns; i++) {
+            if (i < 10) {
+                System.out.println("   " + i + " ");
+            }
+            else {
+                System.out.println("  " + i + " ");
+            }
+        }
+    }
+
+    private void printRowDivider(int noColumns) {
+        for (int i = 0; i < noColumns; i++) { // print row divider
+                System.out.println("-----");
+        }
+        System.out.println("-");
+    }
+
+    
+
+
+
+    
+
     
 }

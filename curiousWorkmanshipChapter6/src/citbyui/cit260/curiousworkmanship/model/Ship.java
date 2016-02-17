@@ -23,8 +23,17 @@ public class Ship implements Serializable {
     private double maxWeighCapacity;
 
     public Ship() {
+        this.description = "\nThis is the this of curious workmanship. If you "   
+                        + "\nhave faith, it will take you to the promised land";
+        this.width = 0;
+        this.length = 0;
+        this.height = 0; 
+        this.maxWeighCapacity = 0;
+        this.sqFtOfSale = 0;
     }
 
+
+    
     public String getDescription() {
         return description;
     }

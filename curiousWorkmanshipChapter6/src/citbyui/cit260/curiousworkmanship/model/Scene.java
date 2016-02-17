@@ -13,22 +13,30 @@ import java.io.Serializable;
  * @author jacksonrkj
  */
 public class Scene implements Serializable {
-    
-    private int coolType;
+   
+    private int sceneType;
     private String description;
     private String mapSymbol;
     private double travelTime;
-    private double amountOfResource;
-
+    private boolean blocked;
+   
     public Scene() {
     }
 
+    public Scene(int sceneType, String description, String mapSymbol, double travelTime, boolean blocked) {
+        this.sceneType = sceneType;
+        this.description = description;
+        this.mapSymbol = mapSymbol;
+        this.travelTime = travelTime;
+        this.blocked = blocked;
+    }
+
     public int getSceneType() {
-        return coolType;
+        return sceneType;
     }
 
     public void setSceneType(int sceneType) {
-        this.coolType = sceneType;
+        this.sceneType = sceneType;
     }
 
     public String getDescription() {
@@ -55,12 +63,12 @@ public class Scene implements Serializable {
         this.travelTime = travelTime;
     }
 
-    public double getAmountOfResource() {
-        return amountOfResource;
+    public boolean isBlocked() {
+        return blocked;
     }
 
-    public void setAmountOfResource(double amountOfResource) {
-        this.amountOfResource = amountOfResource;
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
     
     

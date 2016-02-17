@@ -6,77 +6,37 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
-import java.util.Scanner;
 
 /**
  *
  * @author jacksonrkj
  */
-public class HelpMenuView {
-    
-    private static final String MENU =  "\n"
-            + "\n-----------------------------------------"
-            + "\n| Help Menu                             |"
-            + "\n-----------------------------------------"
-            + "\nG - What is the goal of the game?"
-            + "\nT - Travel to a new location"
-            + "\nV - View a description of a location"
-            + "\nE - Estimating the resources needed"
-            + "\nB - Design barrels"
-            + "\nM - Manufacture items"
-            + "\nR - Harvesting resources"
-            + "\nD - Deliver resources"
-            + "\nW - Work on ship"
-            + "\nP - Pack ship"
-            + "\nJ - Launch ship"
-            + "\nQ - Quit"
-            + "\n-----------------------------------------";
-    
-    public void displayMenu() {
-        boolean done = false;
-        do {
-            // display menu
-            System.out.println(MENU);
-            
-            char selection = this.getInput();
+public class HelpMenuView extends MenuView {
 
-            // get selection and take the appropriate action
-            done = this.doAction(selection);
-        } while(!done);
-    }
-    
-    public char getInput() {
-        
-        Scanner keyboard = new Scanner(System.in);
-        boolean valid = false;
-        String strValue = null;
-        char selection = ' ';    
-        
-        // while a valid name has not been retrieved
-        while(!valid) {
-            
-            // prompt for the player's name
-            System.out.println("\t\nEnter your selection below:");
-        
-            // get the value entered from the keyboard
-            strValue = keyboard.nextLine(); 
-            
-            if (strValue.trim().length() < 1) { // blank value entered
-                // display and error
-                System.out.println("\n*** Invalid selection *** Try again");
-            }
-            
-            selection = strValue.trim().toUpperCase().charAt(0);
-            
-            // signal that a valid name was entered
-            valid = true;            
-        }
-        
-        return selection; // return the name        
-    }
+    public HelpMenuView() {
+        super("\n"
+             + "\n-----------------------------------------"
+             + "\n| Help Menu                             |"
+             + "\n-----------------------------------------"
+             + "\nG - What is the goal of the game?"
+             + "\nT - Travel to a new location"
+             + "\nV - View a description of a location"
+             + "\nE - Estimating the resources needed"
+             + "\nB - Design barrels"
+             + "\nM - Manufacture items"
+             + "\nR - Harvesting resources"
+             + "\nD - Deliver resources"
+             + "\nW - Work on ship"
+             + "\nP - Pack ship"
+             + "\nJ - Launch ship"
+             + "\nQ - Quit"
+             + "\n-----------------------------------------"); 
+    }    
+
+   
     
     
-    public boolean doAction(char selection) {
+    public void doAction(char selection) {
      
         switch (selection) {
             case 'G':
@@ -194,12 +154,16 @@ public class HelpMenuView {
                     + "\nloaded on the ship then win the game");
                 break;
             case 'Q':
-                return true;
+                return;
 
             default:
                 System.out.println("\n*** Invalid selection *** Try again");
         }
-        
-        return false;
+       
     }    
+
+    
+    
+    
+    
 }

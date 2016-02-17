@@ -6,22 +6,47 @@
 
 package curiousworkmanship;
 
-import citbyui.cit260.curiousworkmanship.view.StartProgramView;
+import citbyui.cit260.curiousworkmanship.model.Game;
+import citbyui.cit260.curiousworkmanship.model.Player;
+import citbyui.cit260.curiousworkmanship.view.StartProgramViewOrig;
 
-/**
- *
- * @author jacksonrkj
- */
+
 public class CuriousWorkmanship {
-   
-    /**
-     * @param args the command line arguments
-     */
+    
+    private static Game currentGame = null;
+    private static Player player = null;   
+    
+    
+    
+
     public static void main(String[] args) {  
-                
-        // create StartProgramView and start the program
-        StartProgramView startProgramView = new StartProgramView();
-        startProgramView.startProgram();
+        // create StartProgramViewOrig and start the program
+        StartProgramViewOrig startProgramView = new StartProgramViewOrig();
+        startProgramView.displayStartProgramView();
     }
+
+    
+    
+    
+    
+    
+    public static Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public static void setCurrentGame(Game currentGame) {
+        CuriousWorkmanship.currentGame = currentGame;
+    }
+
+    public static Player getPlayer() {
+        return player;
+    }
+
+    public static void setPlayer(Player player) {
+        CuriousWorkmanship.player = player;
+    }
+
+    
+    
     
 }

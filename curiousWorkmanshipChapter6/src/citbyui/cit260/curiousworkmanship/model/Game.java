@@ -12,12 +12,19 @@ import java.io.Serializable;
  *
  * @author jacksonrkj
  */
+
 public class Game implements Serializable {
     
     private double totalTime;
-    private long noPeople;
+    private Ship ship;
+    private InventoryItem[] inventory; 
+    private Player player;
+    private Actor[] actors;
+    private Wagon wagon;
+    private Map map;
 
     public Game() {
+        this.totalTime = 0;
     }
 
     public double getTotalTime() {
@@ -28,45 +35,65 @@ public class Game implements Serializable {
         this.totalTime = totalTime;
     }
 
-    public long getNoPeople() {
-        return noPeople;
+    public Ship getShip() {
+        return ship;
     }
 
-    public void setNoPeople(long noPeople) {
-        this.noPeople = noPeople;
+    public void setShip(Ship ship) {
+        this.ship = ship;
+    }
+    
+    public InventoryItem[] getInventory() {
+        return inventory;
     }
 
+    public void setInventory(InventoryItem[] inventory) {
+        this.inventory = inventory;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    
+    public Actor[] getActors() {
+        return actors;
+    }
+
+    public void setActors(Actor[] actors) {
+        this.actors = actors;
+    }
+
+
+    public Wagon getWagon() {
+        return wagon;
+    }
+
+    public void setWagon(Wagon wagon) {
+        this.wagon = wagon;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    
+    
     @Override
     public String toString() {
-        return "Game{" + "totalTime=" + totalTime + ", noPeople=" + noPeople + '}';
+        return "Game{" + "totalTime=" + totalTime + ", player=" + player.toString() + '}';
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + (int) (Double.doubleToLongBits(this.totalTime) ^ (Double.doubleToLongBits(this.totalTime) >>> 32));
-        hash = 31 * hash + (int) (this.noPeople ^ (this.noPeople >>> 32));
-        return hash;
-    }
+    
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Game other = (Game) obj;
-        if (Double.doubleToLongBits(this.totalTime) != Double.doubleToLongBits(other.totalTime)) {
-            return false;
-        }
-        if (this.noPeople != other.noPeople) {
-            return false;
-        }
-        return true;
-    }
-
+ 
     
     
 }

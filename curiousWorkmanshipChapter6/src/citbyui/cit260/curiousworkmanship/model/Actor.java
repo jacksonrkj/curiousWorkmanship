@@ -13,9 +13,12 @@ import java.util.Objects;
  *
  * @author jacksonrkj
  */
+
+
 public class Actor implements Serializable {
     
     private String name;
+    private Location location;
 
     public Actor() {
     }
@@ -31,6 +34,16 @@ public class Actor implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    
+    
 
     @Override
     public String toString() {

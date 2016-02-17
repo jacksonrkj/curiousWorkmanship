@@ -1,116 +1,106 @@
-/**
- * View class for Start program end user story
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-
 package citbyui.cit260.curiousworkmanship.view;
 
-import citbyui.cit260.curiousworkmanship.control.Controls;
+import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.model.Player;
-import java.util.Scanner;
 
+/**
+ *
+ * @author jacksonrkj
+ */
 public class StartProgramView {
-    
-    public StartProgramView() {       
-    }
-
-    
-    public void startProgram() {
         
+    private String promptMessage;
+    
+    public StartProgramView() {
         
-        // Display the banner screen
+        this.promptMessage = "\nPlease enter your name: "; 
+        // display the banner when view is created
         this.displayBanner();
         
-        // prompt the player to enter their name Retrieve the name of the player
-        String playersName = this.getPlayersName();
-        if (playersName == null) // user wants to quit
-            return; // exit the game
+    }
+
+    private void displayBanner() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    /**
+     * displays the start program view
+     */
+    public void displayStartProgramView() {
         
-        // Create the player object and save it in the ProgramControl class
-        Player player = new Player();
-        player.setName(playersName);
-        Controls.getProgramControl().setPlayer(player);
-       
-        // Display a personalized welcome message
-        this.displayWelcomeMessage(playersName);
-        
-        // Display the Main menu.
-        MainMenuView mainMenuView = new MainMenuView();
-        mainMenuView.displayMenu();
+        boolean done = false; // set flag to not done
+        do { 
+            // prompt for and get players name
+            String playersName = this.getPlayersName();
+            if (playersName.toUpperCase().equals("Q")) // user wants to quit
+                return; // exit the game
+
+            // do the requested action and display the next view
+            done = this.doAction(playersName); 
+
+        } while (!done);
+
+    }
+
+    private String getPlayersName() {
         
     }
     
-    public void displayBanner() {
-        System.out.println("\n\n*********************************************");
-        
-        System.out.println("*                                           *"
-                       + "\n* This is the game of Curious Workmanship   *"
-                       + "\n* In this game you will help Nephi build a  *"
-                       + "\n* shiop of curious workmanship to travel to *"
-                       + "\n* the promised land.                        *");
-        
-        System.out.println("*                                           *"
-                       + "\n* You and your family will need to first    *"
-                       + "\n* plan for your trip determining and        *"
-                       + "\n*and estimating the amount of resources     *"
-                       + "\n*needed for the trip. Then you will have    *"
-                       + "\n*to go out and search for and harvest       *"
-                       + "\n*the needed resources and deliver them      *"
-                       + "\n*to the warehouse where you will store      *"
-                       + "\n*then until the ship is completed. Then     *"
-                       + "\n* You will also need to build the ship,     *"
-                       + "\n* load the ship and then set sail for       *"
-                       + "\n* the promised land. You will first need    *"
-                       + "\n* to find the resources and manufacture the *"
-                       + "\n* tools need to build the ship.             *");
-     
-        System.out.println("*                                           *"
-                       + "\n* Good luck and have fun in this adventure. *"
-                       + "\n*                                           *");
-        
-        System.out.println("*********************************************");
-        
-    }
     
-    public String getPlayersName() {
-        boolean valid = false;
-        String playersName = null;
-        Scanner keyboard = new Scanner(System.in);
+
+    private boolean doAction(String playersName) {
         
-        // while a valid name has not been retrieved
-        while( !valid) {
-            
-            // prompt for the player's name
-            System.out.println("Enter the player's name below:");
+        if (playersName.length() < 2) {
+            System.out.println("\nInvalid players name: "
+                    + "The name must be greater than one character in length");
+            return false;
+        }
+ 
+	// call createPlayer() control function
+        Player player = GameControl.createPlayer(playersName);
         
-            // get the name from the keyboard
-            playersName = keyboard.nextLine();
-            
-            // if the name is invalid (non-blank and > two characters) then
-            if (playersName.trim().length() < 2) {
-                // display and error
-                System.out.println("Invalid name - the name must be non blank "
-                                 + "and greater than two characters");
-            }
-            
-            if (playersName.toUpperCase().charAt(0) == 'Q') {
-                return null;
-            }
-            
-            // signal that a valid name was entered
-            valid = true;            
+        if (player == null) { // if unsuccessful 
+            System.out.println("\nError creating the player.");
+            return false;
         }
         
-        return playersName; // return the name        
+        // display next view
+	this.displayNextView();
+
+        return true; // success !  
     }
-    
-    public void displayWelcomeMessage(String name) {
-        System.out.println("\n\n=============================================");         
-        System.out.println("\tWelcome to the game " + name);
-        System.out.println("\tWe hope you have a lot of fun!");
-        System.out.println("=============================================");
+
+    private void displayNextView() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
- 
-    
-    
+
 }
+
+
+
+
+
+    /**
+     * Display the start program view
+     */
+//    public void displayStartProgramView() {
+
+        //  do 
+            // Prompt for and get the players name
+                
+            // if (playersName == “Q”) then
+                // exit
+
+            // do the action and display the next view
+
+        // while the action is not successful
+                
+//    }
+    

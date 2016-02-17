@@ -14,19 +14,22 @@ import java.io.Serializable;
  */
 public class Wagon implements Serializable {
     
-    private long numberLoaded;
+    private long numberBarrelsLoaded;
     private double maxWeight;
     private double loadedWeight;
 
     public Wagon() {
+        this.numberBarrelsLoaded = 0;
+        this.maxWeight = 1000;
+        this.loadedWeight = 0;
     }
 
-    public long getNumberLoaded() {
-        return numberLoaded;
+    public long getNumberBarrelsLoaded() {
+        return numberBarrelsLoaded;
     }
 
-    public void setNumberLoaded(long numberLoaded) {
-        this.numberLoaded = numberLoaded;
+    public void setNumberBarrelsLoaded(long numberBarrelsLoaded) {
+        this.numberBarrelsLoaded = numberBarrelsLoaded;
     }
 
     public double getMaxWeight() {
@@ -47,13 +50,13 @@ public class Wagon implements Serializable {
 
     @Override
     public String toString() {
-        return "Wagon{" + "numberLoaded=" + numberLoaded + ", maxWeight=" + maxWeight + ", loadedWeight=" + loadedWeight + '}';
+        return "Wagon{" + "numberLoaded=" + numberBarrelsLoaded + ", maxWeight=" + maxWeight + ", loadedWeight=" + loadedWeight + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 13 * hash + (int) (this.numberLoaded ^ (this.numberLoaded >>> 32));
+        hash = 13 * hash + (int) (this.numberBarrelsLoaded ^ (this.numberBarrelsLoaded >>> 32));
         hash = 13 * hash + (int) (Double.doubleToLongBits(this.maxWeight) ^ (Double.doubleToLongBits(this.maxWeight) >>> 32));
         hash = 13 * hash + (int) (Double.doubleToLongBits(this.loadedWeight) ^ (Double.doubleToLongBits(this.loadedWeight) >>> 32));
         return hash;
@@ -68,7 +71,7 @@ public class Wagon implements Serializable {
             return false;
         }
         final Wagon other = (Wagon) obj;
-        if (this.numberLoaded != other.numberLoaded) {
+        if (this.numberBarrelsLoaded != other.numberBarrelsLoaded) {
             return false;
         }
         if (Double.doubleToLongBits(this.maxWeight) != Double.doubleToLongBits(other.maxWeight)) {

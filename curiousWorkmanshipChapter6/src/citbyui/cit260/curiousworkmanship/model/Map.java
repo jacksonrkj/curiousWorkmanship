@@ -12,40 +12,83 @@ import java.io.Serializable;
  *
  * @author jacksonrkj
  */
+
+
 public class Map implements Serializable {
     
-    private long rowCount;
-    private long columnCount;
+    private int noOfRows;
+    private int noOfColumns;
+    private Location[][] locations;
 
-    public Map() {
+    public Map() {     
+    }
+    
+    public Map(int noOfRows, int noOfColumns) {
+        
+        if (noOfRows < 1 || noOfColumns < 1) {
+            System.out.println("The number of rows and columns must be > zero");
+            return;
+        }
+        
+        this.noOfRows = noOfRows;
+        this.noOfColumns = noOfColumns;
+        
+        // create 2-D array for Location objects
+        this.locations = new Location[noOfRows][noOfColumns];
+        
+        for (int row = 0; row < noOfRows; row++) {
+            for(int column = 0; column < noOfColumns; column++) {
+                // create and initialize new Location object instance
+                Location location = new Location();
+                location.setColumn(column);
+                location.setRow(row);
+                location.setVisited(false);
+                
+                // assign the Location object to the current position in array
+                locations[row][column] = location;          
+            }
+        }
     }
 
-    public long getRowCount() {
-        return rowCount;
+    
+    
+    public long getNoOfRows() {
+        return noOfRows;
     }
 
-    public void setRowCount(long rowCount) {
-        this.rowCount = rowCount;
+    public void setNoOfRows(int noOfRows) {
+        this.noOfRows = noOfRows;
     }
 
     public long getColumnCount() {
-        return columnCount;
+        return noOfColumns;
     }
 
-    public void setColumnCount(long columnCount) {
-        this.columnCount = columnCount;
+    public void setColumnCount(int noOfColumns) {
+        this.noOfColumns = noOfColumns;
     }
+
+    public Location[][] getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Location[][] locations) {
+        this.locations = locations;
+    }
+    
+    
+    
 
     @Override
     public String toString() {
-        return "Map{" + "rowCount=" + rowCount + ", columnCount=" + columnCount + '}';
+        return "Map{" + "rowCount=" + noOfRows + ", columnCount=" + noOfColumns + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + (int) (this.rowCount ^ (this.rowCount >>> 32));
-        hash = 37 * hash + (int) (this.columnCount ^ (this.columnCount >>> 32));
+        hash = 37 * hash + (int) (this.noOfRows ^ (this.noOfRows >>> 32));
+        hash = 37 * hash + (int) (this.noOfColumns ^ (this.noOfColumns >>> 32));
         return hash;
     }
 
@@ -58,10 +101,10 @@ public class Map implements Serializable {
             return false;
         }
         final Map other = (Map) obj;
-        if (this.rowCount != other.rowCount) {
+        if (this.noOfRows != other.noOfRows) {
             return false;
         }
-        if (this.columnCount != other.columnCount) {
+        if (this.noOfColumns != other.noOfColumns) {
             return false;
         }
         return true;
