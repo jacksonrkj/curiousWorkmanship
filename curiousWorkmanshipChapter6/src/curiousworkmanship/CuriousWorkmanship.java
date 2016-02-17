@@ -8,7 +8,7 @@ package curiousworkmanship;
 
 import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
-import citbyui.cit260.curiousworkmanship.view.StartProgramViewOrig;
+import citbyui.cit260.curiousworkmanship.view.StartProgramView;
 
 
 public class CuriousWorkmanship {
@@ -21,7 +21,7 @@ public class CuriousWorkmanship {
 
     public static void main(String[] args) {  
         // create StartProgramViewOrig and start the program
-        StartProgramViewOrig startProgramView = new StartProgramViewOrig();
+        StartProgramView startProgramView = new StartProgramView();
         startProgramView.displayStartProgramView();
     }
 

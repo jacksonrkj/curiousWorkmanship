@@ -288,7 +288,8 @@ public class GameControl {
     
 
     public static Player createPlayer(String playersName) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("\n*** CreatePlayer function called ***");
+        return null;
     }
 
 }

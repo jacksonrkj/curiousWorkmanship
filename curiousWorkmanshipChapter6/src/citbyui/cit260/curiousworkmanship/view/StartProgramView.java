@@ -5,7 +5,6 @@
  */
 package citbyui.cit260.curiousworkmanship.view;
 
-import citbyui.cit260.curiousworkmanship.model.MainMenuView;
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.model.Player;
 
@@ -89,7 +88,7 @@ public class StartProgramView {
                           );
         
         // Create MainMenuView object
-        MainMenuView mainMenuView = new MainMenuView()
+        MainMenuView mainMenuView = new MainMenuView();
                 
         // Display the main menu view
         mainMenuView.displayMainMenuView();    
@@ -97,26 +96,3 @@ public class StartProgramView {
 
 }
 
-
-
-
-       
-        
-
-    /**
-     * Display the start program view
-     */
-//    public void displayStartProgramView() {
-
-        //  do 
-            // Prompt for and get the players name
-                
-            // if (playersName == “Q”) then
-                // exit
-
-            // do the action and display the next view
-
-        // while the action is not successful
-                
-//    }
-    
