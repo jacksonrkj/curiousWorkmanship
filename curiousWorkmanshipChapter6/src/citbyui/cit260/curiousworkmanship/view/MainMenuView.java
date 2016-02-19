@@ -9,7 +9,7 @@ import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.control.ProgramControl;
 import citbyui.cit260.curiousworkmanship.view.GameMenuView;
 import citbyui.cit260.curiousworkmanship.view.HelpMenuView;
-import citbyui.cit260.curiousworkmanship.view.MenuView;
+import citbyui.cit260.curiousworkmanship.view.View;
 import curiousworkmanship.CuriousWorkmanship;
 import java.util.Scanner;
 
@@ -17,7 +17,7 @@ import java.util.Scanner;
  *
  * @author jacksonrkj
  */
-// public class MainMenuView extends MenuView 
+// public class MainMenuView extends View 
 
 public class MainMenuView 
 {
@@ -110,14 +110,13 @@ public class MainMenuView
      
 
     private void startNewGame() {
-        
-        System.out.println("\n *** startNewGame() function called ***");
-//        // create a new game
-//        GameControl.createNewGame(CuriousWorkmanship.getPlayer());
-//
-//        // display the game menu
-//        GameMenuView gameMenu = new GameMenuView();
-//        gameMenu.displayMenu();
+       
+        // create a new game
+        GameControl.createNewGame(CuriousWorkmanship.getPlayer());
+
+        // display the game menu
+        GameMenuView gameMenu = new GameMenuView();
+        gameMenu.displayMenu();
     }
 
     private void startExistingGame() {

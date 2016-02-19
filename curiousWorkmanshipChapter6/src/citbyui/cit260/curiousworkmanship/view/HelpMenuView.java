@@ -11,7 +11,7 @@ package citbyui.cit260.curiousworkmanship.view;
  *
  * @author jacksonrkj
  */
-public class HelpMenuView extends MenuView {
+public class HelpMenuView extends View {
 
     public HelpMenuView() {
         super("\n"
@@ -36,10 +36,10 @@ public class HelpMenuView extends MenuView {
    
     
     
-    public void doAction(char selection) {
+    public boolean doAction(String selection) {
      
         switch (selection) {
-            case 'G':
+            case "G":
                 System.out.println("\n"
                     + "\nThe goals of the game are to first determine what"
                     + "\nresources are needed for the trip. Then you must"
@@ -52,7 +52,7 @@ public class HelpMenuView extends MenuView {
                     + "\nthe ship. Finally, when all is ready you must"
                     + "\nlaunch the ship to the promised land.");
                 break;
-            case 'T':
+            case "T":
                  System.out.println("\n"
                     + "\nMove a person to a new location in the game. Select"
                     + "\nthe Travel to new location option in the Game"
@@ -66,7 +66,7 @@ public class HelpMenuView extends MenuView {
                     + "\nlocation.");
 
                 break;
-            case 'V':
+            case "V":
                 System.out.println("\n"
                     + "\nView the description of a location and who is"
                     + "\ncurrently at that location. You can not view a "
@@ -75,7 +75,7 @@ public class HelpMenuView extends MenuView {
                     + "\nthe Game menu and enter the coordinates of the"
                     + "\nlocation you would like to view.");
                 break;
-            case 'E':
+            case "E":
                 System.out.println("\n"
                     + "\nAs part of the planning phase of the game, you will"
                     + "\nneed to estimate the resources that will be needed"
@@ -93,7 +93,7 @@ public class HelpMenuView extends MenuView {
                     + "\ngame menu and design the barrels first if you have"
                     + "\nalready done so");
                 break;
-            case 'B':
+            case "B":
                 System.out.println("\n"
                     + "\nDesign the barrels to hold the different types of "
                     + "\nresources to be loaded on the ship. Select the Design "
@@ -101,7 +101,7 @@ public class HelpMenuView extends MenuView {
                     + "\nand then enter height and diameter of the barrel for"
                     + "\nthe resource being selected.");
                 break;
-            case 'M':
+            case "M":
                 System.out.println("\n"
                     + "\nYou will need to manufacture items needed to build"
                     + "\nthe ship and store the items that you will take on"
@@ -109,14 +109,14 @@ public class HelpMenuView extends MenuView {
                     + "\non the Game Menu. Select a person to manufacture"
                     + "\nthe item and the amount to be manufacured.");
                 break;
-            case 'R':
+            case "R":
                 System.out.println("\n"
                     + "\nYou must locate the resources needed in the land"
                     + "\nof Bountiful and then harvest the resource."
                     + "\nSelect the Havest resource option in the Game"
                     + "\nMenu and enter the amount that you want to harvest.");
                 break;
-            case 'D':
+            case "D":
                 System.out.println("\n"
                     + "\nOnce you have harvested a resource you will need"
                     + "\nto deliver the resource to the warehouse. Move the"
@@ -126,14 +126,14 @@ public class HelpMenuView extends MenuView {
                     + "\nstored in the warehouse.");
                 break;
 
-            case 'W':
+            case "W":
                 System.out.println("\n"
                     + "\nYou will need to assign people to work on building"
                     + "\nthe ship. Select the indvidual to work on the ship"
                     + "\nand enter the number of days that they will work"
                     + "\non the ship.");
                 break;
-            case 'P':
+            case "P":
                 System.out.println("\n"
                     + "\nYou will need to load and pack the resources on"
                     + "\nthe ship before you can launch it. You can start"
@@ -143,7 +143,7 @@ public class HelpMenuView extends MenuView {
                     + "\nand the number days they are to work on this task.");
                 break;
 
-            case 'J':
+            case "J":
                 System.out.println("\n"
                     + "\nLaunch the ship and embark on your journey to the "
                     + "\ntPromised Land. You must have completed the ship"
@@ -153,12 +153,12 @@ public class HelpMenuView extends MenuView {
                     + "\ncompleted and all of the required resources are"
                     + "\nloaded on the ship then win the game");
                 break;
-            case 'Q':
-                return;
 
             default:
                 System.out.println("\n*** Invalid selection *** Try again");
         }
+        
+        return false;
        
     }    
 

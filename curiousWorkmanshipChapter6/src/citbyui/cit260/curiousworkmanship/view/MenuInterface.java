@@ -14,7 +14,7 @@ interface MenuInterface {
     
     public void displayMenu();
     public String getInput();
-    public void doAction(char choice);
+    public boolean doAction(String choice);
     public void clearConsole();
     
 }

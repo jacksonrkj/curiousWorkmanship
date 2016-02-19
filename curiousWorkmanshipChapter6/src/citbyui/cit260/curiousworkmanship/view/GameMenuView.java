@@ -13,7 +13,7 @@ import citbyui.cit260.curiousworkmanship.model.Location;
 import citbyui.cit260.curiousworkmanship.model.Scene;
 
 
-public class GameMenuView extends MenuView {
+public class GameMenuView extends View {
 
     public GameMenuView() {
         super("\n"
@@ -42,59 +42,60 @@ public class GameMenuView extends MenuView {
    
     
     
-    public void doAction(char selection) {
+    public boolean doAction(String selection) {
+        
         
         switch (selection) {
-            case 'V': // Travel to new location
+            case "V": // Travel to new location
                 this.displayMap(); 
                 break;
-            case 'I': // View list of items in inventory
+            case "I": // View list of items in inventory
                 this.viewInventory(); 
                 break;
-            case 'A': // View list of actors
+            case "A": // View list of actors
                 this.viewActors(); 
                 break;
-            case 'S': // View the ship's status
+            case "S": // View the ship"s status
                 this.viewShipStatus(); 
                 break;
-            case 'L': // View description of location
+            case "L": // View description of location
                 this.viewLocation(); 
                 break;    
-            case 'M': // Move actor to new location
+            case "M": // Move actor to new location
                 this.moveToLocation(); 
                 break;                
-            case 'E': // Estimate the resource needed
+            case "E": // Estimate the resource needed
                 this.estimateResources();
                 break;
-            case 'B': // Design barrels
+            case "B": // Design barrels
                 this.designBarrels(); 
                 break;
-            case 'C': // Construct tools and other items
+            case "C": // Construct tools and other items
                 this.manufactureItems(); 
                 break;
-            case 'R': // Harvest resource
+            case "R": // Harvest resource
                 this.harvestResources(); 
                 break;
-            case 'D': // Deliver resource
+            case "D": // Deliver resource
                 this.deliverResources(); 
                 break;
-            case 'W': // Work on ship
+            case "W": // Work on ship
                 this.workOnShip();
                 break;
-            case 'P': // Pack ship
+            case "P": // Pack ship
                 this.packShip(); 
                 break;
-            case 'J': // Launch ship
+            case "J": // Launch ship
                 this.launchShip();      
                 break;
-            case 'H': // display the help menu
+            case "H": // display the help menu
                 this.displayHelpMenu();
                 break;
-            case 'Q':
-                return;
             default:
                 System.out.println("\n*** Invalid selection *** Try again");
         }
+        
+        return false;
  
     }
     

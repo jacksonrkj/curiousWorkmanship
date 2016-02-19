@@ -12,30 +12,30 @@ import java.util.Scanner;
  *
  * @author jacksonrkj
  */
-public abstract class MenuView implements MenuInterface {
+public abstract class View implements MenuInterface {
     
-    private String menu;
+    private String message;
 
-    public MenuView() {
+    public View() {
     }
 
-    public MenuView(String menu) {
-        this.menu = menu;
+    public View(String message) {
+        this.message = message;
     }
     
     public void displayMenu() {
-
-        char selection = ' ';
+        
+        boolean done = false;
         do { 
-            
-            System.out.println(this.menu); // display the main menu
+            // prompt for and get players name
+            String value = this.getInput();
+            if (value.toUpperCase().equals("Q")) // user wants to quit
+                return; // exit the game
 
-            String input = this.getInput(); // get the user's selection
-            selection = input.charAt(0); // get first character of string
+            // do the requested action and display the next view
+            done = this.doAction(value); 
 
-            this.doAction(selection); // do action based on selection
-            
-        } while (selection != 'Q'); // an selection is not "Exit"
+        } while (!done);
 
     }
     
@@ -50,7 +50,7 @@ public abstract class MenuView implements MenuInterface {
         while (!valid) {
 
             // prompt for the player's name
-            System.out.println("\t\nEnter your selection below:");
+            System.out.println("\t" + this.message);
 
             // get the value entered from the keyboard
             selection = keyboard.nextLine();
