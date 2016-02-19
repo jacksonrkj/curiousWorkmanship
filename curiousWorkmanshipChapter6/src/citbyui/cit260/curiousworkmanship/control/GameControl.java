@@ -16,12 +16,29 @@ import citbyui.cit260.curiousworkmanship.model.Ship;
 import citbyui.cit260.curiousworkmanship.model.Wagon;
 import curiousworkmanship.CuriousWorkmanship;
 
+
 /**
  *
  * @author jacksonrkj
  */
 
 public class GameControl {
+    
+    public static Player createPlayer(String name) {
+        
+        if (name == null) {
+            return null;
+        }    
+        
+        Player player = new Player();
+        player.setName(name);
+        
+        CuriousWorkmanship.setPlayer(player); // save the player
+        
+        return player;
+    }
+    
+    
     
     private static Game game;
 
@@ -286,10 +303,6 @@ public class GameControl {
     }
     
     
-
-    public static Player createPlayer(String playersName) {
-        System.out.println("\n*** CreatePlayer function called ***");
-        return null;
-    }
+    
 
 }
