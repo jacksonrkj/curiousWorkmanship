@@ -40,10 +40,10 @@ public class StartProgramView extends View {
     }
     
     @Override
-    public boolean doAction(Object obj) {
+    public boolean doAction(String value) {
         
         boolean valid = false;
-        String playersName = (String) obj;
+        String playersName = value;
         
         while(!valid) { // while a valid name has not been retrieved
             playersName = playersName.trim(); 

@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 
 public abstract class View implements ViewInterface {
     
-    private String promptMessage;
+    protected String promptMessage;
     private boolean input = true;
     
     protected final BufferedReader keyboard = CuriousWorkmanship.getInFile();
@@ -53,9 +53,12 @@ public abstract class View implements ViewInterface {
         
         do { 
             this.console.println(this.promptMessage); // display the prompt promptMessage
+            
             if (this.input) {
                 value = this.getInput(); // get the user's selection
             }
+            if (value.toUpperCase().equals("Q")) // user wants to quit
+                return; // exit the view
             done = this.doAction(value); // do action based on selection        
         } while (!done);
 

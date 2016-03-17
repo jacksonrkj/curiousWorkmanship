@@ -43,6 +43,7 @@ public class GameMenuView extends View {
             + "\nJ - Launch ship to the promised land"
             + "\nH - Display help menu"
             + "\nP - Print game report"
+            + "\nZ - Calculate volume of barrel" 
             + "\nQ - Quit"
             + "\n---------------------------------------------");
 
@@ -52,8 +53,8 @@ public class GameMenuView extends View {
     
     
     @Override
-    public boolean doAction(Object obj) {
-        String value = (String) obj;
+    public boolean doAction(String value) {
+        
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
      
@@ -107,8 +108,7 @@ public class GameMenuView extends View {
             case 'P': // print game report
                 this.printReport();
                 break;
-            case 'Q':
-                return true;
+
             default:
                 ErrorView.display("GameMenuView", "*** Invalid selection *** Try again");
         }
@@ -341,5 +341,6 @@ public class GameMenuView extends View {
         }
 
     }
- 
+
+
 }

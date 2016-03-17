@@ -34,7 +34,7 @@ public class EstimateResourcesView extends View {
 
     
     @Override
-    public boolean doAction(Object obj) {
+    public boolean doAction(String value) {
         Game game = CuriousWorkmanship.getCurrentGame();
         
         boolean done = false;
@@ -100,8 +100,8 @@ public class EstimateResourcesView extends View {
         }
 
         @Override
-        public boolean doAction(Object obj) {
-            String value = (String) obj;
+        public boolean doAction(String value) {
+            
             char choice = value.trim().toUpperCase().charAt(0);
    
             selectedFoodItem = null;
@@ -151,8 +151,8 @@ public class EstimateResourcesView extends View {
         }
 
         @Override
-        public boolean doAction(Object obj) {
-            String value = (String) obj;
+        public boolean doAction(String value) {
+            
             
             if ( value.trim().toUpperCase().charAt(0) == 'Q') {
                 quit = true;
@@ -237,10 +237,8 @@ public class EstimateResourcesView extends View {
         }
 
         @Override
-        public boolean doAction(Object obj) {
+        public boolean doAction(String value) {
             int peopleEntered = 0;
-            
-            String value = (String) obj;
             
             if ( value.trim().toUpperCase().charAt(0) == 'Q') {
                 quit = true;
@@ -301,8 +299,7 @@ public class EstimateResourcesView extends View {
         }
 
         @Override
-        public boolean doAction(Object obj) {
-            String value = (String) obj;
+        public boolean doAction(String value) {
            
             if ( value.trim().toUpperCase().charAt(0) == 'Q') {
                 quit = true;

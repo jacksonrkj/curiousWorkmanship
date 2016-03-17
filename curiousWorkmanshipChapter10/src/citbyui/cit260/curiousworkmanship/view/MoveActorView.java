@@ -40,12 +40,11 @@ public class MoveActorView extends View {
 
 
     @Override
-    public boolean doAction(Object obj) {
+    public boolean doAction(String choice) {
 
         Actor actor; 
         Game game = CuriousWorkmanship.getCurrentGame();
         
-        String choice = (String) obj;
         choice = choice.trim().toUpperCase(); // trim blanks and uppercase
         
         // check for valid actor

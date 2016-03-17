@@ -26,8 +26,8 @@ public class ViewLocationView extends View {
 
 
     @Override
-    public boolean doAction(Object obj) {
-        String choice = (String) obj;
+    public boolean doAction(String choice) {
+
         try{
             Point coordinates = this.getCoordinates(choice); // get the row and column
             if (coordinates == null)

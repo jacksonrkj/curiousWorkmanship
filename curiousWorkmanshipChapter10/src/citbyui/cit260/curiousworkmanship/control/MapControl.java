@@ -51,8 +51,6 @@ public class MapControl {
     
     
     private static Scene[] createScenes() {
-     
-        Game game = CuriousWorkmanship.getCurrentGame();
 
         Scene[] scenes = new Scene[SceneType.values().length];
 
@@ -286,10 +284,9 @@ public class MapControl {
         salt.setAmountOfResource(60);
         salt.setResourceType(Item.salt);
         scenes[SceneType.salt.ordinal()] = salt;
-    //
-
-        InventoryItem[] inventory = game.getInventory();
-
+        
+        
+        InventoryItem[] inventory = CuriousWorkmanship.getCurrentGame().getInventory();
         ConstructionScene blacksmith = new ConstructionScene();
         blacksmith.setBlocked(false);
         blacksmith.setDescription(

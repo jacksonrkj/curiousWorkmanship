@@ -18,12 +18,6 @@ public interface ViewInterface {
     
     public void display();
     public String getInput();
-    public boolean doAction(Object obj);
-    
-}
-
-
-
-class abc {
+    public boolean doAction(String value);
     
 }

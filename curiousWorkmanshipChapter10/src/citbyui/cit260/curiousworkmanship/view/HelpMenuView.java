@@ -36,8 +36,7 @@ public class HelpMenuView extends View {
     }   
     
     
-    public boolean doAction(Object obj) {
-        String value = (String) obj;
+    public boolean doAction(String value) {
         
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered

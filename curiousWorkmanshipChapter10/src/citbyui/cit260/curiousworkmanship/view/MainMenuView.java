@@ -7,7 +7,9 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
+import citbyui.cit260.curiousworkmanship.model.Scene;
 import curiousworkmanship.CuriousWorkmanship;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,7 +18,7 @@ import curiousworkmanship.CuriousWorkmanship;
 
 
 public class MainMenuView extends View {
-
+    
     public MainMenuView() {
         super("\n"
               + "\n-----------------------------------------"
@@ -31,9 +33,8 @@ public class MainMenuView extends View {
     }
 
     @Override
-    public boolean doAction(Object obj) {
- 
-        String value = (String) obj;       
+    public boolean doAction(String value) {
+       
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
 
@@ -50,8 +51,6 @@ public class MainMenuView extends View {
             case 'S': // save the current game
                 this.saveGame();               
                 break;
-            case 'Q': // Exit the program
-                return true;
             default:
                 ErrorView.display("MainMenuView", 
                                   "*** Invalid selection *** Try again");
