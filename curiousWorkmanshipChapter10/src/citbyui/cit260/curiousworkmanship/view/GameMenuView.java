@@ -56,15 +56,14 @@ public class GameMenuView extends View {
     public boolean doAction(String value) {
         
         value = value.toUpperCase(); // convert to all upper case
-        char choice = value.charAt(0); // get first character entered
-     
+        char choice = value.charAt(0); // get first character entered     
         
         switch (choice) {
             case 'V': // Travel to new location
                 this.displayMap(); 
                 break;
             case 'I': // View list of items in inventory
-                this.displayInventory(); 
+                this.viewInventory(); 
                 break;
             case 'A': // View list of actors
                 this.displayActors(); 
@@ -234,29 +233,56 @@ public class GameMenuView extends View {
         helpMenu.display(); 
     }
 
-    private void displayInventory() {
-        this.viewInventory(CuriousWorkmanship.getOutFile());
-    }
-    private void viewInventory(PrintWriter out) {
-        // get the sorted list of inventory items for the current game
-        InventoryItem[] inventory = GameControl.getSortedInventoryList();
+//    private void viewInventory() {
+//        this.viewInventory(CuriousWorkmanship.getOutFile());
+//    }
+//    
+//        private void viewInventory(PrintWriter out) {
+//        // get the sorted list of inventory items for the current game
+//        InventoryItem[] inventory = GameControl.getSortedInventoryList();
+//        
+//        out.println("\n        LIST OF INVENTORY ITEMS");
+//        StringBuilder line = new StringBuilder("                                                          ");
+//        line.insert(0, "DESCRIPTION"); 
+//        line.insert(20, "REQUIRED");
+//        line.insert(30, "IN STOCK");
+//        out.println(line.toString());
+//        
+//        // for each inventory item
+//        for (InventoryItem inventoryItem : inventory) {
+//            line = new StringBuilder("                                                          ");
+//            line.insert(0, inventoryItem.getDescription());
+//            line.insert(23, inventoryItem.getRequiredAmount());
+//            line.insert(33, inventoryItem.getQuantityInStock());
+//            
+//            // DISPLAY the description, the required amount and amount in stock
+//            out.println(line.toString());
+//        }   
+//    }
         
-        out.println("\n        LIST OF INVENTORY ITEMS");
-        StringBuilder line = new StringBuilder("                                                          ");
+        
+    private void viewInventory() {
+        StringBuilder line;
+        
+        Game game = CuriousWorkmanship.getCurrentGame();
+        InventoryItem[] inventory = game.getInventory();
+        
+        System.out.println("\n        LIST OF INVENTORY ITEMS");
+        line = new StringBuilder("                                       ");
         line.insert(0, "DESCRIPTION"); 
         line.insert(20, "REQUIRED");
         line.insert(30, "IN STOCK");
-        out.println(line.toString());
+        System.out.println(line.toString());
         
         // for each inventory item
-        for (InventoryItem inventoryItem : inventory) {
-            line = new StringBuilder("                                                          ");
-            line.insert(0, inventoryItem.getDescription());
-            line.insert(23, inventoryItem.getRequiredAmount());
-            line.insert(33, inventoryItem.getQuantityInStock());
+        for (InventoryItem item : inventory) {
+            line = new StringBuilder("                                       ");
+            line.insert(0, item.getDescription());
+            line.insert(23, item.getRequiredAmount());
+            line.insert(33, item.getQuantityInStock());
             
-            // DISPLAY the description, the required amount and amount in stock
-            out.println(line.toString());
+            // DISPLAY the line
+            System.out.println(line.toString());
         }   
     }
 
@@ -327,7 +353,7 @@ public class GameMenuView extends View {
             this.viewMap(reportFile);
             
             reportFile.println();
-            this.viewInventory(reportFile);
+//            this.viewInventory(reportFile);
 
             reportFile.println();
             this.viewActors(reportFile); 

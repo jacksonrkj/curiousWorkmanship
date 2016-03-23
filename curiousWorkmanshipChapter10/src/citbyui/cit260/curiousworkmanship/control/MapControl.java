@@ -137,7 +137,6 @@ public class MapControl {
         riverCrossing.setMapSymbol("=}{=");
         riverCrossing.setTravelTime(20);
         scenes[SceneType.riverCrossing.ordinal()] = riverCrossing;
-    //
 
         Scene beach = new Scene();
         beach.setBlocked(false);
@@ -432,10 +431,7 @@ public class MapControl {
         campScene.setTravelTime(600);
         scenes[SceneType.camp.ordinal()] = campScene;
 
-
         return scenes;
-
-
     }
 
     private static void assignScenesToLocations(Map map, Scene[] scenes) {

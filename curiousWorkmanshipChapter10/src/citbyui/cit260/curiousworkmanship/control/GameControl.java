@@ -266,7 +266,7 @@ public class GameControl {
             
             output.writeObject(game); // write the game object out to file
         }
-        catch(IOException e) {
+        catch(Exception e) {
             throw new GameControlException(e.getMessage());
         } 
     }
@@ -277,12 +277,9 @@ public class GameControl {
         Game game = null;
 
         try( FileInputStream fips = new FileInputStream(filepath)) {
-            ObjectInputStream output = new ObjectInputStream(fips);
+            ObjectInputStream input = new ObjectInputStream(fips);
             
-            game = (Game) output.readObject(); // read the game object from file
-        }
-        catch(FileNotFoundException fnfe) {
-            throw new GameControlException(fnfe.getMessage());
+            game = (Game) input.readObject(); // read the game object from file
         }
         catch(Exception e) {
             throw new GameControlException(e.getMessage());
