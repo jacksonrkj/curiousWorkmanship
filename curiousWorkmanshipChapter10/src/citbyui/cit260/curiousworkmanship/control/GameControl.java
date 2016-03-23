@@ -19,11 +19,8 @@ import citbyui.cit260.curiousworkmanship.model.Player;
 import citbyui.cit260.curiousworkmanship.model.Ship;
 import citbyui.cit260.curiousworkmanship.model.Wagon;
 import curiousworkmanship.CuriousWorkmanship;
-import java.awt.Point;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.InvalidParameterException;
@@ -390,6 +387,22 @@ public class GameControl {
    
      public static double harvestResource(Location location, Item item, int noOfPeople, double noOfHours) {
          CuriousWorkmanship.getOutFile().println("*** harvestResouce() called ***");
+ 
+         // calculate the total person hours workded
+         
+         // get resource scene from location
+         // get the amount of resources harvested per day (hour) 
+         
+         // get amount of resources available in scene
+         // calculate the amount of resources harvested
+         // amountHarvested = amountHarvestedPerHour * numberOfHours
+ 
+         // if amountToHarvest is less than amountInScene
+            // amountToHarvest = amountInScene
+
+        // reduce amountAvailable in scene
+        // get and add resource to wagon
+        
          return 0;
     }
     
