@@ -1,15 +1,9 @@
-///*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
-import citbyui.cit260.curiousworkmanship.model.Scene;
 import curiousworkmanship.CuriousWorkmanship;
-import java.util.ArrayList;
 
 /**
  *
