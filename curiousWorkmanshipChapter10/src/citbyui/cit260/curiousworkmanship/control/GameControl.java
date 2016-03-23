@@ -36,6 +36,8 @@ import java.security.InvalidParameterException;
 
 
 public class GameControl {
+
+   
     
     public enum Probability {
         OK,
@@ -386,6 +388,10 @@ public class GameControl {
     }
 
    
+     public static double harvestResource(Location location, Item item, int noOfPeople, double noOfHours) {
+         CuriousWorkmanship.getOutFile().println("*** harvestResouce() called ***");
+         return 0;
+    }
     
   
     
