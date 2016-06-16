@@ -33,9 +33,7 @@ import java.security.InvalidParameterException;
 
 
 public class GameControl {
-
    
-    
     public enum Probability {
         OK,
         TOO_LOW,
@@ -385,13 +383,32 @@ public class GameControl {
     }
 
    
-     public static double harvestResource(Location location, Item item, int noOfPeople, double noOfHours) {
+     public static double harvestResource(Location location, Item item, int noOfPeople, double noOfHours) throws GameControlException {
          CuriousWorkmanship.getOutFile().println("*** harvestResouce() called ***");
- 
+         
+         if (location == null) {
+             throw new GameControlException("harvestResource - no location specified");
+         }
+         
+         if (item == null){
+             throw new GameControlException("harvestResource - no item specified");
+         }
+         
+         if (noOfPeople < 0  || noOfPeople > Constants.ACTOR_COUNT) {
+            throw new GameControlException("harvestResource - invalid number of people specified");
+         }
+         
+         if (noOfHours < 1 || noOfHours > 12) {
+             throw new GameControlException("The minimum number of hours you can work is 1 and the maximum is 12");
+         }
+         
          // calculate the total person hours workded
+         double personHours = noOfHours * noOfHours;
          
          // get resource scene from location
          // get the amount of resources harvested per day (hour) 
+         
+         
          
          // get amount of resources available in scene
          // calculate the amount of resources harvested

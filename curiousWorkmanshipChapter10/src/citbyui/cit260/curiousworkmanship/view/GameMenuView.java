@@ -43,7 +43,8 @@ public class GameMenuView extends View {
             + "\nJ - Launch ship to the promised land"
             + "\nH - Display help menu"
             + "\nP - Print game report"
-            + "\nZ - Calculate volume of barrel" 
+            + "\nZ - Calculate volume of barrel"
+            + "\nT - Calculate area of a triangle" 
             + "\nQ - Quit"
             + "\n---------------------------------------------");
 
@@ -188,7 +189,8 @@ public class GameMenuView extends View {
     }
     
     private void harvestResources() {
-        this.console.println("*** harvestResources stub function called ***");        
+        HarvestResourcesView harvestView = new HarvestResourcesView();
+        harvestView.display();
     }
 
     private void deliverResources() {
@@ -367,6 +369,5 @@ public class GameMenuView extends View {
         }
 
     }
-
 
 }

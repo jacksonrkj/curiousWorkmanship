@@ -52,7 +52,6 @@ public abstract class View implements ViewInterface {
         boolean done = false;
         
         do { 
-            this.console.println(this.promptMessage); // display the prompt promptMessage
             
             if (this.input) {
                 value = this.getInput(); // get the user's selection
@@ -73,7 +72,8 @@ public abstract class View implements ViewInterface {
         try {
             // while a valid name has not been retrieved
             while (!valid) {
-
+                this.console.println(this.promptMessage); // display the prompt promptMessage
+                
                 // get the value entered from the keyboard
                 selection = this.keyboard.readLine();
                 selection = selection.trim();

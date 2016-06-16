@@ -62,11 +62,11 @@ public class HarvestResourcesView extends View {
 
             // display contents of location
             if (actorsInLocation.size() < 1) {
-                ErrorView.display("HarvestResourcesView", "There are no actors in this location to harvest this resource. "
-                        + "Move to a different location that contains items to harvest");
+                ErrorView.display("HarvestResourcesView", "There are no characters in this location to harvest this resource. "
+                        + "You need to move one or more characters to this location before you harvest these resources");
                 return false;
             }
-            this.console.println("\nThe following actors are currently in this location");
+            this.console.println("\nThe following characters are currently in this location");
             for (Actor actor : actorsInLocation) {
                 this.console.println("   " + actor);
 
