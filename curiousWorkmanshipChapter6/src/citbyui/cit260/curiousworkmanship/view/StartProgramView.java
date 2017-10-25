@@ -6,28 +6,23 @@
 package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
+import citbyui.cit260.curiousworkmanship.model.Location;
+import citbyui.cit260.curiousworkmanship.model.SceneType;
 import citbyui.cit260.curiousworkmanship.model.Player;
+import citbyui.cit260.curiousworkmanship.model.Scene;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  *
  * @author jacksonrkj
  */
-public class StartProgramView {
+public class StartProgramView extends View {
         
-    private String promptMessage;
     
-    public StartProgramView() {
-        
-        this.promptMessage = "\nPlease enter your name: "; 
-        // display the banner when view is created
-        this.displayBanner();
-        
-    }
 
-    private void displayBanner() {
-        
-        System.out.println( 
+    public StartProgramView() {
+        super( 
                 "\n***********************************************"
               + "\n*                                             *"
               + "\n* This is the game of Curious Workmanship     *"
@@ -52,57 +47,16 @@ public class StartProgramView {
               + "\n* Good luck and have fun in this adventure.   *"
               + "\n*                                             *"
               + "\n***********************************************"
+              + "\n\nPlease enter your name:                    "
               );
     }
 
 
-    /**
-     * displays the start program view
-     */
-    public void displayStartProgramView() {
-        
-        boolean done = false; // set flag to not done
-        do { 
-            // prompt for and get players name
-            String playersName = this.getPlayersName();
-            if (playersName.toUpperCase().equals("Q")) // user wants to quit
-                return; // exit the game
 
-            // do the requested action and display the next view
-            done = this.doAction(playersName); 
-
-        } while (!done);
-
-    }
 
     
-    private String getPlayersName() {
-        
-        Scanner keyboard = new Scanner(System.in); // get infile for keyboard
-        String value = ""; // value to be returned
-        boolean valid = false; // initialize to not valid
-        
-        while (!valid) { // loop while an invalid value is enter
-            System.out.println("\n" + this.promptMessage);
-            
-            value = keyboard.nextLine(); // get next line typed on keyboard
-            value = value.trim(); // trim off leading and trailing blanks
-            
-            if (value.length() < 1) { // value is blank
-                System.out.println("\nInvalid value: value can not be blank");
-                continue;
-            }
-            
-            break;  // end the loop 
-        }
-        
-        return value; // return the value entered
-    }    
-    
-
-    
-
-    private boolean doAction(String playersName) {
+    @Override
+    public boolean doAction(String playersName) {
         
         if (playersName.length() < 2) {
             System.out.println("\nInvalid players name: "
@@ -117,6 +71,7 @@ public class StartProgramView {
             System.out.println("\nError creating the player.");
             return false;
         }
+        
         
         // display next view
 	this.displayNextView(player);
@@ -140,7 +95,7 @@ public class StartProgramView {
         MainMenuView mainMenuView = new MainMenuView();
                 
         // Display the main menu view
-        mainMenuView.displayMainMenuView();    
+        mainMenuView.display();    
     }
 
 

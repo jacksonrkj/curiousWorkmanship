@@ -37,7 +37,8 @@ public class HelpMenuView extends View {
     
     
     public boolean doAction(String selection) {
-     
+        selection = selection.toUpperCase();
+        
         switch (selection) {
             case "G":
                 System.out.println("\n"

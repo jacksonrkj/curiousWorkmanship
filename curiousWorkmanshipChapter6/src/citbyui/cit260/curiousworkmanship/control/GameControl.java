@@ -153,7 +153,7 @@ public class GameControl {
     public static InventoryItem[] createInventoryList() {
         // created array(list) of inventory items    
         InventoryItem[] inventory = 
-            new InventoryItem[Constants.NUMBER_OF_INVENTORY_ITEMS];
+            new InventoryItem[15];
         
         InventoryItem lumber = new InventoryItem();
         lumber.setDescription("Lumber");
@@ -300,6 +300,11 @@ public class GameControl {
 
     public static Location[][] getMapLocations() {
         return CuriousWorkmanship.getCurrentGame().getMap().getLocations();
+    }
+
+    public static double gatherResource(String type, double amount) {
+        System.out.println("*** gatherResources() called ***");
+        return 0;
     }
     
     

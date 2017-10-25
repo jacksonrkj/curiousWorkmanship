@@ -13,6 +13,7 @@ import java.util.Objects;
  *
  * @author jacksonrkj
  */
+
 public class Player implements Serializable {
     
     private String name;
@@ -41,38 +42,39 @@ public class Player implements Serializable {
     public void setTime(double time) {
         this.time = time;
     }
+ }
 
-    @Override
-    public String toString() {
-        return "Player{" + "name=" + name + ", time=" + time + '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.name);
-        hash = 23 * hash + (int) (Double.doubleToLongBits(this.time) ^ (Double.doubleToLongBits(this.time) >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Player other = (Player) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.time) != Double.doubleToLongBits(other.time)) {
-            return false;
-        }
-        return true;
-    }
-    
-    
-    
-}
+//    @Override
+//    public String toString() {
+//        return "Player{" + "name=" + name + ", time=" + time + '}';
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int hash = 5;
+//        hash = 23 * hash + Objects.hashCode(this.name);
+//        hash = 23 * hash + (int) (Double.doubleToLongBits(this.time) ^ (Double.doubleToLongBits(this.time) >>> 32));
+//        return hash;
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        final Player other = (Player) obj;
+//        if (!Objects.equals(this.name, other.name)) {
+//            return false;
+//        }
+//        if (Double.doubleToLongBits(this.time) != Double.doubleToLongBits(other.time)) {
+//            return false;
+//        }
+//        return true;
+//    }
+//    
+//    
+//    
+//}

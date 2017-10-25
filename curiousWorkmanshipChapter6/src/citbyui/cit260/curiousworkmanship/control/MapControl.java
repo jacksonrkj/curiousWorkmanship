@@ -46,8 +46,6 @@ public class MapControl {
     
     private static Scene[] createScenes() {
         
-        Game game = CuriousWorkmanship.getCurrentGame();
-        
         Scene[] scenes = new Scene[Constants.NUMBER_OF_SCENES];
           
         Scene cliffScene = new Scene();
@@ -237,7 +235,7 @@ public class MapControl {
         salt.setResourceType(Constants.ITEM_SALT);
         scenes[Constants.SALT] = salt;
 
-        
+        Game game = CuriousWorkmanship.getCurrentGame();
         InventoryItem[] inventory = game.getInventory();
         
         ConstructionScene blacksmith = new ConstructionScene();
@@ -588,14 +586,20 @@ public class MapControl {
     }
     
 
-    public static void moveActorsToLocation(Map map, Actor[] actors, int row, int column) {
+    public static int moveActorsToLocation(Map map, Actor[] actors, int row, int column){
         Location location = map.getLocations()[row][column];
         location.setActors(actors);
+        
+        if (row < 0 || row > map.getNoOfRows()) {
+            return -1;
+        }
         
         // for every actor
         for (Actor actor : actors) {
             actor.setLocation(location);            
         }
+        
+        return 0;
     }
     
 }

@@ -23,6 +23,11 @@ public class Scene implements Serializable {
     public Scene() {
     }
 
+    public Scene(String description) {
+        this.description = description;
+    }
+    
+
     public Scene(int sceneType, String description, String mapSymbol, double travelTime, boolean blocked) {
         this.sceneType = sceneType;
         this.description = description;

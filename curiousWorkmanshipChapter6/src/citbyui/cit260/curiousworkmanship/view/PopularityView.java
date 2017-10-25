@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package citbyui.cit260.curiousworkmanship.view;
 
 /**
  *
  * @author jacksonrkj
  */
-interface MenuInterface {
-    
-    public void displayMenu();
-    public String getInput();
-    public boolean doAction(String choice);
-    public void clearConsole();
+public class PopularityView {
     
 }

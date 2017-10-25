@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package citbyui.cit260.curiousworkmanship.view;
 
 import java.util.Scanner;
@@ -12,20 +11,14 @@ import java.util.Scanner;
  *
  * @author jacksonrkj
  */
-
-public abstract class View implements ViewInterface {
+public class DemoView {
     
-    protected String displayMessage;
+     protected String displayMessage;
 
-    public View() {
+    public DemoView() {
     }
 
-    public View(String message) {
-        this.displayMessage = message;
-    }
     
-    
-    @Override
     public void display() {
         
         boolean done = false;
@@ -42,7 +35,6 @@ public abstract class View implements ViewInterface {
 
     }
     
-    @Override
     public String getInput() {
 
         Scanner keyboard = new Scanner(System.in);
@@ -71,21 +63,11 @@ public abstract class View implements ViewInterface {
     }
     
     
-    public void clearConsole() {
-        try {
-            final String os = System.getProperty("os.name");
-
-            if (os.contains("Windows")) {
-                Runtime.getRuntime().exec("cls");
-            } else {
-                Runtime.getRuntime().exec("clear");
-            }
-        } catch (final Exception e) {
-            //  Handle any exceptions.
-        }
-
+    public boolean doAction(String inputValue) {
+        
+        
+        return false;
     }
-
-   
+    
     
 }

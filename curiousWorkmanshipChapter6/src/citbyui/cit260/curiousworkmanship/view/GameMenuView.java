@@ -11,6 +11,7 @@ import citbyui.cit260.curiousworkmanship.control.MapControl;
 import citbyui.cit260.curiousworkmanship.model.InventoryItem;
 import citbyui.cit260.curiousworkmanship.model.Location;
 import citbyui.cit260.curiousworkmanship.model.Scene;
+import curiousworkmanship.CuriousWorkmanship;
 
 
 public class GameMenuView extends View {
@@ -43,7 +44,7 @@ public class GameMenuView extends View {
     
     
     public boolean doAction(String selection) {
-        
+        selection = selection.toUpperCase();
         
         switch (selection) {
             case "V": // Travel to new location
@@ -129,11 +130,29 @@ public class GameMenuView extends View {
     }  
 
     private void moveToLocation() {
+        this.displayMessage = "Enter the coordinates of where you want to move (e.g., 5 2):";
+        String strCoordinates = this.getInput().trim();
         
+        int separatorPos = strCoordinates.indexOf(" ");
+        String strRow = strCoordinates.substring(separatorPos, separatorPos);
+        String strCol = strCoordinates.substring(separatorPos+1);
+        int row;
+        int col;
+        try {
+            row = Integer.parseInt(strRow);
+            col = Integer.parseInt(strCol);
+        } catch (NumberFormatException e) {
+            System.out.println("You must end valid numbers for the row and column.");
+            return;  
+        }
+       
         // get the list of actors chosen
         // get the location
-        // MapControl.moveActorsToLocation(curiousworkmanship.CuriousWorkmanship.getCurrentGame().getMap(), actors, row, column);
-          
+        MapControl.moveActorsToLocation(curiousworkmanship.CuriousWorkmanship.getCurrentGame().getMap(), 
+                                        CuriousWorkmanship.getCurrentGame().getActors(), row, col);
+        
+        System.out.println();
+   
     }
 
     private void viewLocation() {
@@ -154,7 +173,8 @@ public class GameMenuView extends View {
     }
     
     private void harvestResources() {
-        System.out.println("*** harvestResources stub function called ***");        
+        CollectResourceVIew collectResourceVIew = new CollectResourceVIew();
+        collectResourceVIew.display();
     }
 
     private void deliverResources() {
@@ -176,7 +196,7 @@ public class GameMenuView extends View {
     
     private void displayHelpMenu() {
         HelpMenuView helpMenu = new HelpMenuView();
-        helpMenu.displayMenu(); 
+        helpMenu.display(); 
     }
 
     private void viewInventory() {
@@ -223,9 +243,6 @@ public class GameMenuView extends View {
         }
         System.out.println("-");
     }
-
-    
-
 
 
     

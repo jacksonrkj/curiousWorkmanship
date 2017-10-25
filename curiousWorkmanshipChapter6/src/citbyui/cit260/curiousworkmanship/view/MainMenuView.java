@@ -7,11 +7,7 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
 import citbyui.cit260.curiousworkmanship.control.ProgramControl;
-import citbyui.cit260.curiousworkmanship.view.GameMenuView;
-import citbyui.cit260.curiousworkmanship.view.HelpMenuView;
-import citbyui.cit260.curiousworkmanship.view.View;
 import curiousworkmanship.CuriousWorkmanship;
-import java.util.Scanner;
 
 /**
  *
@@ -19,74 +15,29 @@ import java.util.Scanner;
  */
 // public class MainMenuView extends View 
 
-public class MainMenuView 
-{
+public class MainMenuView extends View {
+
     private String menu;
-    
-    
+
     public MainMenuView() {
-        this.menu = "\n"
-                  + "\n-----------------------------------------"
-                  + "\n| Main Menu                             |"
-                  + "\n-----------------------------------------"
-                  + "\nN - Start new game"
-                  + "\nG - Get and start saved game"
-                  + "\nH - Get help on how to play the game"
-                  + "\nS - Save game"
-                  + "\nQ - Quit"
-                  + "\n-----------------------------------------";
-    }
-    
-
-    /**
-     * displays the start program view
-     */
-    public void displayMainMenuView() {
-        
-        boolean done = false; // set flag to not done
-        do { 
-            // prompt for and get players name
-            String menuOption = this.getMenuOption();
-            if (menuOption.toUpperCase().equals("Q")) // user wants to quit
-                return; // exit the game
-
-            // do the requested action and display the next view
-            done = this.doAction(menuOption); 
-
-        } while (!done);
-
+        super(  "\n"
+                + "\n-----------------------------------------"
+                + "\n| Main Menu                             |"
+                + "\n-----------------------------------------"
+                + "\nN - Start new game"
+                + "\nG - Get and start saved game"
+                + "\nH - Get help on how to play the game"
+                + "\nS - Save game"
+                + "\nQ - Quit"
+                + "\n-----------------------------------------"
+             );
     }
 
- 
-    private String getMenuOption() {
-        
-        Scanner keyboard = new Scanner(System.in); // get infile for keyboard
-        String value = ""; // value to be returned
-        boolean valid = false; // initialize to not valid
-        
-        while (!valid) { // loop while an invalid value is enter
-            System.out.println("\n" + this.menu);
-            
-            value = keyboard.nextLine(); // get next line typed on keyboard
-            value = value.trim(); // trim off leading and trailing blanks
-            
-            if (value.length() < 1) { // value is blank
-                System.out.println("\nInvalid value: value can not be blank");
-                continue;
-            }
-            
-            break;  // end the loop 
-        }
-        
-        return value; // return the value entered
-    }    
-    
-    
-    
+    @Override
     public boolean doAction(String choice) {
-        
+
         choice = choice.toUpperCase(); // convert choice to upper case
-        
+
         switch (choice) {
             case "N": // create and start a new game
                 this.startNewGame();
@@ -98,25 +49,24 @@ public class MainMenuView
                 this.displayHelpMenu();
                 break;
             case "S": // save the current game
-                this.saveGame();               
+                this.saveGame();
                 break;
             default:
                 System.out.println("\n*** Invalid selection *** Try again");
                 break;
         }
-        
+
         return false;
     }
-     
 
     private void startNewGame() {
-       
+
         // create a new game
         GameControl.createNewGame(CuriousWorkmanship.getPlayer());
 
         // display the game menu
         GameMenuView gameMenu = new GameMenuView();
-        gameMenu.displayMenu();
+        gameMenu.display();
     }
 
     private void startExistingGame() {
@@ -125,25 +75,35 @@ public class MainMenuView
 
         // display the game menu
         GameMenuView gameMenu = new GameMenuView();
-        gameMenu.displayMenu();
+        gameMenu.display();
     }
 
     private void saveGame() {
-        // prompt for and get the name of the file to save the game in
-        System.out.println("\n\nEnter the file path for file where the game "
-                           + "is to be saved.");
-        String filePath = this.getMenuOption();
-        
-        // save the game to the speciried file
-        ProgramControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
+        new SaveGameView().display();
+
     }
 
     private void displayHelpMenu() {
         HelpMenuView helpMenu = new HelpMenuView();
-        helpMenu.displayMenu();
+        helpMenu.display();
     }
 
+    private class SaveGameView extends View {
 
- 
+        public SaveGameView() {
+            super("\n\nEnter the file path for file where the game "
+                    + "is to be saved.");
+        }
+
+        @Override
+        public boolean doAction(String filePath) {
+            // save the game to the speciried file
+            ProgramControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
+
+            System.out.println("The game has been successfully saved to: " + filePath);
+            return true;
+        }
+
+    }
 
 }

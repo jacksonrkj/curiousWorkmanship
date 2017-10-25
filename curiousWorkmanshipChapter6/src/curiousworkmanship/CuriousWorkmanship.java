@@ -22,7 +22,7 @@ public class CuriousWorkmanship {
     public static void main(String[] args) {  
         // create StartProgramViewOrig and start the program
         StartProgramView startProgramView = new StartProgramView();
-        startProgramView.displayStartProgramView();
+        startProgramView.display();
     }
 
     
