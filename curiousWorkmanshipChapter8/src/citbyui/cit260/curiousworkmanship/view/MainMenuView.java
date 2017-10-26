@@ -13,28 +13,37 @@ import curiousworkmanship.CuriousWorkmanship;
  *
  * @author jacksonrkj
  */
-
-
 public class MainMenuView extends View {
 
-    public MainMenuView() {
-        super("\n"
-              + "\n-----------------------------------------"
-              + "\n| Main Menu                             |"
-              + "\n-----------------------------------------"
-              + "\nN - Start new game"
-              + "\nG - Get and start saved game"
-              + "\nH - Get help on how to play the game"
-              + "\nS - Save game"
-              + "\nQ - Quit"
-              + "\n-----------------------------------------");
-    }
-   
-    
-       
-    public boolean doAction(String value) {
+    public MainMenuView() { }
+
+    @Override
+    public String[] getInputs() {
+        String[] inputs = new String[1];
+
+        System.out.println(
+                  "\n"
+                + "\n-----------------------------------------"
+                + "\n| Main Menu                             |"
+                + "\n-----------------------------------------"
+                + "\nN - Start new game"
+                + "\nG - Get and start saved game"
+                + "\nH - Get help on how to play the game"
+                + "\nS - Save game"
+                + "\nQ - Quit"
+                + "\n-----------------------------------------"
+        );
         
-        value = value.toUpperCase(); // convert to all upper case
+         inputs[0] = this.getInput("\nEnter a menu item");
+        
+        return inputs;
+        
+    }
+
+    @Override
+    public boolean doAction(String[] inputs) {
+
+        String value = inputs[0].toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
 
         switch (choice) {
@@ -48,7 +57,7 @@ public class MainMenuView extends View {
                 this.displayHelpMenu();
                 break;
             case 'S': // save the current game
-                this.saveGame();               
+                this.saveGame();
                 break;
             case 'Q': // Exit the program
                 return true;
@@ -59,12 +68,11 @@ public class MainMenuView extends View {
 
         return false;
     }
-     
 
     private void startNewGame() {
-          
+
         // create a new game
-        int returnValue = GameControl.createNewGame(CuriousWorkmanship.getPlayer());    
+        int returnValue = GameControl.createNewGame(CuriousWorkmanship.getPlayer());
         if (returnValue < 0) {
             System.out.println("ERROR - Failed to create new game");
         }
@@ -84,13 +92,7 @@ public class MainMenuView extends View {
     }
 
     private void saveGame() {
-        // prompt for and get the name of the file to save the game in
-        System.out.println("\n\nEnter the file path for file where the game "
-                           + "is to be saved.");
-        String filePath = this.getInput();
-        
-        // save the game to the speciried file
-        ProgramControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
+       System.out.println("*** saveGame() called");
     }
 
     private void displayHelpMenu() {
@@ -98,5 +100,5 @@ public class MainMenuView extends View {
         helpMenu.display();
     }
 
-
+  
 }

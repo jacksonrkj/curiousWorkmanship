@@ -13,7 +13,8 @@ package citbyui.cit260.curiousworkmanship.view;
 public interface ViewInterface {
     
     public void display();
-    public String getInput();
-    public boolean doAction(String value);
+    public String[] getInputs();
+    public String getInput(String promptMessage);
+    public boolean doAction(String[] inputs);
     
 }

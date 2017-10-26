@@ -5,6 +5,7 @@
  */
 package citbyui.cit260.curiousworkmanship.control;
 
+import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.model.Barrel;
 import citbyui.cit260.curiousworkmanship.model.InventoryItem;
 
@@ -13,6 +14,11 @@ import citbyui.cit260.curiousworkmanship.model.InventoryItem;
  * @author jacksonrkj
  */
 public class InventoryControl {
+
+    public static int buildBarrels(Item item, double diameter, double height, int noOfBarrels) {
+        System.out.println("\n***buildBarrels() called");
+        return 1;
+    }
 
     /*
      Calculates the volume of a barrel

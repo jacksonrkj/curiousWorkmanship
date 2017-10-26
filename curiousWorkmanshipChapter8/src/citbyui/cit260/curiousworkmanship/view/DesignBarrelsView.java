@@ -6,6 +6,7 @@
 
 package citbyui.cit260.curiousworkmanship.view;
 
+import citbyui.cit260.curiousworkmanship.control.InventoryControl;
 import citbyui.cit260.curiousworkmanship.enums.Item;
 import java.awt.Point;
 
@@ -16,7 +17,16 @@ import java.awt.Point;
 public class DesignBarrelsView extends View {
    
     public DesignBarrelsView() {
-        super("\n"
+        super();
+    }
+
+
+    @Override
+    public String[] getInputs() {
+        String[] inputs = new String[4];
+
+        System.out.println(
+              "\n"
             + "\n---------------------------------------------------------------"
             + "\n| Select inventory item that you need to build the barrels for|"
             + "\n---------------------------------------------------------------"
@@ -27,15 +37,60 @@ public class DesignBarrelsView extends View {
             + "\nH - Honey"
             + "\nS - Salt"
             + "\nQ - Quit to main main menu"
-            + "\n---------------------------------------------------------------");
+            + "\n---------------------------------------------------------------"
+        );
+
+        boolean valid = false;
+        do {
+            inputs[0] = this.getInput("\nEnter a menu item").toUpperCase();
+            if (inputs[0].equals("Q")) {
+                return null;
+            }
+            
+            String[] menu = {"G", "L", "O", "W", "H", "S"};          
+            valid = this.validMenuItem(menu, inputs[0]);
+            if (!valid) {
+                System.out.println("\n*** Invalid menu item.");
+            }
+
+        } while (!valid);
+
+        inputs[1] = this.getInput("\nEnter the diameter of the barrel in inches: ");
+        if (inputs[1].toUpperCase().equals("Q")) {
+            return null;
+        }
+        
+        inputs[2] = this.getInput("\nEnter the height of the barrel in inches: ");
+        if (inputs[2].toUpperCase().equals("Q")) {
+            return null;
+        }
+        
+        inputs[3] = this.getInput("\nEnter the number barrel to build");
+        if (inputs[3].toUpperCase().equals("Q")) {
+            return null;
+        }
+
+        return inputs;
+    }
+    
+    
+    private boolean validMenuItem(String[] menuItems, String menuItem) {
+
+        for (int i = 0; i < menuItems.length; i++) {
+            if (menuItem.toUpperCase().equals(menuItems[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
     @Override
-    public boolean doAction(String choice) {
+    public boolean doAction(String[] inputs) {
+        
         Item item; 
         
-        choice = choice.trim().toUpperCase(); // trim blanks and uppercase
+        String choice = inputs[0].trim().toUpperCase(); // trim blanks and uppercase
         
         // check for valid actor
         switch (choice) {
@@ -64,85 +119,33 @@ public class DesignBarrelsView extends View {
                 return false;
         }
         
+        double diameter = Double.parseDouble(inputs[1]);
+        double height = Double.parseDouble(inputs[2]);
+        int noOfBarrels = Integer.parseInt(inputs[3]);
         
-        boolean done = false;
-        do {
-            try {
-                // prompt for and get the dimension of the barrel
-                System.out.println("\nEnter the diameter and heigth  of the barrel in inches (e.g., 12 18)");
-                Point coordinates = this.getCoordinates(); // get the dimensions
-                if (coordinates == null) // entered "Q" to quit
-                    break;
-                
-                // get the number of barrels to be built
-                System.out.println("\nEnter the number of barrels to be built");
-                Double numberOfBarrels = this.getDoubleNumber();
-                if (numberOfBarrels == null)  // entered "Q" to quit
-                    break;
-                
-                // call control function to build barrels and add to inventory
-                
-                System.out.println("\n" + numberOfBarrels + " " + item 
+        int returnValue = InventoryControl.buildBarrels(item, diameter, height, noOfBarrels);
+        switch (returnValue) {
+            case -1:
+                System.out.println("\n***Invalid diameter");
+                return false;
+            case -2:
+                System.out.println("\n***Invalid height");
+                return false;
+            case -3:
+                System.out.println("\n***Invalid number of barrels");
+                return false;
+            case -4:
+                System.out.println("\n***The barrel is too large for a human being to handle");
+                return false;
+            default:
+                System.out.println("\n" + noOfBarrels + " " + item 
                                    + " barrels were successfully built and "
                                    + "added to the warehouse inventory.");
-                done = true;
-                
-            } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                    return false;
-            }       
-        } while (!done);
-
-        return false;  
-    }
-    
-    public Point getCoordinates() {
-        
-        String value = this.getInput();
-        value = value.trim().toUpperCase();
-        if (value.equals("Q"))
-            return null;
-
-        //tokenize values int string
-        String[] values = value.split(" ");
-
-        if (values.length < 2) {
-            return null;
+                return true;
         }
 
-        // parse out row and column numbers
-        
-            int row = Integer.parseInt(values[0]);
-            int column = Integer.parseInt(values[1]);
-            return new Point(row, column);
-
-                
     }
     
-    
-    public Double getDoubleNumber() {
-        Double number = null;
-        
-        while (number == null) {
-            String value = this.getInput();
-            value = value.trim().toUpperCase();
-            
-            if (value.equals("Q")) 
-                break;
-
-            try {
-                // parse and convert number from text to a double
-                number = Double.parseDouble(value);
-                
-            } catch (NumberFormatException nf) {
-                
-                System.out.println("\nYou must enter a valid number."
-                        + " Try again or enter Q to quit.");
-                
-            }        
-        }
-        
-        return number;
-    }
+   
     
 }

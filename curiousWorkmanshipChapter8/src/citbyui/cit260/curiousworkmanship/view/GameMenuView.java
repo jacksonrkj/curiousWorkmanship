@@ -14,8 +14,16 @@ import citbyui.cit260.curiousworkmanship.model.Scene;
 
 public class GameMenuView extends View {
 
-    public GameMenuView() {
-        super("\n"
+    public GameMenuView() { }
+    
+    
+    
+    @Override
+    public String[] getInputs() {
+        String[] inputs = new String[1];
+        
+        System.out.println(
+              "\n"
             + "\n---------------------------------------------"
             + "\n| Game Menu                                 |"
             + "\n---------------------------------------------"
@@ -35,14 +43,20 @@ public class GameMenuView extends View {
             + "\nJ - Launch ship to the promised land"
             + "\nH - Display help menu"
             + "\nQ - Quit"
-            + "\n---------------------------------------------");
+            + "\n---------------------------------------------"       
+        );
+        
+        inputs[0] = this.getInput("\nEnter a menu item");
+        
+        return inputs;
+        
     }
   
     
     
-    public boolean doAction(String value) {
+    public boolean doAction(String[] inputs) {
         
-        value = value.toUpperCase(); // convert to all upper case
+        String value = inputs[0].toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
      
         
@@ -256,5 +270,6 @@ public class GameMenuView extends View {
         System.out.println("\n");
         
     }
+
     
 }

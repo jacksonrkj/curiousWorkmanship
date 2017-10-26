@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package citbyui.cit260.curiousworkmanship.view;
 
 import java.util.Scanner;
@@ -13,42 +12,31 @@ import java.util.Scanner;
  * @author jacksonrkj
  */
 public abstract class View implements ViewInterface {
-    
-    private String message;
+
 
     public View() {
     }
-
-    public View(String menu) {
-        this.message = menu;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
     
-    
-    
+    @Override
     public void display() {
-        String value;
-        boolean done = false;
-        
-        do { 
-            System.out.println(this.message); // display the prompt message
-            value = this.getInput(); // get the user's selection
-            done = this.doAction(value); // do action based on selection        
-        } while (!done);
-            
-        
+        String[] inputs = null;
+        boolean endOfView = false;
+
+        do {
+            inputs = this.getInputs(); // get the user's selection
+            if (  inputs == null
+               || inputs.length < 1
+               || inputs[0].toUpperCase().equals("Q")) {
+                return;
+            }
+            endOfView = this.doAction(inputs); // do action based on selection
+
+        } while (!endOfView);
 
     }
-    
-    
-    public String getInput() {
+
+    @Override
+    public String getInput(String promptMessage) {
 
         Scanner keyboard = new Scanner(System.in);
         boolean valid = false;
@@ -56,22 +44,23 @@ public abstract class View implements ViewInterface {
 
         // while a valid name has not been retrieved
         while (!valid) {
-
+            System.out.println(promptMessage);
+            
             // get the value entered from the keyboard
             selection = keyboard.nextLine();
             selection = selection.trim();
 
             if (selection.length() < 1) { // blank value entered
-                System.out.println("\n*** Invalid selection *** Try again");
+                System.out.println("\n*** You must enter a non-blank value");
                 continue;
             }
-            
+
             break;
         }
 
         return selection; // return the name        
     }
-    
+
     public void clearConsole() {
         try {
             final String os = System.getProperty("os.name");
@@ -86,9 +75,5 @@ public abstract class View implements ViewInterface {
         }
 
     }
-    
-    
 
-   
-    
 }

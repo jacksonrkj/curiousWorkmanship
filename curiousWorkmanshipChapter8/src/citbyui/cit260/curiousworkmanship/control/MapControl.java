@@ -640,7 +640,12 @@ public class MapControl {
     
     
     public static Location getLocation(Point coordinates) {
-        return CuriousWorkmanship.getCurrentGame().getMap().getLocations()[coordinates.x-1][coordinates.y-1];
+        System.out.println("*** getLocation() called");
+        Location location = new Location();
+        location.setRow(coordinates.x);
+        location.setScene(new Scene(SceneGroup.regular, "You are in the ocean", "~~~", 0, true));
+        location.setColumn(coordinates.y);
+        return location;
     }
     
 }
