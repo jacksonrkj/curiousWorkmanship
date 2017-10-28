@@ -8,6 +8,7 @@ package citbyui.cit260.curiousworkmanship.model;
 
 import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.enums.SceneGroup;
+import citbyui.cit260.curiousworkmanship.enums.SceneType;
 
 /**
  *

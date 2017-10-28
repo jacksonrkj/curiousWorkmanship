@@ -10,10 +10,6 @@ package citbyui.cit260.curiousworkmanship.view;
  *
  * @author jacksonrkj
  */
-
-
-
-
 public interface ViewInterface {
     
     public void display();

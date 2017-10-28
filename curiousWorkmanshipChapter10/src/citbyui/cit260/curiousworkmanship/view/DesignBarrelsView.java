@@ -8,7 +8,7 @@ package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.exceptions.ViewException;
-import java.awt.Dimension;
+import java.awt.Point;
 
 /**
  *
@@ -34,7 +34,6 @@ public class DesignBarrelsView extends View {
 
     @Override
     public boolean doAction(String choice) {
-
         Item item; 
         
         choice = choice.trim().toUpperCase(); // trim blanks and uppercase
@@ -62,110 +61,86 @@ public class DesignBarrelsView extends View {
             case "Q":
                 return true;
             default:
-                ErrorView.display("DesignBarrelsView", "Invalid selection. Try again");
+                System.out.println("Invalid selection");
                 return false;
         }
         
-        boolean returnValue = this.designBarrels(item); 
-
-        return returnValue;  
-    }
-    
-    private boolean designBarrels(Item item) {
-        try {
-            // prompt for and get the dimension of the barrel
-            Dimension dimensions = this.getDimensions(); // get the dimensions
-            if (dimensions == null) // entered "Q" to quit
-                return false;
-
-            // get the number of barrels to be built
-            Double numberOfBarrels = this.getNumberOfBarrels();
-            if (numberOfBarrels == null)  // entered "Q" to quit
-                return false;
-
-            // call control function to build barrels and add to inventory
-
-            this.console.println("\n" + numberOfBarrels + " " + item 
-                               + " barrels were successfully built and "
-                               + "added to the warehouse inventory.");
-
-        } catch (Exception ex) {
-                ErrorView.display("DesignBarrelsView", ex.getMessage());
-                return false;
-        }       
         
-        return true;
-    }
-    
-    public Dimension getDimensions() throws ViewException {
-        Dimension dimensions = null;
-        
-        do {  
-            // prompt for and get the dimension of the barrel
-            this.console.println("\nEnter the diameter and heigth  of the barrel in inches (e.g., 12 18)");
-            
-            String value = this.getInput();
-            value = value.trim().toUpperCase();
-            if (value.equals("Q"))
-                return null;
-
-            //tokenize values int string
-            String[] values = value.split(" ");
-
-            if (values.length < 2) {
-                ErrorView.display("DesignBarrelsView", 
-                      "You must enter both the diameter and height of the barrel .");
-                continue;
-            }
-
-            // parse out row and column numbers
+        boolean done = false;
+        do {
             try {
-                int diameter = Integer.parseInt(values[0]);
-                int height = Integer.parseInt(values[1]);
-                if (diameter <= 0 || height <= 0) {
-                    ErrorView.display("DesignBarrelsView", 
-                          "The diameter and height must be greater than zero.");
-                    continue;
-                }
+                // prompt for and get the dimension of the barrel
+                System.out.println("\nEnter the diameter and heigth  of the barrel in inches (e.g., 12 18)");
+                Point coordinates = this.getCoordinates(); // get the dimensions
+                if (coordinates == null) // entered "Q" to quit
+                    break;
                 
-                dimensions = new Dimension(diameter, height);
+                // get the number of barrels to be built
+                System.out.println("\nEnter the number of barrels to be built");
+                Double numberOfBarrels = this.getDoubleNumber();
+                if (numberOfBarrels == null)  // entered "Q" to quit
+                    break;
+                
+                // call control function to build barrels and add to inventory
+                
+                System.out.println("\n" + numberOfBarrels + " " + item 
+                                   + " barrels were successfully built and "
+                                   + "added to the warehouse inventory.");
+                done = true;
+                
+            } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    return false;
+            }       
+        } while (!done);
 
-            } catch (NumberFormatException nf) {
-                ErrorView.display("DesignBarrelsView", 
-                        "Either the diameter or height is not a  number.");
-            } 
-        
-        } while(dimensions == null);
-
-        return dimensions;
+        return false;  
     }
     
-    public Double getNumberOfBarrels() throws ViewException {
+    public Point getCoordinates() throws ViewException {
+        
+        String value = this.getInput();
+        value = value.trim().toUpperCase();
+        if (value.equals("Q"))
+            return null;
+
+        //tokenize values int string
+        String[] values = value.split(" ");
+
+        if (values.length < 2) {
+            throw new ViewException("You must enter both a row and column number.");
+        }
+
+        // parse out row and column numbers
+        try {
+            int row = Integer.parseInt(values[0]);
+            int column = Integer.parseInt(values[1]);
+            return new Point(row, column);
+
+        } catch (NumberFormatException nf) {
+            throw new ViewException("The row or column number is not a  number.");
+        }        
+    }
+    
+    public Double getDoubleNumber() throws ViewException {
         Double number = null;
         
         while (number == null) {
-            this.console.println("\nEnter the number of barrels to be built");
-            
             String value = this.getInput();
             value = value.trim().toUpperCase();
             
             if (value.equals("Q")) 
-                return null;
+                break;
 
             try {
                 // parse and convert number from text to a double
-                double dblValue = Double.parseDouble(value);
-                if (dblValue < 1) {
-                    ErrorView.display("DesignBarrelsView", 
-                      "The number of barrels must be greater than or equal to one");
-                    continue;
-                }
-                
-                number = dblValue;
+                number = Double.parseDouble(value);
                 
             } catch (NumberFormatException nf) {
-                ErrorView.display("DesignBarrelsView", 
-                        "You must enter a valid number greater than zero.");
+                
+                System.out.println("\nYou must enter a valid number."
+                        + " Try again or enter Q to quit.");
+                
             }        
         }
         

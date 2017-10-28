@@ -114,27 +114,5 @@ public class Constants {
     public final static int ACTOR_COUNT = 8;
     public final static int NUMBER_OF_SCENES = 33;
     
-    // miles saudia arabia to panama via pacific (14328 miles)
-    // miles saudia arabia to panama via alantic (7741 miles)
-    // minimum speed 1.5 miles per hour
-    // maximum speed 4.3 miles per hour
-    // minimum days 14328 / 2.3 / 24;
-    // average speed (4.3 + 1.5) / 2 = 2.9
-    
-    // 1 deviation range (avg * 34%) = .98 (low 1.92 - 3.88 high)
-    // 2 deviation range (avg * 49%) =  1.421 (low 1.48 - 4.32 high)
-    
-    public final static double TRIP_DISTANCE = 14328;
-    public final static double MIN_SPEED = 1.5;
-    public final static double MAX_SPEED = 4.3;  
-    public final static double DEV_ONE_LOW = 1.92;
-    public final static double DEV_ONE_HIGH = 3.88;
-    public final static double DEV_TWO_LOW = 1.48;  
-    public final static double DEV_TWO_HIGH = 4.32;
-    public final static int MIN_PERSONS_SAILING = 20;
-    public final static int MAX_PERSONS_SAILING = 68;
-    
-    
-    
     
 }

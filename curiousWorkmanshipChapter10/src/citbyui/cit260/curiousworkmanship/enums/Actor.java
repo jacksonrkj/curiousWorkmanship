@@ -6,7 +6,10 @@
 
 package citbyui.cit260.curiousworkmanship.enums;
 
+import citbyui.cit260.curiousworkmanship.model.Location;
+import java.awt.Point;
 import java.io.Serializable;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -28,13 +31,19 @@ public enum Actor implements Serializable {
     Zoram("Laban servant that became a faithful follower of Nephi");
     
     private final String description;
+    private final Point coordinates;
     
     Actor(String description) {
         this.description = description;
+        coordinates = new Point(1,1);
     }
 
     public String getDescription() {
         return description;
-    }   
+    }
+
+    public Point getCoordinates() {
+        return coordinates;
+    }
     
 }

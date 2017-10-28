@@ -7,20 +7,12 @@
 package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
-import citbyui.cit260.curiousworkmanship.enums.Actor;
-import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.InventoryItem;
 import citbyui.cit260.curiousworkmanship.model.Location;
 import citbyui.cit260.curiousworkmanship.model.Scene;
-import curiousworkmanship.CuriousWorkmanship;
-import java.awt.Point;
-import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 public class GameMenuView extends View {
-        
 
     public GameMenuView() {
         super("\n"
@@ -39,25 +31,20 @@ public class GameMenuView extends View {
             + "\nR - Harvest resource at location"
             + "\nD - Deliver harvested resources to warehouse"
             + "\nW - Work on ship"
-            + "\nK - Pack ship for journey"
+            + "\nP - Pack ship for journey"
             + "\nJ - Launch ship to the promised land"
             + "\nH - Display help menu"
-            + "\nP - Print game report"
-            + "\nZ - Calculate volume of barrel"
-            + "\nT - Calculate area of a triangle" 
             + "\nQ - Quit"
             + "\n---------------------------------------------");
-
     }
+  
     
-      
     
-    
-    @Override
     public boolean doAction(String value) {
         
         value = value.toUpperCase(); // convert to all upper case
-        char choice = value.charAt(0); // get first character entered     
+        char choice = value.charAt(0); // get first character entered
+     
         
         switch (choice) {
             case 'V': // Travel to new location
@@ -67,7 +54,7 @@ public class GameMenuView extends View {
                 this.viewInventory(); 
                 break;
             case 'A': // View list of actors
-                this.displayActors(); 
+                this.viewActors(); 
                 break;
             case 'S': // View the ship's status
                 this.viewShipStatus(); 
@@ -87,7 +74,7 @@ public class GameMenuView extends View {
             case 'C': // Construct tools and other items
                 this.manufactureItems(); 
                 break;
-               case 'R': // Harvest resource
+            case 'R': // Harvest resource
                 this.harvestResources(); 
                 break;
             case 'D': // Deliver resource
@@ -96,7 +83,7 @@ public class GameMenuView extends View {
             case 'W': // Work on ship
                 this.workOnShip();
                 break;
-            case 'K': // Pack ship
+            case 'P': // Pack ship
                 this.packShip(); 
                 break;
             case 'J': // Launch ship
@@ -105,60 +92,54 @@ public class GameMenuView extends View {
             case 'H': // display the help menu
                 this.displayHelpMenu();
                 break;
-            case 'P': // print game report
-                this.printReport();
-                break;
-
+            case 'Q':
+                return true;
             default:
-                ErrorView.display("GameMenuView", "*** Invalid selection *** Try again");
+                System.out.println("\n*** Invalid selection *** Try again");
         }
         return false;
     }
     
-    public void displayMap() { 
-       this.viewMap(CuriousWorkmanship.getOutFile()); 
-    }
-    
-    public void viewMap(PrintWriter out) {
+    public void displayMap() {
         int lineLength = 0;
         
         // get the map for the game
         Location[][] locations = GameControl.getMapLocations();
         int noColumns = locations[0].length; // get number columns in row
         
-        this.printTitle(out, noColumns, "THE LAND OF BOUNTIFUL");
-        this.printColumnHeaders(out, noColumns);
+        this.printTitle(noColumns, "THE LAND OF BOUNTIFUL");
+        this.printColumnHeaders(noColumns);
         
         for (int i = 0; i < locations.length; i++) {    
             Location[] rowLocations = locations[i];
-            this.printRowDivider(out, noColumns);
-            out.println(); // move down one i
+            this.printRowDivider(noColumns);
+            System.out.println(); // move down one i
             if (i < 9)
-                out.print(" " + (i+1));
+                System.out.print(" " + (i+1));
             else 
-                out.print(i+1);
+                System.out.print(i+1);
             
             // for every column in the row
             for (int column = 0; column < noColumns; column++) {
-                out.print("|"); // print column divider
+                System.out.print("|"); // print column divider
                 Location location = rowLocations[column];
                 if (location != null && location.isVisited()) { // if location is visited 
                     
                     Scene scene = location.getScene();
                     if (scene != null)
-                        out.print(scene.getMapSymbol());
+                        System.out.print(scene.getMapSymbol());
                     else
-                        out.print("    ");
+                        System.out.print("    ");
                 }
                 else {
-                    out.print(" ?? ");
+                    System.out.print(" ?? ");
                 }      
             }
             
-            out.print("|"); // print column divider
+            System.out.print("|"); // print column divider
         }
         
-        this.printRowDivider(out, noColumns);
+        this.printRowDivider(noColumns);
     }  
 
     private void moveToLocation() {
@@ -172,12 +153,8 @@ public class GameMenuView extends View {
     }
 
     private void estimateResources() {
-        EstimateResourcesView estimateResourcesView = new EstimateResourcesView();
-        estimateResourcesView.display();
-
+        System.out.println("*** estimateResources stub function called ***");        
     }
-    
-    
 
     private void designBarrels() {
         DesignBarrelsView designBarrelsView = new DesignBarrelsView();
@@ -185,48 +162,27 @@ public class GameMenuView extends View {
     }
 
     private void manufactureItems() {
-        this.console.println("*** manufactureItems stub function called ***");         
+        System.out.println("*** manufactureItems stub function called ***");         
     }
     
     private void harvestResources() {
-        HarvestResourcesView harvestView = new HarvestResourcesView();
-        harvestView.display();
+        System.out.println("*** harvestResources stub function called ***");        
     }
 
     private void deliverResources() {
-        this.console.println("*** deliverResources stub function called ***");        
+        System.out.println("*** deliverResources stub function called ***");        
     }
 
     private void workOnShip() {
-        this.console.println("*** workOnShip stub function called ***");        
+        System.out.println("*** workOnShip stub function called ***");        
     }
     
-    private void displayActors() {
-        this.viewActors(CuriousWorkmanship.getOutFile());
-    }
-    private void viewActors(PrintWriter out) {
-        Game game = CuriousWorkmanship.getCurrentGame();
-        out.println("\n    LIST OF ACTORS");
-        StringBuilder line = new StringBuilder("                                                          ");
-        line.insert(0, "NAME"); 
-        line.insert(15, "LOCATION");
-        out.println(line.toString());
-        
-        Actor[] actors = Actor.values();
-        for (Actor actor : actors) {
-            Point coordinates = game.getActorsLocation()[actor.ordinal()];
-            line = new StringBuilder("                                                          ");
-            line.insert(0, actor.name());
-            int row = coordinates.x+1;
-            int column = coordinates.y+1;
-            line.insert(17,  + row + ", " + column);
-            out.println(line.toString());
-        }
-        
+    private void viewActors() {
+        System.out.println("*** viewActors stub function called ***");       
     }
 
     private void viewShipStatus() {
-        this.console.println("*** viewShipStatus stub function called ***");        
+        System.out.println("*** viewShipStatus stub function called ***");        
     }
     
     
@@ -235,139 +191,70 @@ public class GameMenuView extends View {
         helpMenu.display(); 
     }
 
-//    private void viewInventory() {
-//        this.viewInventory(CuriousWorkmanship.getOutFile());
-//    }
-//    
-//        private void viewInventory(PrintWriter out) {
-//        // get the sorted list of inventory items for the current game
-//        InventoryItem[] inventory = GameControl.getSortedInventoryList();
-//        
-//        out.println("\n        LIST OF INVENTORY ITEMS");
-//        StringBuilder line = new StringBuilder("                                                          ");
-//        line.insert(0, "DESCRIPTION"); 
-//        line.insert(20, "REQUIRED");
-//        line.insert(30, "IN STOCK");
-//        out.println(line.toString());
-//        
-//        // for each inventory item
-//        for (InventoryItem inventoryItem : inventory) {
-//            line = new StringBuilder("                                                          ");
-//            line.insert(0, inventoryItem.getDescription());
-//            line.insert(23, inventoryItem.getRequiredAmount());
-//            line.insert(33, inventoryItem.getQuantityInStock());
-//            
-//            // DISPLAY the description, the required amount and amount in stock
-//            out.println(line.toString());
-//        }   
-//    }
-        
-        
     private void viewInventory() {
-        StringBuilder line;
+        // get the sorted list of inventory items for the current game
+        InventoryItem[] inventory = GameControl.getSortedInventoryList();
         
-        Game game = CuriousWorkmanship.getCurrentGame();
-        InventoryItem[] inventory = game.getInventory();
-        
-        System.out.println("\n        LIST OF INVENTORY ITEMS");
-        line = new StringBuilder("                                       ");
-        line.insert(0, "DESCRIPTION"); 
-        line.insert(20, "REQUIRED");
-        line.insert(30, "IN STOCK");
+        System.out.println("\nList of Inventory Items");
+        StringBuilder line = new StringBuilder("                                                          ");
+        line.insert(0, "Description"); 
+        line.insert(20, "Required");
+        line.insert(30, "In Stock");
         System.out.println(line.toString());
         
         // for each inventory item
-        for (InventoryItem item : inventory) {
-            line = new StringBuilder("                                       ");
-            line.insert(0, item.getDescription());
-            line.insert(23, item.getRequiredAmount());
-            line.insert(33, item.getQuantityInStock());
+        for (InventoryItem inventoryItem : inventory) {
+            line = new StringBuilder("                                                          ");
+            line.insert(0, inventoryItem.getDescription());
+            line.insert(23, inventoryItem.getRequiredAmount());
+            line.insert(33, inventoryItem.getQuantityInStock());
             
-            // DISPLAY the line
+            // DISPLAY the description, the required amount and amount in stock
             System.out.println(line.toString());
         }   
     }
 
     private void packShip() {
-        this.console.println("*** packShip stub function called ***");       
+        System.out.println("*** packShip stub function called ***");       
     }
 
     private void launchShip() {
-        this.console.println("*** launchShip stub function called ***");        
+        System.out.println("*** launchShip stub function called ***");        
     }
 
 
-    private void printColumnHeaders(PrintWriter out, int noOfColumns) {
+    private void printColumnHeaders(int noOfColumns) {
         for (int i = 1; i < noOfColumns+1; i++) {
             if (i < 10) {
-                out.print("   " + i + " ");
+                System.out.print("   " + i + " ");
             }
             else {
-                out.print("  " + i + " ");
+                System.out.print("  " + i + " ");
             }
         }
     }
 
-    private void printRowDivider(PrintWriter out, int noColumns) {
-        out.println();
-        out.print("  ");
+    private void printRowDivider(int noColumns) {
+        System.out.println();
+        System.out.print("  ");
         for (int i = 0; i < noColumns; i++) { // print row divider
-                out.print("-----");
+                System.out.print("-----");
         }
-        out.print("-");
+        System.out.print("-");
     }
 
-    private void printTitle(PrintWriter out, int noOfColumns, String title) {
+    private void printTitle(int noOfColumns, String title) {
         
         int titleLength = title.length();
         int lineLength = noOfColumns * 5 + 3;
         int startPosition = (lineLength / 2) - (titleLength / 2);
-        out.println("\n");
+        System.out.println("\n");
         for (int i = 0; i < startPosition; i++) {
-            out.print(" ");  
+            System.out.print(" ");  
         }
-        out.print(title);
-        out.println("\n");
+        System.out.print(title);
+        System.out.println("\n");
         
     }
     
-    
-    
-     public void printReport() {
-        // get the filepath and name of the file
-        this.console.println("\nEnter the file path where the report is to be saved");
-        
-        String filePath = this.getInput();
-        if (filePath == null) {
-            return;
-        }
-        
-        // Create a new printwriter
-        try (PrintWriter reportFile = new PrintWriter(filePath)) {
-            
-            
-            LocalDateTime currentTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            String dateTime = formatter.format(currentTime);
-            
-            reportFile.println("Report printed: " + dateTime);
-            
-            this.viewMap(reportFile);
-            
-            reportFile.println();
-//            this.viewInventory(reportFile);
-
-            reportFile.println();
-            this.viewActors(reportFile); 
-            
-            CuriousWorkmanship.getOutFile().println(
-                    "\n*** Report printed to file: " + filePath + " ***");
-            
-        } catch (Exception ex) {
-            ErrorView.display("GameMenuView", "Error writing to game report file. "
-                    + "\n\t" + ex.getMessage());
-        }
-
-    }
-
 }

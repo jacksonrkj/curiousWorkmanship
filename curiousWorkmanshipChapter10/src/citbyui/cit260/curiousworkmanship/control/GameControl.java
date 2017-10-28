@@ -7,7 +7,6 @@
 package citbyui.cit260.curiousworkmanship.control;
 
 import citbyui.cit260.curiousworkmanship.enums.Actor;
-import citbyui.cit260.curiousworkmanship.enums.FoodItem;
 import citbyui.cit260.curiousworkmanship.enums.Item;
 import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
@@ -19,11 +18,7 @@ import citbyui.cit260.curiousworkmanship.model.Player;
 import citbyui.cit260.curiousworkmanship.model.Ship;
 import citbyui.cit260.curiousworkmanship.model.Wagon;
 import curiousworkmanship.CuriousWorkmanship;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.security.InvalidParameterException;
+import java.awt.Point;
 
 /**
  *
@@ -33,19 +28,6 @@ import java.security.InvalidParameterException;
 
 
 public class GameControl {
-   
-    public enum Probability {
-        OK,
-        TOO_LOW,
-        TOO_HIGH,
-        LOW_PROBABILITY,
-        HIGH_PROBABILITY;
-    }
-    
-    
-    public GameControl() {
-    }
-
 
     public static void createNewGame(Player player) 
             throws MapControlException {
@@ -69,9 +51,10 @@ public class GameControl {
        game.setMap(map); // save map in game
 
        // move actors to starting position in the map
-       Actor[] actors = Actor.values();
        
-       MapControl.moveActorsToStartingLocation(map, actors);    
+       // ...
+       
+       MapControl.moveActorsToStartingLocation(map);    
     }
  
     
@@ -191,13 +174,125 @@ public class GameControl {
         
         
         InventoryItem nails = new InventoryItem();
-        nails.setDescription("Nails");
+        nails.setDescription("Sickle");
         nails.setQuantityInStock(0);
         nails.setRequiredAmount(50);
         inventory[Item.nails.ordinal()] = nails;
    
         return inventory;
     }
+
+    public static void startSavedGame() {
+        System.out.println("*** startSavedGame() called ***");
+    }
+    
+
+
+    
+    /*
+    public static InventoryItem[] createInventoryList() {
+            
+        // created array(list) of inventory items    
+        InventoryItem[] inventory = 
+            new InventoryItem[14];
+        
+        InventoryItem lumber = new InventoryItem();
+        lumber.setDescription("Lumber");
+        lumber.setQuantityInStock(0);
+        lumber.setRequiredAmount(0);
+        inventory[0] = lumber;
+        
+        InventoryItem ore = new InventoryItem();
+        ore.setDescription("Ore");
+        ore.setQuantityInStock(0);
+        ore.setRequiredAmount(0);
+        inventory[1] = ore;
+        
+        InventoryItem grain = new InventoryItem();
+        grain.setDescription("Grain");
+        grain.setQuantityInStock(0);
+        grain.setRequiredAmount(0);
+        inventory[2] = grain;
+        
+        InventoryItem legumes = new InventoryItem();
+        legumes.setDescription("Legumes");
+        legumes.setQuantityInStock(0);
+        legumes.setRequiredAmount(0);
+        inventory[3] = legumes;
+        
+        InventoryItem oil = new InventoryItem();
+        oil.setDescription("Olive Oil");
+        oil.setQuantityInStock(0);
+        oil.setRequiredAmount(0);
+        inventory[4] = oil;
+        
+        InventoryItem water = new InventoryItem();
+        water.setDescription("Water");
+        water.setQuantityInStock(0);
+        water.setRequiredAmount(0);
+        inventory[5] = water;
+        
+        InventoryItem honey = new InventoryItem();
+        honey.setDescription("Honey");
+        honey.setQuantityInStock(0);
+        honey.setRequiredAmount(0);
+        inventory[6] = honey;
+        
+        InventoryItem salt = new InventoryItem();
+        salt.setDescription("Salt");
+        salt.setQuantityInStock(0);
+        salt.setRequiredAmount(0);
+        inventory[Constants.ITEM_SALT] = salt;
+        
+        InventoryItem axe = new InventoryItem();
+        axe.setDescription("Axe");
+        axe.setQuantityInStock(0);
+        axe.setRequiredAmount(2);
+        inventory[7] = axe;
+
+        InventoryItem hammer = new InventoryItem();
+        hammer.setDescription("Hammer");
+        hammer.setQuantityInStock(0);
+        hammer.setRequiredAmount(3);
+        inventory[8] = hammer;
+        
+        InventoryItem drill = new InventoryItem();
+        drill.setDescription("Drill");
+        drill.setQuantityInStock(0);
+        drill.setRequiredAmount(1);
+        inventory[9] = drill;
+        
+        InventoryItem shovel = new InventoryItem();
+        shovel.setDescription("Shovel");
+        shovel.setQuantityInStock(0);
+        shovel.setRequiredAmount(1);
+        inventory[10] = shovel;
+        
+        InventoryItem sickle = new InventoryItem();
+        sickle.setDescription("Sickle");
+        sickle.setQuantityInStock(0);
+        sickle.setRequiredAmount(2);
+        inventory[11] = sickle;
+        
+        
+        InventoryItem saw = new InventoryItem();
+        saw.setDescription("Saw");
+        saw.setQuantityInStock(0);
+        saw.setRequiredAmount(2);
+        inventory[12] = saw;
+        
+        
+        InventoryItem nails = new InventoryItem();
+        nails.setDescription("Sickle");
+        nails.setQuantityInStock(0);
+        nails.setRequiredAmount(50);
+        inventory[13] = nails;
+   
+        return inventory;
+    }
+    
+    */
+    
     
   
     public Actor[]  getSortActorList(Actor[] actors) {
@@ -250,179 +345,57 @@ public class GameControl {
     }
     
     
+    
+    public static void moveActorToLocation(Actor actor, int row, int column) 
+                            throws MapControlException {
+        Map map = CuriousWorkmanship.getCurrentGame().getMap();
+        try {
+            if (row < 1  || row > map.getNoOfRows() ||
+                column < 1  || row > map.getNoOfColumns()) {
+
+                throw new CuriousWorkmanshipException("Row or column is outsides the bounds of the map");
+            }
+        } catch (CuriousWorkmanshipException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        MapControl.moveActorToLocation(actor, new Point(row, column));
+        
+    }
+    
     public static InventoryItem[] getInventory() {
         return CuriousWorkmanship.getCurrentGame().getInventory();
     }
 
-    
-    public static void saveGame(Game game, String filepath) 
-            throws GameControlException {
+    enum ToolWeights {
+        HAMMER(2.75),
+        AX(10.0),
+        DRILL(1.5),
+        SHOVEL(7.25),
+        SICKLE(2.3),
+        SAW(1.75);
+        
+        private final double weight;
 
-        try( FileOutputStream fops = new FileOutputStream(filepath)) {
-            ObjectOutputStream output = new ObjectOutputStream(fops);
+        private ToolWeights(double weight) {
+            this.weight = weight;
+        }
+        
+        
+        public double getWeight() {
+            return weight;
+        }
             
-            output.writeObject(game); // write the game object out to file
-        }
-        catch(Exception e) {
-            throw new GameControlException(e.getMessage());
-        } 
-    }
-
-    
-    public static void getSavedGame(String filepath) 
-                        throws GameControlException {
-        Game game = null;
-
-        try( FileInputStream fips = new FileInputStream(filepath)) {
-            ObjectInputStream input = new ObjectInputStream(fips);
-            
-            game = (Game) input.readObject(); // read the game object from file
-        }
-        catch(Exception e) {
-            throw new GameControlException(e.getMessage());
-        }
-
-       // close the outuput file
-       CuriousWorkmanship.setCurrentGame(game); // save in CuriousWorkmanship
-    }
- 
-    
-    public static double getLengthOfTrip(double speed) {
-        return Constants.TRIP_DISTANCE / 24 / speed;
+        
     }
     
-    public static Probability checkSpeedOfShip(double speed) throws GameControlException {
-        if (speed < 0) {
-            throw new GameControlException("The speed must be a number greater than zero.");
-        }
+    private double getWeightOfToolBox() {
         
-        if (speed >= Constants.DEV_ONE_LOW && speed <= Constants.DEV_ONE_HIGH) {
-            return Probability.HIGH_PROBABILITY;
-        }
-        else if (speed >= Constants.DEV_TWO_LOW && speed <= Constants.DEV_TWO_HIGH) {
-            return Probability.LOW_PROBABILITY;
-        }
-        else if (speed < Constants.DEV_TWO_LOW) {
-            return Probability.TOO_LOW;
-        }
-        else {
-            return Probability.TOO_HIGH;
-        }
-
-    }   
-    
-    public static Probability checkNoOfPeople(int noOfPeople) throws GameControlException {
+        double totalWeight = ToolWeights.HAMMER.getWeight() + ToolWeights.DRILL.getWeight();
         
-        if (noOfPeople < 0) {
-            throw new GameControlException( "The number of people must be a "
-                                          + "number greater than zero.");
-        }
+        return totalWeight;
         
-        if (noOfPeople < Constants.MIN_PERSONS_SAILING) {
-            return Probability.TOO_LOW;
-        }
-        else if (noOfPeople > Constants.MAX_PERSONS_SAILING) {
-            return Probability.TOO_HIGH;
-        }
-        else {
-            return Probability.OK;
-        }
-
-    }
-    
-    public static Probability checkRequiredAmount(FoodItem item, 
-                                             double noOfDays, 
-                                             int noOfPeople, 
-                                             double estimatedAmount) 
-                                throws GameControlException { 
-        
-        if (item == null  ||  
-            noOfDays < 0  ||  
-            noOfPeople < Constants.MIN_PERSONS_SAILING ||
-            estimatedAmount < 0) {
-            throw new InvalidParameterException("calculateRequiredAMount");
-        }
-
-        double requiredAmount = item.getRecommendedAmountPerDay() * noOfDays * noOfPeople;
-        
-        if (estimatedAmount < requiredAmount * .90) {
-            return Probability.TOO_LOW;            
-        } 
-        else if (estimatedAmount > requiredAmount * 1.10) {
-            return Probability.TOO_HIGH;            
-        } 
-        else {
-            return Probability.OK;
-        }
-
-    }
-    
-    
-    public double getPercentage(String value1, String value2) {
-        double percentage = 0.0;
-        
-        try {
-             
-            try {
-                double firstNumber = Double.parseDouble(value1);
-                double secondNumber = Double.parseDouble(value2);
-                percentage = (firstNumber / secondNumber) * 100;            
-            } catch (ArithmeticException ae) {
-                System.out.println("The second value can not be zero.");
-            } finally {
-                System.out.println("Inner try statement completed.");
-            }
-             
-        } catch (Exception e) {
-            System.out.println("Some other exception occurred.");
-        } finally {
-            System.out.println("Outer try statement completed."); 
-        }
-               
-        return percentage;
     }
 
-   
-     public static double harvestResource(Location location, Item item, int noOfPeople, double noOfHours) throws GameControlException {
-         CuriousWorkmanship.getOutFile().println("*** harvestResouce() called ***");
-         
-         if (location == null) {
-             throw new GameControlException("harvestResource - no location specified");
-         }
-         
-         if (item == null){
-             throw new GameControlException("harvestResource - no item specified");
-         }
-         
-         if (noOfPeople < 0  || noOfPeople > Constants.ACTOR_COUNT) {
-            throw new GameControlException("harvestResource - invalid number of people specified");
-         }
-         
-         if (noOfHours < 1 || noOfHours > 12) {
-             throw new GameControlException("The minimum number of hours you can work is 1 and the maximum is 12");
-         }
-         
-         // calculate the total person hours workded
-         double personHours = noOfHours * noOfHours;
-         
-         // get resource scene from location
-         // get the amount of resources harvested per day (hour) 
-         
-         
-         
-         // get amount of resources available in scene
-         // calculate the amount of resources harvested
-         // amountHarvested = amountHarvestedPerHour * numberOfHours
- 
-         // if amountToHarvest is less than amountInScene
-            // amountToHarvest = amountInScene
 
-        // reduce amountAvailable in scene
-        // get and add resource to wagon
-        
-         return 0;
-    }
-    
-  
-    
 }

@@ -9,72 +9,59 @@ package curiousworkmanship;
 import citbyui.cit260.curiousworkmanship.model.Game;
 import citbyui.cit260.curiousworkmanship.model.Player;
 import citbyui.cit260.curiousworkmanship.view.StartProgramView;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 
 
 public class CuriousWorkmanship {
     
     private static Game currentGame = null;
-    private static Player player = null;  
+    private static Player player = null;   
     
-    private static PrintWriter outFile = null;
-    private static BufferedReader inFile = null;
-    private static PrintWriter logFile = null;
     
+    
+
     public static void main(String[] args) { 
+    
+        while (true) { // play game until user explcitly quits
+            try {
+                // create StartProgramView and start the program
+                StartProgramView startProgramView = new StartProgramView();
+                startProgramView.display();
+                return;
+                
+            } catch (Exception e) {
+                
+                // build stacktrace string.
+                StringBuilder sb = new StringBuilder();
+                for (StackTraceElement element : e.getStackTrace()) {
+                    sb.append("\t" + element.toString());
+                    sb.append("\n");
+                }
 
-        try {
-            
-            // open charcter stream files for end user input and output
-            CuriousWorkmanship.inFile = 
-                    new BufferedReader(new InputStreamReader(System.in));
-            
-            CuriousWorkmanship.outFile = new PrintWriter(System.out, true);
-        
-            // open log file
-            String filePath = "log.txt";
-            CuriousWorkmanship.logFile = new PrintWriter(filePath);
+                System.out.println("\n"
+                        + "\n*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+                        + "\nAn abnormal error occured. ");
 
-
-            // create StartProgramView and start the program
-            StartProgramView startProgramView = new StartProgramView();
-            startProgramView.display();
-            return; 
-
-        } catch (Throwable e) {
-              
                 System.out.println("Exception: " + e.toString() + 
                                    "\nCause: " + e.getCause() + 
                                    "\nMessage: " + e.getMessage());
 
-                e.printStackTrace();;
-        }
+                System.out.println("\n" + e.toString() + "\n" + sb);
 
-        finally {
-            try {
-                if (CuriousWorkmanship.inFile != null)
-                    CuriousWorkmanship.inFile.close();
-                
-                if (CuriousWorkmanship.outFile != null)
-                    CuriousWorkmanship.outFile.close();
-                
-                if (CuriousWorkmanship.logFile != null)
-                    CuriousWorkmanship.logFile.close();
-            } catch (IOException ex) {
-                System.out.println("Error closing files");
-                return;
-            }   
+                System.out.println("\nRestarting the program."              
+                        + "\nIf this error persist, contact support."
+                        + "\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+                        + "\n\n\n");
+            }
+
         }
+        
+        
     }
-        
-//    private static PrintWriter logFile = null;
-  
-// 
-        
 
+    
+    
+    
+    
     
     public static Game getCurrentGame() {
         return currentGame;
@@ -92,30 +79,7 @@ public class CuriousWorkmanship {
         CuriousWorkmanship.player = player;
     }
 
-    public static PrintWriter getOutFile() {
-        return outFile;
-    }
-
-    public static void setOutFile(PrintWriter outFile) {
-        CuriousWorkmanship.outFile = outFile;
-    }
-
-    public static BufferedReader getInFile() {
-        return inFile;
-    }
-
-    public static void setInFile(BufferedReader inFile) {
-        CuriousWorkmanship.inFile = inFile;
-    }
-
-
-
-    public static PrintWriter getLogFile() {
-        return logFile;
-    }
-
-    public static void setLogFile(PrintWriter logFile) {
-        CuriousWorkmanship.logFile = logFile;
-    }
+    
+    
     
 }

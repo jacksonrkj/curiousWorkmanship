@@ -1,8 +1,15 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package citbyui.cit260.curiousworkmanship.view;
 
 import citbyui.cit260.curiousworkmanship.control.GameControl;
+import citbyui.cit260.curiousworkmanship.control.ProgramControl;
+import citbyui.cit260.curiousworkmanship.exceptions.GameControlException;
 import citbyui.cit260.curiousworkmanship.exceptions.MapControlException;
+import citbyui.cit260.curiousworkmanship.exceptions.ProgramControlException;
 import curiousworkmanship.CuriousWorkmanship;
 
 /**
@@ -12,7 +19,7 @@ import curiousworkmanship.CuriousWorkmanship;
 
 
 public class MainMenuView extends View {
-    
+
     public MainMenuView() {
         super("\n"
               + "\n-----------------------------------------"
@@ -25,10 +32,11 @@ public class MainMenuView extends View {
               + "\nQ - Quit"
               + "\n-----------------------------------------");
     }
-
-    @Override
-    public boolean doAction(String value) {
+   
+    
        
+    public boolean doAction(String value) {
+        
         value = value.toUpperCase(); // convert to all upper case
         char choice = value.charAt(0); // get first character entered
 
@@ -37,7 +45,7 @@ public class MainMenuView extends View {
                 this.startNewGame();
                 break;
             case 'G': // get and start an existing game
-                this.startSavedGame();
+                this.startExistingGame();
                 break;
             case 'H': // display the help menu
                 this.displayHelpMenu();
@@ -45,9 +53,10 @@ public class MainMenuView extends View {
             case 'S': // save the current game
                 this.saveGame();               
                 break;
+            case 'Q': // Exit the program
+                return true;
             default:
-                ErrorView.display("MainMenuView", 
-                                  "*** Invalid selection *** Try again");
+                System.out.println("\n*** Invalid selection *** Try again");
                 break;
         }
 
@@ -61,29 +70,22 @@ public class MainMenuView extends View {
             // create a new game
             GameControl.createNewGame(CuriousWorkmanship.getPlayer());    
         } catch (MapControlException mce) {
-            ErrorView.display("MainMenuView", mce.getMessage());
+            System.out.println(mce.getMessage());
             return;
-        } 
+        } catch (Throwable te) {
+            System.out.println(te.getMessage());
+            te.printStackTrace();
+            return;
+        }
 
         // display the game menu
         GameMenuView gameMenu = new GameMenuView();
         gameMenu.display();
     }
 
-    private void startSavedGame() {
-        
-        // prompt for and get the name of the file to save the game in
-        this.console.println("\n\nEnter the file path for file where the game "
-                           + "is to be saved.");
-        
-        String filePath = this.getInput();
-        
-        try {
-            // start a saved game
-            GameControl.getSavedGame(filePath);
-        } catch (Exception ex) {
-            ErrorView.display("MainMenuView", ex.getMessage());
-        } 
+    private void startExistingGame() {
+        // start a saved game
+        GameControl.startSavedGame();
 
         // display the game menu
         GameMenuView gameMenu = new GameMenuView();
@@ -92,16 +94,12 @@ public class MainMenuView extends View {
 
     private void saveGame() {
         // prompt for and get the name of the file to save the game in
-        this.console.println("\n\nEnter the file path for file where the game "
+        System.out.println("\n\nEnter the file path for file where the game "
                            + "is to be saved.");
-        String filePath = this.getInput();     
+        String filePath = this.getInput();
         
-        try {
-            // save the game to the speciried file
-            GameControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
-        } catch (Exception ex) {
-            ErrorView.display("MainMenuView", ex.getMessage());
-        } 
+        // save the game to the speciried file
+        ProgramControl.saveGame(CuriousWorkmanship.getCurrentGame(), filePath);
     }
 
     private void displayHelpMenu() {
